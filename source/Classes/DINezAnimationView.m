@@ -28,6 +28,7 @@
 @synthesize activeSet = _activeSet;
 @synthesize sets = _sets;
 @synthesize activeIndex = _activeIndex;
+@synthesize interactionState = _interactionState;
 
 
 - (id)initWithFrame:(CGRect)frame
@@ -51,7 +52,6 @@
   }
 
   self.sets = frame;
-  
   self.activeSet = @"blink";
   self.activeIndex = 0;
 
@@ -67,19 +67,19 @@
 - (void)touchesBegan:(NSSet *)touches
            withEvent:(UIEvent *)event
 {
-	_stroking = YES;
+  self.interactionState = StateStroke;
 }
 
 - (void)touchesEnded:(NSSet *)touches
            withEvent:(UIEvent *)event
 {
-	_stroking = NO;
+  self.interactionState = StateDefault;
 }
 
 - (void)touchesCancelled:(NSSet *)touches
                withEvent:(UIEvent *)event
 {
-	_stroking = NO;
+  self.interactionState = StateDefault;
 }
 
 
@@ -159,6 +159,9 @@
  */
 - (NSString *)nextSet
 {
+  static NSString *kActionDefault  = @"default";
+  static NSString *kActionStroke   = @"stroke";
+  
   static NSString *kTypeTransition = @"transition";
   static NSString *kTransitionSet  = @"set";
   
@@ -168,8 +171,25 @@
   NSDictionary *set = [self set:self.activeSet];
   NSDictionary *actions = [set objectForKey:@"actions"];
   
-  // TODO Switch based on the current interactive state.
-  NSDictionary *action = [actions objectForKey:@"default"];
+  
+  NSDictionary *action = nil;
+  
+  // Check to see if there is an action for the current interaction state.
+  switch (self.interactionState) {
+    case StateStroke:
+      action = [actions objectForKey:kActionStroke];
+      break;
+    case StateDefault:
+    default:
+      action = [actions objectForKey:kActionDefault];
+      break;
+  }
+  
+  // If there is no specific action, then simply choose the default.
+  if (action == nil) {
+    action = [actions objectForKey:kActionDefault];
+  }
+
   
   NSString *type = [action objectForKey:@"type"];
   if ([type isEqualToString:kTypeTransition]) {

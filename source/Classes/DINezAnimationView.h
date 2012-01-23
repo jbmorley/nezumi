@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+  
+  StateDefault,
+  StateStroke,
+  
+} InteractionState;
+
 @interface DINezAnimationView : UIView {
 
 	IBOutlet UIImageView *image;	
@@ -15,11 +22,10 @@
   NSString *_activeSet;
   NSDictionary *_sets;
 	
-	BOOL _stroking;
-	
 	int _state;
   
   NSUInteger _activeIndex;
+  InteractionState _interactionState;
 	
 }
 
@@ -27,5 +33,6 @@
 @property (nonatomic, retain) NSString *activeSet;
 @property (nonatomic, retain) NSDictionary *sets;
 @property (nonatomic, assign) NSUInteger activeIndex;
+@property (nonatomic, assign) InteractionState interactionState;
 
 @end
