@@ -8,31 +8,54 @@
 
 #import "DINezAnimationView.h"
 
+@interface DINezAnimationView (Private)
+
+- (UIImage *)nextFrame;
+- (NSDictionary *)set:(NSString *)set;
+- (NSString *)nextSet;
+- (NSArray *)frames:(NSString *)set;
+
+- (UIImage *) imageForFrame:(NSUInteger)index;
+
+@property (nonatomic, readonly) NSArray *activeFrames;
+
+@end
+
 
 @implementation DINezAnimationView
 
 @synthesize image;
+@synthesize activeSet = _activeSet;
+@synthesize sets = _sets;
+@synthesize activeIndex = _activeIndex;
 
 
-- (id)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-    }
-    return self;
+- (id)initWithFrame:(CGRect)frame
+{
+  if (self = [super initWithFrame:frame]) {
+  }
+  return self;
 }
 
-- (void)awakeFromNib {
-	
-	_blinkSet = [[NSArray arrayWithObjects:@"nez-blink1.gif", @"nez-blink1.gif", @"nez-blink2.gif", @"nez-blink3.gif", @"nez-blink2.gif", nil] retain];
-	
-	_beginStrokeSet = [[NSArray arrayWithObjects:@"nez-pet1.gif", @"nez-pet2.gif", nil] retain];
-	_strokeSet = [[NSArray arrayWithObjects:@"nez-pet3.gif", @"nez-pet4.gif", @"nez-pet5.gif", @"nez-pet4.gif", @"nez-pet3.gif", nil] retain];
-	_endStrokeSet = [[NSArray arrayWithObjects:@"nez-pet2.gif", @"nez-pet1.gif", nil] retain];
-	
-	_activeSet = _blinkSet;
-	_state = STATE_BLINK;
-	
+- (void)awakeFromNib
+{	
+  NSError *error = nil;
+  NSString *file = [[NSBundle mainBundle] pathForResource:@"nezumi"
+                                                   ofType:@"json"];
+  NSData *data = [NSData dataWithContentsOfFile:file];
+  NSDictionary *frame = [NSJSONSerialization JSONObjectWithData:data
+                                                        options:kNilOptions
+                                                          error:&error];
+  if (error) {
+    NSLog(@"Error: %@", error);    
+  }
+
+  self.sets = frame;
+  
+  self.activeSet = @"blink";
+  self.activeIndex = 0;
+
 	// Initialize the animation sets
-	_frameIndex = 0;
 	[NSTimer scheduledTimerWithTimeInterval:0.25
                                    target:self
                                  selector:@selector(onTick)
@@ -41,85 +64,119 @@
 	
 }
 
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches
+           withEvent:(UIEvent *)event
+{
 	_stroking = YES;
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches
+           withEvent:(UIEvent *)event
+{
 	_stroking = NO;
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesCancelled:(NSSet *)touches
+               withEvent:(UIEvent *)event
+{
 	_stroking = NO;
 }
 
 
-- (void)onTick {
-	
-	_frameIndex++;
-	if (_frameIndex >= [_activeSet count]) {
-	
-		switch (_state) {
-			case STATE_BLINK:
-				if (_stroking) {
-					_activeSet = _beginStrokeSet;
-					_state = STATE_BEGIN_STROKE;
-				}
-				break;
-			case STATE_BEGIN_STROKE:
-				if (_stroking) {
-					_activeSet = _strokeSet;
-					_state = STATE_STROKE;
-				} else {
-					_activeSet = _endStrokeSet;
-					_state = STATE_END_STROKE;
-				}
-				break;
-			case STATE_STROKE:
-				if (!_stroking) {
-					_activeSet = _endStrokeSet;
-					_state = STATE_END_STROKE;
-				}
-				break;
-			case STATE_END_STROKE:
-				if (!_stroking) {
-					_activeSet = _blinkSet;
-					_state = STATE_BLINK;
-				} else {
-					_activeSet = _beginStrokeSet;
-					_state = STATE_BEGIN_STROKE;
-				}
-				break;
-			default:
-				NSLog(@"Unknown State");
-		}		
-	
-		if (_stroking) {
-			_activeSet = _strokeSet;
-		} else {
-			_activeSet = _blinkSet;
-		}
-
-		_frameIndex = 0;
-	}
-	
-	[image setImage:[UIImage imageNamed:(NSString *)[_activeSet objectAtIndex:_frameIndex]]];
-	
+- (void)onTick
+{
+	[image setImage:[self nextFrame]];	
 }
 
 
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)drawRect:(CGRect)rect
+{
 }
 
 
-- (void)dealloc {
-	[_blinkSet release];
-	[_beginStrokeSet release];
-	[_strokeSet release];
-	[_endStrokeSet release];
-    [super dealloc];
+- (void) dealloc
+{
+  self.activeSet = nil;
+  self.sets = nil;
+  [super dealloc];
+}
+
+
+@end
+
+@implementation DINezAnimationView (Private)
+
+- (UIImage *) nextFrame
+{
+  
+  // Fetch the image.
+  UIImage *frame = [self imageForFrame:self.activeIndex];
+  
+  // Transition the state.
+  if (self.activeIndex < [self.activeFrames count]-1) {
+    self.activeIndex++;
+  } else {
+    // TODO Transition the state and not just the frame.
+    self.activeIndex = 0;
+    self.activeSet = [self nextSet];
+  }
+  
+  return frame;
+}
+
+/**
+ * Returns the NSDictionary containing the parameters for a named set.
+ */
+- (NSDictionary *)set:(NSString *)set
+{
+  return [self.sets objectForKey:set];
+}
+
+/**
+ * Returns the frames for a named set.
+ */
+- (NSArray *)frames:(NSString *)set
+{
+  return [[self set:set] objectForKey:@"frames"];
+}
+
+- (NSArray *)activeFrames
+{
+  return [self frames:self.activeSet];
+}
+
+- (UIImage *) imageForFrame:(NSUInteger)index
+{
+  NSDictionary *frame = [self.activeFrames objectAtIndex:index];
+  NSString *file = [frame objectForKey:@"file"];
+  return [UIImage imageNamed:file];
+}
+
+
+/**
+ * Determines what the next set should be based on the current state of the
+ * user interaction and the current state in the animation.
+ */
+- (NSString *)nextSet
+{
+  static NSString *kTypeTransition = @"transition";
+  static NSString *kTransitionSet  = @"set";
+  
+  NSString *nextSet = self.activeSet;
+  
+  // TODO Work out what the next set should be.
+  NSDictionary *set = [self set:self.activeSet];
+  NSDictionary *actions = [set objectForKey:@"actions"];
+  
+  // TODO Switch based on the current interactive state.
+  NSDictionary *action = [actions objectForKey:@"default"];
+  
+  NSString *type = [action objectForKey:@"type"];
+  if ([type isEqualToString:kTypeTransition]) {
+    nextSet = [action objectForKey:kTransitionSet];
+  }
+  
+  return nextSet;
 }
 
 

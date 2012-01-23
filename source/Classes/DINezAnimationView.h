@@ -8,31 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-enum {
-	STATE_BLINK,
-	STATE_BEGIN_STROKE,
-	STATE_STROKE,
-	STATE_END_STROKE
-};
-
 @interface DINezAnimationView : UIView {
 
 	IBOutlet UIImageView *image;	
 
-	int _frameIndex;
-	
-	NSArray *_activeSet;	
-	NSArray *_blinkSet;
-	NSArray *_beginStrokeSet;
-	NSArray *_strokeSet;
-	NSArray *_endStrokeSet;
+  NSString *_activeSet;
+  NSDictionary *_sets;
 	
 	BOOL _stroking;
 	
 	int _state;
+  
+  NSUInteger _activeIndex;
 	
 }
 
 @property(nonatomic, retain) IBOutlet UIImageView *image;
+@property (nonatomic, retain) NSString *activeSet;
+@property (nonatomic, retain) NSDictionary *sets;
+@property (nonatomic, assign) NSUInteger activeIndex;
 
 @end
