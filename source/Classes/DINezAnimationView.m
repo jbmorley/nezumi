@@ -31,9 +31,13 @@
 	_activeSet = _blinkSet;
 	_state = STATE_BLINK;
 	
-	// Initialize the animation sets	
+	// Initialize the animation sets
 	_frameIndex = 0;
-	[NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(onTick) userInfo:nil repeats:YES];
+	[NSTimer scheduledTimerWithTimeInterval:0.25
+                                   target:self
+                                 selector:@selector(onTick)
+                                 userInfo:nil
+                                  repeats:YES];
 	
 }
 
