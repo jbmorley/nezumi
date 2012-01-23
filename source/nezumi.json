@@ -1,15 +1,31 @@
 {
 "blink" : {
-    "frames" : [
-        { "file" : "nez-blink1.gif", "duration" : 0.5  },
-        { "file" : "nez-blink2.gif", "duration" : 0.25 },
-        { "file" : "nez-blink3.gif", "duration" : 0.25 },
-        { "file" : "nez-blink2.gif", "duration" : 0.25 }
-    ],
-    "actions" : {
-        "default" : { "type" : "transition", "set" : "blink" },
-        "stroke"  : { "type" : "transition", "set" : "pet-start" }
-    }
+  "frames" : [
+    { "file" : "nez-blink1.gif", "duration" : 0.5  },
+    { "file" : "nez-blink2.gif", "duration" : 0.25 },
+    { "file" : "nez-blink3.gif", "duration" : 0.25 },
+    { "file" : "nez-blink2.gif", "duration" : 0.25 }
+  ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink" },
+    "stroke"  : { "type" : "transition", "set" : "stroke" }
+  }
+},
+"mad" : {
+  "frames" : [
+    { "file" : "nez-mad1.gif", "duration" : 0.25  },
+    { "file" : "nez-mad2.gif", "duration" : 0.25  },
+    { "file" : "nez-mad3.gif", "duration" : 0.25  },
+    { "file" : "nez-mad4.gif", "duration" : 0.25  },
+    { "file" : "nez-mad5.gif", "duration" : 0.25  },
+    { "file" : "nez-mad4.gif", "duration" : 0.25  },
+    { "file" : "nez-mad3.gif", "duration" : 0.25  },
+    { "file" : "nez-mad2.gif", "duration" : 0.25  },
+    { "file" : "nez-mad1.gif", "duration" : 0.25  }
+  ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink" }
+  }
 },
 "pet-start" : {
     "name" : "pet-start",
