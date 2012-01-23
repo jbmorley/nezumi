@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		10A185EA0FFC0058003046FA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A185E90FFC0058003046FA /* icon.png */; };
-		10A186070FFC0292003046FA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A186060FFC0292003046FA /* Default.png */; };
 		10A186180FFC04C4003046FA /* DINezAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A186170FFC04C4003046FA /* DINezAnimationView.m */; };
 		10DBDC520FFBF7460004034A /* 17-bar-chart.png in Resources */ = {isa = PBXBuildFile; fileRef = 10DBDC510FFBF7460004034A /* 17-bar-chart.png */; };
 		10DBDC540FFBF7720004034A /* 29-heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 10DBDC530FFBF7720004034A /* 29-heart.png */; };
@@ -44,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		10A185E90FFC0058003046FA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		10A186060FFC0292003046FA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		10A186160FFC04C4003046FA /* DINezAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DINezAnimationView.h; sourceTree = "<group>"; };
 		10A186170FFC04C4003046FA /* DINezAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DINezAnimationView.m; sourceTree = "<group>"; };
 		10DBDC510FFBF7460004034A /* 17-bar-chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "17-bar-chart.png"; sourceTree = "<group>"; };
@@ -183,7 +181,6 @@
 				D80C1C2714CE012B00A5FBCF /* nezumi.json */,
 				28AD73870D9D96C1002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Nezumi2-Info.plist */,
-				10A186060FFC0292003046FA /* Default.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -282,7 +279,6 @@
 				10DBDC670FFBF92F0004034A /* nez-pet1.gif in Resources */,
 				10DBDC680FFBF92F0004034A /* nez-pet2.gif in Resources */,
 				10A185EA0FFC0058003046FA /* icon.png in Resources */,
-				10A186070FFC0292003046FA /* Default.png in Resources */,
 				D80C1C2814CE012B00A5FBCF /* nezumi.json in Resources */,
 				D80C1C2F14CE162D00A5FBCF /* nez-mad1.gif in Resources */,
 				D80C1C3014CE162D00A5FBCF /* nez-mad2.gif in Resources */,
