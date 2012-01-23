@@ -34,6 +34,13 @@
 		D80C1C3114CE162D00A5FBCF /* nez-mad3.gif in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C2C14CE162D00A5FBCF /* nez-mad3.gif */; };
 		D80C1C3214CE162D00A5FBCF /* nez-mad4.gif in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C2D14CE162D00A5FBCF /* nez-mad4.gif */; };
 		D80C1C3314CE162D00A5FBCF /* nez-mad5.gif in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C2E14CE162D00A5FBCF /* nez-mad5.gif */; };
+		D80C1C3C14CE1DE200A5FBCF /* nez-sleep1.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3514CE1DE200A5FBCF /* nez-sleep1.png */; };
+		D80C1C3D14CE1DE200A5FBCF /* nez-sleep2.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3614CE1DE200A5FBCF /* nez-sleep2.png */; };
+		D80C1C3E14CE1DE200A5FBCF /* nez-sleep3.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3714CE1DE200A5FBCF /* nez-sleep3.png */; };
+		D80C1C3F14CE1DE200A5FBCF /* nez-sleep4.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3814CE1DE200A5FBCF /* nez-sleep4.png */; };
+		D80C1C4014CE1DE200A5FBCF /* nez-sleep5.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3914CE1DE200A5FBCF /* nez-sleep5.png */; };
+		D80C1C4114CE1DE200A5FBCF /* nez-sleep6.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3A14CE1DE200A5FBCF /* nez-sleep6.png */; };
+		D80C1C4214CE1DE200A5FBCF /* nez-sleep7.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3B14CE1DE200A5FBCF /* nez-sleep7.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +77,13 @@
 		D80C1C2C14CE162D00A5FBCF /* nez-mad3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "nez-mad3.gif"; sourceTree = "<group>"; };
 		D80C1C2D14CE162D00A5FBCF /* nez-mad4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "nez-mad4.gif"; sourceTree = "<group>"; };
 		D80C1C2E14CE162D00A5FBCF /* nez-mad5.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "nez-mad5.gif"; sourceTree = "<group>"; };
+		D80C1C3514CE1DE200A5FBCF /* nez-sleep1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep1.png"; sourceTree = "<group>"; };
+		D80C1C3614CE1DE200A5FBCF /* nez-sleep2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep2.png"; sourceTree = "<group>"; };
+		D80C1C3714CE1DE200A5FBCF /* nez-sleep3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep3.png"; sourceTree = "<group>"; };
+		D80C1C3814CE1DE200A5FBCF /* nez-sleep4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep4.png"; sourceTree = "<group>"; };
+		D80C1C3914CE1DE200A5FBCF /* nez-sleep5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep5.png"; sourceTree = "<group>"; };
+		D80C1C3A14CE1DE200A5FBCF /* nez-sleep6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep6.png"; sourceTree = "<group>"; };
+		D80C1C3B14CE1DE200A5FBCF /* nez-sleep7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep7.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +116,7 @@
 		10DBDC6C0FFBF9940004034A /* Frames */ = {
 			isa = PBXGroup;
 			children = (
+				D80C1C3414CE1DD800A5FBCF /* Sleep */,
 				D80C1C2914CE15F900A5FBCF /* Mad */,
 				10DBDC6D0FFBF99C0004034A /* Blink */,
 				10DBDC6E0FFBF9A10004034A /* Pet */,
@@ -198,6 +213,20 @@
 			name = Mad;
 			sourceTree = "<group>";
 		};
+		D80C1C3414CE1DD800A5FBCF /* Sleep */ = {
+			isa = PBXGroup;
+			children = (
+				D80C1C3514CE1DE200A5FBCF /* nez-sleep1.png */,
+				D80C1C3614CE1DE200A5FBCF /* nez-sleep2.png */,
+				D80C1C3714CE1DE200A5FBCF /* nez-sleep3.png */,
+				D80C1C3814CE1DE200A5FBCF /* nez-sleep4.png */,
+				D80C1C3914CE1DE200A5FBCF /* nez-sleep5.png */,
+				D80C1C3A14CE1DE200A5FBCF /* nez-sleep6.png */,
+				D80C1C3B14CE1DE200A5FBCF /* nez-sleep7.png */,
+			);
+			name = Sleep;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -264,6 +293,13 @@
 				D80C1C3114CE162D00A5FBCF /* nez-mad3.gif in Resources */,
 				D80C1C3214CE162D00A5FBCF /* nez-mad4.gif in Resources */,
 				D80C1C3314CE162D00A5FBCF /* nez-mad5.gif in Resources */,
+				D80C1C3C14CE1DE200A5FBCF /* nez-sleep1.png in Resources */,
+				D80C1C3D14CE1DE200A5FBCF /* nez-sleep2.png in Resources */,
+				D80C1C3E14CE1DE200A5FBCF /* nez-sleep3.png in Resources */,
+				D80C1C3F14CE1DE200A5FBCF /* nez-sleep4.png in Resources */,
+				D80C1C4014CE1DE200A5FBCF /* nez-sleep5.png in Resources */,
+				D80C1C4114CE1DE200A5FBCF /* nez-sleep6.png in Resources */,
+				D80C1C4214CE1DE200A5FBCF /* nez-sleep7.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

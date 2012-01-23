@@ -8,7 +8,22 @@
   ],
   "actions" : {
     "default" : { "type" : "transition", "set" : "blink" },
-    "stroke"  : { "type" : "transition", "set" : "stroke" }
+    "stroke"  : { "type" : "transition", "set" : "sleep" }
+  }
+},
+"sleep" : {
+  "frames" : [
+    { "file" : "nez-sleep1.png", "duration" : 0.25 },
+    { "file" : "nez-sleep2.png", "duration" : 0.25 },
+    { "file" : "nez-sleep3.png", "duration" : 0.25 },
+    { "file" : "nez-sleep4.png", "duration" : 0.25 },
+    { "file" : "nez-sleep5.png", "duration" : 0.25 },
+    { "file" : "nez-sleep6.png", "duration" : 0.25 },
+    { "file" : "nez-sleep7.png", "duration" : 0.25 }
+  ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink" },
+    "stroke"  : { "type" : "transition", "set" : "sleep" }
   }
 },
 "mad" : {
