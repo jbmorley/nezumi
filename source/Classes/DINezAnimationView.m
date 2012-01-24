@@ -17,6 +17,7 @@
 
 - (UIImage *)imageForFrame:(NSUInteger)index;
 - (CGFloat) durationForFrame:(NSUInteger)index;
+- (InteractionState) state:(NSString *)state;
 
 @property (nonatomic, readonly) NSArray *activeFrames;
 
@@ -32,9 +33,11 @@
 @synthesize interactionState = _interactionState;
 @synthesize touchStart = _touchStart;
 
-
 static NSTimeInterval kPokeThreshold = 0.1;
 
+static NSString *kStateDefault  = @"default";
+static NSString *kStateStroke   = @"stroke";
+static NSString *kStatePoke     = @"poke";
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -167,12 +170,10 @@ static NSTimeInterval kPokeThreshold = 0.1;
  */
 - (NSString *)nextSet
 {
-  static NSString *kActionDefault  = @"default";
-  static NSString *kActionStroke   = @"stroke";
-  static NSString *kActionPoke     = @"poke";
-  
   static NSString *kTypeTransition = @"transition";
+  static NSString *kTypeState      = @"state";
   static NSString *kTransitionSet  = @"set";
+  static NSString *kStateTarget    = @"target";
   
   NSString *nextSet = self.activeSet;
   
@@ -181,34 +182,50 @@ static NSTimeInterval kPokeThreshold = 0.1;
   NSDictionary *actions = [set objectForKey:@"actions"];
   
   
-  NSDictionary *action = nil;
+  NSArray *action = nil;
   
   // Check to see if there is an action for the current interaction state.
   switch (self.interactionState) {
     case StateStroke:
-      action = [actions objectForKey:kActionStroke];
+      action = [actions objectForKey:kStateStroke];
       break;
     case StatePoke:
-      action = [actions objectForKey:kActionPoke];
+      action = [actions objectForKey:kStatePoke];
       break;
     case StateDefault:
     default:
-      action = [actions objectForKey:kActionDefault];
+      action = [actions objectForKey:kStateDefault];
       break;
   }
   
   // If there is no specific action, then simply choose the default.
   if (action == nil) {
-    action = [actions objectForKey:kActionDefault];
+    action = [actions objectForKey:kStateDefault];
+  }
+  
+  for (NSDictionary *act in action) {
+    NSString *type = [act objectForKey:@"type"];
+    if ([type isEqualToString:kTypeTransition]) {
+      nextSet = [act objectForKey:kTransitionSet];
+    } else if ([type isEqualToString:kTypeState]) {
+      self.interactionState = [self state:[act objectForKey:kStateTarget]];
+    }
+    
   }
 
-  
-  NSString *type = [action objectForKey:@"type"];
-  if ([type isEqualToString:kTypeTransition]) {
-    nextSet = [action objectForKey:kTransitionSet];
-  }
-  
   return nextSet;
+}
+
+- (InteractionState) state:(NSString *)state
+{
+  if ([state isEqualToString:kStateDefault]) {
+    return StateDefault;
+  } else if ([state isEqualToString:kStatePoke]) {
+    return StatePoke;
+  } else if ([state isEqualToString:kStateStroke]) {
+    return StateStroke;
+  }
+  return StateDefault;
 }
 
 
