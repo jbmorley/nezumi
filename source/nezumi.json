@@ -1,14 +1,15 @@
 {
 "blink" : {
   "frames" : [
-    { "file" : "nez-blink1.gif", "duration" : 0.5  },
-    { "file" : "nez-blink2.gif", "duration" : 0.25 },
-    { "file" : "nez-blink3.gif", "duration" : 0.25 },
-    { "file" : "nez-blink2.gif", "duration" : 0.25 }
+    { "file" : "nez-blink1.gif", "duration" : 1.0 },
+    { "file" : "nez-blink2.gif", "duration" : 0.2 },
+    { "file" : "nez-blink3.gif", "duration" : 0.2 },
+    { "file" : "nez-blink2.gif", "duration" : 0.2 }
   ],
   "actions" : {
     "default" : { "type" : "transition", "set" : "blink" },
-    "stroke"  : { "type" : "transition", "set" : "pet-start" }
+    "stroke"  : { "type" : "transition", "set" : "pet-start" },
+    "poke"    : { "type" : "transition", "set" : "mad" }
   }
 },
 "sleep" : {

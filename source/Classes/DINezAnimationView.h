@@ -12,6 +12,7 @@ typedef enum {
   
   StateDefault,
   StateStroke,
+  StatePoke,
   
 } InteractionState;
 
@@ -19,13 +20,13 @@ typedef enum {
 
 	IBOutlet UIImageView *image;	
 
-  NSString *_activeSet;
   NSDictionary *_sets;
-	
-	int _state;
-  
+  NSString *_activeSet;
   NSUInteger _activeIndex;
+
   InteractionState _interactionState;
+  
+  NSDate *_touchStart;
 	
 }
 
@@ -34,5 +35,6 @@ typedef enum {
 @property (nonatomic, retain) NSDictionary *sets;
 @property (nonatomic, assign) NSUInteger activeIndex;
 @property (nonatomic, assign) InteractionState interactionState;
+@property (nonatomic, retain) NSDate *touchStart;
 
 @end

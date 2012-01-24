@@ -10,12 +10,13 @@
 
 @interface DINezAnimationView (Private)
 
-- (UIImage *)nextFrame;
+- (void) nextFrame;
 - (NSDictionary *)set:(NSString *)set;
 - (NSString *)nextSet;
 - (NSArray *)frames:(NSString *)set;
 
-- (UIImage *) imageForFrame:(NSUInteger)index;
+- (UIImage *)imageForFrame:(NSUInteger)index;
+- (CGFloat) durationForFrame:(NSUInteger)index;
 
 @property (nonatomic, readonly) NSArray *activeFrames;
 
@@ -29,6 +30,10 @@
 @synthesize sets = _sets;
 @synthesize activeIndex = _activeIndex;
 @synthesize interactionState = _interactionState;
+@synthesize touchStart = _touchStart;
+
+
+static NSTimeInterval kPokeThreshold = 0.1;
 
 
 - (id)initWithFrame:(CGRect)frame
@@ -54,38 +59,31 @@
   self.sets = frame;
   self.activeSet = @"blink";
   self.activeIndex = 0;
-
-	// Initialize the animation sets
-	[NSTimer scheduledTimerWithTimeInterval:0.25
-                                   target:self
-                                 selector:@selector(onTick)
-                                 userInfo:nil
-                                  repeats:YES];
-	
+  [self nextFrame];
 }
 
 - (void)touchesBegan:(NSSet *)touches
            withEvent:(UIEvent *)event
 {
+  self.touchStart = [NSDate date];
   self.interactionState = StateStroke;
 }
 
 - (void)touchesEnded:(NSSet *)touches
            withEvent:(UIEvent *)event
 {
-  self.interactionState = StateDefault;
+  NSTimeInterval duration = [self.touchStart timeIntervalSinceNow] * -1;
+  if (duration < kPokeThreshold) {
+    self.interactionState = StatePoke;
+  } else {
+    self.interactionState = StateDefault;
+  }
 }
 
 - (void)touchesCancelled:(NSSet *)touches
                withEvent:(UIEvent *)event
 {
   self.interactionState = StateDefault;
-}
-
-
-- (void)onTick
-{
-	[image setImage:[self nextFrame]];	
 }
 
 
@@ -106,22 +104,27 @@
 
 @implementation DINezAnimationView (Private)
 
-- (UIImage *) nextFrame
+- (void) nextFrame
 {
   
   // Fetch the image.
   UIImage *frame = [self imageForFrame:self.activeIndex];
+  CGFloat duration = [self durationForFrame:self.activeIndex];
+  
+  // Schedule the next frame event.
+  [self performSelector:@selector(nextFrame)
+             withObject:nil
+             afterDelay:duration];
   
   // Transition the state.
   if (self.activeIndex < [self.activeFrames count]-1) {
     self.activeIndex++;
   } else {
-    // TODO Transition the state and not just the frame.
     self.activeIndex = 0;
     self.activeSet = [self nextSet];
   }
   
-  return frame;
+	[image setImage:frame];
 }
 
 /**
@@ -152,6 +155,11 @@
   return [UIImage imageNamed:file];
 }
 
+- (CGFloat) durationForFrame:(NSUInteger)index
+{
+  NSDictionary *frame = [self.activeFrames objectAtIndex:index];
+  return [[frame valueForKey:@"duration"] floatValue];
+}
 
 /**
  * Determines what the next set should be based on the current state of the
@@ -161,6 +169,7 @@
 {
   static NSString *kActionDefault  = @"default";
   static NSString *kActionStroke   = @"stroke";
+  static NSString *kActionPoke     = @"poke";
   
   static NSString *kTypeTransition = @"transition";
   static NSString *kTransitionSet  = @"set";
@@ -178,6 +187,9 @@
   switch (self.interactionState) {
     case StateStroke:
       action = [actions objectForKey:kActionStroke];
+      break;
+    case StatePoke:
+      action = [actions objectForKey:kActionPoke];
       break;
     case StateDefault:
     default:
