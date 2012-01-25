@@ -39,6 +39,7 @@
 		D80C1C4014CE1DE200A5FBCF /* nez-sleep5.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3914CE1DE200A5FBCF /* nez-sleep5.png */; };
 		D80C1C4114CE1DE200A5FBCF /* nez-sleep6.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3A14CE1DE200A5FBCF /* nez-sleep6.png */; };
 		D80C1C4214CE1DE200A5FBCF /* nez-sleep7.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C1C3B14CE1DE200A5FBCF /* nez-sleep7.png */; };
+		D892834614D0954900B9F589 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = D892834514D0954900B9F589 /* MainView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,8 @@
 		D80C1C3914CE1DE200A5FBCF /* nez-sleep5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep5.png"; sourceTree = "<group>"; };
 		D80C1C3A14CE1DE200A5FBCF /* nez-sleep6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep6.png"; sourceTree = "<group>"; };
 		D80C1C3B14CE1DE200A5FBCF /* nez-sleep7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-sleep7.png"; sourceTree = "<group>"; };
+		D892834414D0954900B9F589 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
+		D892834514D0954900B9F589 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,8 @@
 				28216C960DB411BC00E5133A /* FirstViewController.m */,
 				1D3623240D0F684500981E51 /* Nezumi2AppDelegate.h */,
 				1D3623250D0F684500981E51 /* Nezumi2AppDelegate.m */,
+				D892834414D0954900B9F589 /* MainView.h */,
+				D892834514D0954900B9F589 /* MainView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -306,6 +311,7 @@
 				1D3623260D0F684500981E51 /* Nezumi2AppDelegate.m in Sources */,
 				28216C970DB411BC00E5133A /* FirstViewController.m in Sources */,
 				10A186180FFC04C4003046FA /* DINezAnimationView.m in Sources */,
+				D892834614D0954900B9F589 /* MainView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

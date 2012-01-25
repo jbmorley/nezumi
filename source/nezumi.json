@@ -12,7 +12,8 @@
     "poke"    : [
       { "type" : "transition", "set" : "mad" },
       { "type" : "state", "target" : "blink" }
-    ]
+    ],
+    "night"   : [ { "type" : "transition", "set" : "sleep" } ]
   }
 },
 "sleep" : {
@@ -26,8 +27,8 @@
     { "file" : "nez-sleep7.png", "duration" : 0.25 }
   ],
   "actions" : {
-    "default" : [ { "type" : "transition", "set" : "blink" } ],
-    "stroke"  : [ { "type" : "transition", "set" : "sleep" } ]
+    "default" : [ { "type" : "transition", "set" : "sleep" } ],
+    "day"     : [ { "type" : "transition", "set" : "blink" } ]
   }
 },
 "mad" : {

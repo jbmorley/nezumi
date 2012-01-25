@@ -31,6 +31,7 @@
 @synthesize sets = _sets;
 @synthesize activeIndex = _activeIndex;
 @synthesize interactionState = _interactionState;
+@synthesize timeState = _timeState;
 @synthesize touchStart = _touchStart;
 
 static NSTimeInterval kPokeThreshold = 0.1;
@@ -174,6 +175,8 @@ static NSString *kStatePoke     = @"poke";
   static NSString *kTypeState      = @"state";
   static NSString *kTransitionSet  = @"set";
   static NSString *kStateTarget    = @"target";
+  static NSString *kStateDay       = @"day";
+  static NSString *kStateNight     = @"night";
   
   NSString *nextSet = self.activeSet;
   
@@ -181,8 +184,17 @@ static NSString *kStatePoke     = @"poke";
   NSDictionary *set = [self set:self.activeSet];
   NSDictionary *actions = [set objectForKey:@"actions"];
   
-  
   NSArray *action = nil;
+  
+  // Check to see if there is an action for the time state.
+  switch (self.timeState) {
+    case StateDay:
+      action = [actions objectForKey:kStateDay];
+      break;
+    case StateNight:
+      action = [actions objectForKey:kStateNight];
+      break;
+  }
   
   // Check to see if there is an action for the current interaction state.
   switch (self.interactionState) {
@@ -194,7 +206,10 @@ static NSString *kStatePoke     = @"poke";
       break;
     case StateDefault:
     default:
-      action = [actions objectForKey:kStateDefault];
+      // Only honour the default state if no action has been found.
+      if (action == nil) {
+        action = [actions objectForKey:kStateDefault];
+      }
       break;
   }
   
