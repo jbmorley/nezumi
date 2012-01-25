@@ -16,6 +16,14 @@
     "night"   : [ { "type" : "transition", "set" : "sleep" } ]
   }
 },
+"eat" : {
+  "frames" : [
+    { "file" : "nez-eat1.png", "duration" : 2.0 }
+  ],
+  "actions" : {
+    "default" : [ { "type" : "transition", "set" : "blink" } ]
+  }
+},
 "sleep" : {
   "frames" : [
     { "file" : "nez-sleep1.png", "duration" : 0.25 },
@@ -28,7 +36,32 @@
   ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "sleep" } ],
-    "day"     : [ { "type" : "transition", "set" : "blink" } ]
+    "day"     : [ { "type" : "transition", "set" : "wake" } ]
+  }
+},
+"wake" : {
+  "frames" : [
+    { "file" : "nez-wake1.png",  "duration" : 0.25 },
+    { "file" : "nez-wake2.png",  "duration" : 0.25 },
+    { "file" : "nez-wake3.png",  "duration" : 0.25 },
+    { "file" : "nez-wake4.png",  "duration" : 0.25 },
+    { "file" : "nez-wake5.png",  "duration" : 0.25 },
+    { "file" : "nez-wake6.png",  "duration" : 0.25 },
+    { "file" : "nez-wake7.png",  "duration" : 0.25 },
+    { "file" : "nez-wake8.png",  "duration" : 0.25 },
+    { "file" : "nez-wake9.png",  "duration" : 0.25 },
+    { "file" : "nez-wake10.png", "duration" : 0.25 },
+    { "file" : "nez-wake11.png", "duration" : 0.25 },
+    { "file" : "nez-wake12.png", "duration" : 0.25 },
+    { "file" : "nez-wake13.png", "duration" : 0.25 },
+    { "file" : "nez-wake14.png", "duration" : 0.25 },
+    { "file" : "nez-wake15.png", "duration" : 0.25 },
+    { "file" : "nez-wake16.png", "duration" : 0.25 },
+    { "file" : "nez-wake17.png", "duration" : 0.25 },
+    { "file" : "nez-wake18.png", "duration" : 0.25 }
+  ],
+  "actions" : {
+    "default" : [ { "type" : "transition", "set" : "blink" } ],
   }
 },
 "mad" : {
