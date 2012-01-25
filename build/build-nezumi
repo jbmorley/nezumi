@@ -1,0 +1,16 @@
+#!/bin/bash
+
+pushd source
+xcodebuild || exit 1
+popd
+
+export ARTIFACTS=artifacts
+export PAYLOAD=$ARTIFACTS/Payload
+
+mkdir -p $ARTIFACTS
+mkdir -p $PAYLOAD
+
+cp -R source/build/Release-iphoneos/Nezumi2.app $PAYLOAD
+pushd $ARTIFACTS
+zip Nezumi.ipa Payload
+popd
