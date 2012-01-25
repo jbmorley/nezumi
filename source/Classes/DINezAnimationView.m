@@ -18,6 +18,7 @@
 - (UIImage *)imageForFrame:(NSUInteger)index;
 - (CGFloat) durationForFrame:(NSUInteger)index;
 - (InteractionState) state:(NSString *)state;
+- (ActionState) action:(NSString *)state;
 
 @property (nonatomic, readonly) NSArray *activeFrames;
 
@@ -31,6 +32,7 @@
 @synthesize sets = _sets;
 @synthesize activeIndex = _activeIndex;
 @synthesize interactionState = _interactionState;
+@synthesize actionState = _actionState;
 @synthesize timeState = _timeState;
 @synthesize touchStart = _touchStart;
 
@@ -39,6 +41,8 @@ static NSTimeInterval kPokeThreshold = 0.1;
 static NSString *kStateDefault  = @"default";
 static NSString *kStateStroke   = @"stroke";
 static NSString *kStatePoke     = @"poke";
+static NSString *kStateEat      = @"eat";
+static NSString *kStateNone     = @"none";
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -173,6 +177,7 @@ static NSString *kStatePoke     = @"poke";
 {
   static NSString *kTypeTransition = @"transition";
   static NSString *kTypeState      = @"state";
+  static NSString *kTypeAction     = @"action";
   static NSString *kTransitionSet  = @"set";
   static NSString *kStateTarget    = @"target";
   static NSString *kStateDay       = @"day";
@@ -187,12 +192,24 @@ static NSString *kStatePoke     = @"poke";
   NSArray *action = nil;
   
   // Check to see if there is an action for the time state.
+  // Only process the time change if there's not an action.
   switch (self.timeState) {
     case StateDay:
       action = [actions objectForKey:kStateDay];
       break;
     case StateNight:
       action = [actions objectForKey:kStateNight];
+      break;
+  }
+  
+  // Check to see if there is an explicit requested action.
+  switch (self.actionState) {
+    case StateEat:
+      action = [actions objectForKey:kStateEat];
+      break;
+    case StateNone:
+    default:
+      // Nothing to do.
       break;
   }
   
@@ -211,7 +228,7 @@ static NSString *kStatePoke     = @"poke";
         action = [actions objectForKey:kStateDefault];
       }
       break;
-  }
+  }  
   
   // If there is no specific action, then simply choose the default.
   if (action == nil) {
@@ -224,8 +241,9 @@ static NSString *kStatePoke     = @"poke";
       nextSet = [act objectForKey:kTransitionSet];
     } else if ([type isEqualToString:kTypeState]) {
       self.interactionState = [self state:[act objectForKey:kStateTarget]];
+    } else if ([type isEqualToString:kTypeAction]) {
+      self.actionState = [self action:[act objectForKey:kStateTarget]];
     }
-    
   }
 
   return nextSet;
@@ -243,5 +261,14 @@ static NSString *kStatePoke     = @"poke";
   return StateDefault;
 }
 
+- (ActionState) action:(NSString *)state
+{
+  if ([state isEqualToString:kStateNone]) {
+    return StateNone;
+  } else if ([state isEqualToString:kStateEat]) {
+    return StateEat;
+  }
+  return StateDefault;
+}
 
 @end

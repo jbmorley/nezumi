@@ -13,7 +13,11 @@
       { "type" : "transition", "set" : "mad" },
       { "type" : "state", "target" : "blink" }
     ],
-    "night"   : [ { "type" : "transition", "set" : "sleep" } ]
+    "night"   : [ { "type" : "transition", "set" : "sleep" } ],
+    "eat"     : [
+      { "type" : "transition", "set" : "eat" },
+      { "type" : "action", "target" : "none" }
+    ]
   }
 },
 "eat" : {

@@ -34,7 +34,6 @@
 
 - (IBAction) timeClicked:(id)sender
 {
-  NSLog(@"timeClicked");
   switch (self.animationView.timeState) {
     case StateDay:
       [self.timeButton setTitle:@"Day"
@@ -51,7 +50,7 @@
 
 - (IBAction) cheeseClicked:(id)sender
 {
-  NSLog(@"cheeseClicked");
+  self.animationView.actionState = StateEat;
 }
 
 /*

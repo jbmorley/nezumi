@@ -23,6 +23,13 @@ typedef enum {
   
 } TimeState;
 
+typedef enum {
+  
+  StateNone,
+  StateEat,
+  
+} ActionState;
+
 @interface DINezAnimationView : UIView {
 
 	IBOutlet UIImageView *image;	
@@ -33,6 +40,7 @@ typedef enum {
 
   InteractionState _interactionState;
   TimeState _timeState;
+  ActionState _actionState;
   
   NSDate *_touchStart;
 	
@@ -44,6 +52,7 @@ typedef enum {
 @property (nonatomic, assign) NSUInteger activeIndex;
 @property (nonatomic, assign) InteractionState interactionState;
 @property (nonatomic, assign) TimeState timeState;
+@property (nonatomic, assign) ActionState actionState;
 @property (nonatomic, retain) NSDate *touchStart;
 
 @end
