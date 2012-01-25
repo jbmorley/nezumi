@@ -59,6 +59,7 @@
 		D87E324814D0A77900E5E69F /* nez-wake17.png in Resources */ = {isa = PBXBuildFile; fileRef = D87E323614D0A77900E5E69F /* nez-wake17.png */; };
 		D87E324914D0A77900E5E69F /* nez-wake18.png in Resources */ = {isa = PBXBuildFile; fileRef = D87E323714D0A77900E5E69F /* nez-wake18.png */; };
 		D892834614D0954900B9F589 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = D892834514D0954900B9F589 /* MainView.m */; };
+		D8DB803214D0AD4A00780112 /* nez-wake.png in Resources */ = {isa = PBXBuildFile; fileRef = D8DB803114D0AD4A00780112 /* nez-wake.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +122,7 @@
 		D87E323714D0A77900E5E69F /* nez-wake18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-wake18.png"; sourceTree = "<group>"; };
 		D892834414D0954900B9F589 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		D892834514D0954900B9F589 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
+		D8DB803114D0AD4A00780112 /* nez-wake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nez-wake.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +292,7 @@
 				D87E323014D0A77900E5E69F /* nez-wake11.png */,
 				D87E323114D0A77900E5E69F /* nez-wake12.png */,
 				D87E323214D0A77900E5E69F /* nez-wake13.png */,
+				D8DB803114D0AD4A00780112 /* nez-wake.png */,
 				D87E323314D0A77900E5E69F /* nez-wake14.png */,
 				D87E323414D0A77900E5E69F /* nez-wake15.png */,
 				D87E323514D0A77900E5E69F /* nez-wake16.png */,
@@ -389,6 +392,7 @@
 				D87E324714D0A77900E5E69F /* nez-wake16.png in Resources */,
 				D87E324814D0A77900E5E69F /* nez-wake17.png in Resources */,
 				D87E324914D0A77900E5E69F /* nez-wake18.png in Resources */,
+				D8DB803214D0AD4A00780112 /* nez-wake.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
