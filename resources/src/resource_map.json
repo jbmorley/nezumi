@@ -1,0 +1,21 @@
+
+{"friendlyVersion": "VERSION",
+ "versionDefName": "VERSION",
+ "media": [
+     {
+      "type":"png",
+      "defName":"FRAME_BLINK_01",
+      "file":"images/blink-01.png"
+     },
+     {
+      "type":"png",
+      "defName":"FRAME_BLINK_02",
+      "file":"images/blink-02.png"
+     },
+     {
+      "type":"png",
+      "defName":"FRAME_BLINK_03",
+      "file":"images/blink-03.png"
+     }
+	  ]
+}
