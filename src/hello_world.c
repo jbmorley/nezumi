@@ -17,7 +17,15 @@ BmpContainer image;
 AppTimerHandle timer;
 
 int frame;
-#define MAX_FRAME 3
+
+struct animation {
+  int length;
+  int *frames;
+};
+
+int frames[3] = { RESOURCE_ID_FRAME_BLINK_01, RESOURCE_ID_FRAME_BLINK_02, RESOURCE_ID_FRAME_BLINK_03 };
+struct animation blink = { 3, frames };
+
 
 // Identifier for the timer.
 #define ANIMATION_TIMER 1
@@ -30,6 +38,9 @@ void draw_bitmap(int resource_id, GContext* context) {
   bmp_init_container(resource_id, &image);
 
   // Draw the bitmap in the layer.
+  // We make sure the dimensions of the GRect to draw into
+  // are equal to the size of the bitmap--otherwise the image
+  // will automatically tile. Which might be what *you* want.
   GRect destination = layer_get_frame(&image.layer.layer);
   destination.origin.y = 5;
   destination.origin.x = 5;
@@ -40,24 +51,8 @@ void draw_bitmap(int resource_id, GContext* context) {
 }
 
 void layer_update_callback(Layer *me, GContext* ctx) {
-
-  // We make sure the dimensions of the GRect to draw into
-  // are equal to the size of the bitmap--otherwise the image
-  // will automatically tile. Which might be what *you* want.
-
-  frame = (frame + 1) % MAX_FRAME;
-  switch (frame) {
-    case 0:
-      draw_bitmap(RESOURCE_ID_FRAME_BLINK_01, ctx);
-      break;
-    case 1:
-      draw_bitmap(RESOURCE_ID_FRAME_BLINK_02, ctx);
-      break;
-    case 2:
-      draw_bitmap(RESOURCE_ID_FRAME_BLINK_03, ctx);
-      break;
-  }
-
+  frame = (frame + 1) % blink.length;
+  draw_bitmap(blink.frames[frame], ctx);
 }
 
 void handle_timer(AppContextRef ctx, AppTimerHandle handle, uint32_t cookie) {
