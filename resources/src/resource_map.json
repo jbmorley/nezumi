@@ -1,21 +1,206 @@
-
-{"friendlyVersion": "VERSION",
- "versionDefName": "VERSION",
- "media": [
-     {
-      "type":"png",
-      "defName":"FRAME_BLINK_01",
-      "file":"images/blink-01.png"
-     },
-     {
-      "type":"png",
-      "defName":"FRAME_BLINK_02",
-      "file":"images/blink-02.png"
-     },
-     {
-      "type":"png",
-      "defName":"FRAME_BLINK_03",
-      "file":"images/blink-03.png"
-     }
-	  ]
+{
+    "media": [
+        {
+            "defName": "FRAME_WAKE_16", 
+            "type": "png", 
+            "file": "images/wake-16.png"
+        }, 
+        {
+            "defName": "FRAME_PET_02", 
+            "type": "png", 
+            "file": "images/pet-02.png"
+        }, 
+        {
+            "defName": "FRAME_PET_03", 
+            "type": "png", 
+            "file": "images/pet-03.png"
+        }, 
+        {
+            "defName": "FRAME_SLEEP_04", 
+            "type": "png", 
+            "file": "images/sleep-04.png"
+        }, 
+        {
+            "defName": "FRAME_SLEEP_05", 
+            "type": "png", 
+            "file": "images/sleep-05.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_13", 
+            "type": "png", 
+            "file": "images/wake-13.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_14", 
+            "type": "png", 
+            "file": "images/wake-14.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_17", 
+            "type": "png", 
+            "file": "images/wake-17.png"
+        }, 
+        {
+            "defName": "FRAME_BLINK_02", 
+            "type": "png", 
+            "file": "images/blink-02.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_11", 
+            "type": "png", 
+            "file": "images/wake-11.png"
+        }, 
+        {
+            "defName": "FRAME_PET_05", 
+            "type": "png", 
+            "file": "images/pet-05.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_06", 
+            "type": "png", 
+            "file": "images/wake-06.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_10", 
+            "type": "png", 
+            "file": "images/wake-10.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_12", 
+            "type": "png", 
+            "file": "images/wake-12.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_02", 
+            "type": "png", 
+            "file": "images/wake-02.png"
+        }, 
+        {
+            "defName": "FRAME_PET_01", 
+            "type": "png", 
+            "file": "images/pet-01.png"
+        }, 
+        {
+            "defName": "FRAME_SLEEP_02", 
+            "type": "png", 
+            "file": "images/sleep-02.png"
+        }, 
+        {
+            "defName": "FRAME_MAD_02", 
+            "type": "png", 
+            "file": "images/mad-02.png"
+        }, 
+        {
+            "defName": "FRAME_SLEEP_07", 
+            "type": "png", 
+            "file": "images/sleep-07.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_04", 
+            "type": "png", 
+            "file": "images/wake-04.png"
+        }, 
+        {
+            "defName": "FRAME_BLINK_01", 
+            "type": "png", 
+            "file": "images/blink-01.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_03", 
+            "type": "png", 
+            "file": "images/wake-03.png"
+        }, 
+        {
+            "defName": "FRAME_BLINK_03", 
+            "type": "png", 
+            "file": "images/blink-03.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_01", 
+            "type": "png", 
+            "file": "images/wake-01.png"
+        }, 
+        {
+            "defName": "FRAME_MAD_03", 
+            "type": "png", 
+            "file": "images/mad-03.png"
+        }, 
+        {
+            "defName": "FRAME_MAD_01", 
+            "type": "png", 
+            "file": "images/mad-01.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_08", 
+            "type": "png", 
+            "file": "images/wake-08.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_09", 
+            "type": "png", 
+            "file": "images/wake-09.png"
+        }, 
+        {
+            "defName": "FRAME_SLEEP_01", 
+            "type": "png", 
+            "file": "images/sleep-01.png"
+        }, 
+        {
+            "defName": "FRAME_YAWN_01", 
+            "type": "png", 
+            "file": "images/yawn-01.png"
+        }, 
+        {
+            "defName": "FRAME_SLEEP_06", 
+            "type": "png", 
+            "file": "images/sleep-06.png"
+        }, 
+        {
+            "defName": "FRAME_PET_04", 
+            "type": "png", 
+            "file": "images/pet-04.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_07", 
+            "type": "png", 
+            "file": "images/wake-07.png"
+        }, 
+        {
+            "defName": "FRAME_EAT_01", 
+            "type": "png", 
+            "file": "images/eat-01.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_05", 
+            "type": "png", 
+            "file": "images/wake-05.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_15", 
+            "type": "png", 
+            "file": "images/wake-15.png"
+        }, 
+        {
+            "defName": "FRAME_SLEEP_03", 
+            "type": "png", 
+            "file": "images/sleep-03.png"
+        }, 
+        {
+            "defName": "FRAME_WAKE_18", 
+            "type": "png", 
+            "file": "images/wake-18.png"
+        }, 
+        {
+            "defName": "FRAME_MAD_05", 
+            "type": "png", 
+            "file": "images/mad-05.png"
+        }, 
+        {
+            "defName": "FRAME_MAD_04", 
+            "type": "png", 
+            "file": "images/mad-04.png"
+        }
+    ], 
+    "friendlyVersion": "VERSION", 
+    "versionDefName": "VERSION"
 }
