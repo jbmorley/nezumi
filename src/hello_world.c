@@ -1,7 +1,7 @@
 #include "pebble_os.h"
 #include "pebble_app.h"
 #include "pebble_fonts.h"
-
+#include "animation.h"
 
 #define MY_UUID { 0x5C, 0x91, 0x99, 0xF8, 0xC3, 0x77, 0x46, 0x86, 0xBD, 0x63, 0x83, 0x2D, 0xC8, 0x07, 0x14, 0xC9 }
 PBL_APP_INFO(MY_UUID,
@@ -17,14 +17,6 @@ BmpContainer image;
 AppTimerHandle timer;
 
 int frame;
-
-struct animation {
-  int length;
-  int *frames;
-};
-
-int frames[3] = { RESOURCE_ID_FRAME_BLINK_01, RESOURCE_ID_FRAME_BLINK_02, RESOURCE_ID_FRAME_BLINK_03 };
-struct animation blink = { 3, frames };
 
 
 // Identifier for the timer.
@@ -51,14 +43,14 @@ void draw_bitmap(int resource_id, GContext* context) {
 }
 
 void layer_update_callback(Layer *me, GContext* ctx) {
-  frame = (frame + 1) % blink.length;
-  draw_bitmap(blink.frames[frame], ctx);
+  draw_bitmap(resource_blink.frames[frame], ctx);
+  frame = (frame + 1) % resource_blink.length;
 }
 
 void handle_timer(AppContextRef ctx, AppTimerHandle handle, uint32_t cookie) {
   if (cookie == ANIMATION_TIMER) {
     layer_mark_dirty(&layer);
-    timer = app_timer_send_event(ctx, 500, ANIMATION_TIMER);
+    timer = app_timer_send_event(ctx, resource_blink.durations[frame], ANIMATION_TIMER);
   }
 
 }
