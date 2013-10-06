@@ -8,11 +8,19 @@ PBL_APP_INFO(MY_UUID,
              "Nezumi", "InSeven Limited",
              1, 0, /* App version */
              DEFAULT_MENU_ICON,
-             APP_INFO_WATCH_FACE);
+             APP_INFO_STANDARD_APP);
 
 Window window;
 Layer layer;
 BmpContainer image;
+
+AppTimerHandle timer;
+
+int frame;
+#define MAX_FRAME 3
+
+// Identifier for the timer.
+#define ANIMATION_TIMER 1
 
 void draw_bitmap(int resource_id, GContext* context) {
   // This appears to be the way we load an image resource, using the BmpContainer to
@@ -37,7 +45,27 @@ void layer_update_callback(Layer *me, GContext* ctx) {
   // are equal to the size of the bitmap--otherwise the image
   // will automatically tile. Which might be what *you* want.
 
-  draw_bitmap(RESOURCE_ID_FRAME_BLINK_01, ctx);
+  frame = (frame + 1) % MAX_FRAME;
+  switch (frame) {
+    case 0:
+      draw_bitmap(RESOURCE_ID_FRAME_BLINK_01, ctx);
+      break;
+    case 1:
+      draw_bitmap(RESOURCE_ID_FRAME_BLINK_02, ctx);
+      break;
+    case 2:
+      draw_bitmap(RESOURCE_ID_FRAME_BLINK_03, ctx);
+      break;
+  }
+
+}
+
+void handle_timer(AppContextRef ctx, AppTimerHandle handle, uint32_t cookie) {
+  if (cookie == ANIMATION_TIMER) {
+    layer_mark_dirty(&layer);
+    timer = app_timer_send_event(ctx, 500, ANIMATION_TIMER);
+  }
+
 }
 
 void handle_init(AppContextRef ctx) {
@@ -51,6 +79,9 @@ void handle_init(AppContextRef ctx) {
 
   // Load the resources
   resource_init_current_app(&VERSION);
+
+  // Initialize the timer.
+  timer = app_timer_send_event(ctx, 500, ANIMATION_TIMER);
 }
 
 
@@ -63,8 +94,12 @@ void handle_deinit(AppContextRef ctx) {
 void pbl_main(void *params) {
   PebbleAppHandlers handlers = {
     .init_handler = &handle_init,
-    .deinit_handler = &handle_deinit
+    .deinit_handler = &handle_deinit,
+    .timer_handler = &handle_timer
   };
+
+  frame = 0;
+
   app_event_loop(params, &handlers);
 }
 
