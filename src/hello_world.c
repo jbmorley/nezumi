@@ -43,14 +43,14 @@ void draw_bitmap(int resource_id, GContext* context) {
 }
 
 void layer_update_callback(Layer *me, GContext* ctx) {
-  draw_bitmap(resource_blink.frames[frame], ctx);
-  frame = (frame + 1) % resource_blink.length;
+  draw_bitmap(resource_state_blink.frames[frame], ctx);
+  frame = (frame + 1) % resource_state_blink.length;
 }
 
 void handle_timer(AppContextRef ctx, AppTimerHandle handle, uint32_t cookie) {
   if (cookie == ANIMATION_TIMER) {
     layer_mark_dirty(&layer);
-    timer = app_timer_send_event(ctx, resource_blink.durations[frame], ANIMATION_TIMER);
+    timer = app_timer_send_event(ctx, resource_state_blink.durations[frame], ANIMATION_TIMER);
   }
 
 }

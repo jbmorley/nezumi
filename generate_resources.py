@@ -13,6 +13,10 @@ def generate_state(key):
 def generate_frame(file):
   return "FRAME_%s" % os.path.basename(file).replace('.png', '').replace('-', '_').upper()
 
+def generate_resource(key):
+  return "resource_state_%s" % key.replace('-', '_')
+
+
 def main():
   parser = argparse.ArgumentParser(description = "Generate resource and state machine structs for a JSON animation description.")
   parser.add_argument('description', help = 'Animation description file to process')
@@ -24,7 +28,6 @@ def main():
   resource_root = os.path.dirname(resource_map)
   description_root = os.path.dirname(options.description)
   source_root = os.path.join(project, SOURCE_ROOT)
-  print resource_map
 
   # Read the description file.
   description = json.load(open(options.description))
@@ -83,6 +86,11 @@ struct animation {
   int *durations;
 };
 
+struct states {
+  int length;
+  struct animation **states;
+};
+
 """)
 
     for key, value in description.iteritems():
@@ -90,7 +98,7 @@ struct animation {
       durations = []
       name_frames = "resource_frames_%s" % key.replace('-', '_')
       name_durations = "resource_durations_%s" % key.replace('-', '_')
-      name = "resource_%s" % key.replace('-', '_')
+      name = generate_resource(key)
       for item in value['frames']:
         file = item['file'] # Path to file.
         id = "RESOURCE_ID_%s" % generate_frame(file)
@@ -101,6 +109,13 @@ struct animation {
       f.write("int %s[%d] = { %s };\n" % (name_durations, len(durations), ", ".join(durations)))
       f.write("struct animation %s = { %d, %s, %s };\n" % (name, len(frames), name_frames, name_durations))
       f.write("\n")
+
+    resource_structs = []
+    for key, value in description.iteritems():
+      resource_structs.append("&%s" % generate_resource(key))
+    
+    f.write("struct animation *%s[%d] = { %s };\n" % ("resource_states", len(resource_structs), ", ".join(resource_structs)))
+    f.write("struct states resources = { %d, %s };\n" % (len(resource_structs), "resource_states"))
 
 
   #print json.dumps(resources)
