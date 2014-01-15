@@ -1,10 +1,10 @@
 {
 "blink" : {
   "frames" : [
-    { "file" : "../resources/src/images/blink-01.png", "duration" : 1.0  },
-    { "file" : "../resources/src/images/blink-02.png", "duration" : 0.15 },
-    { "file" : "../resources/src/images/blink-03.png", "duration" : 0.15 },
-    { "file" : "../resources/src/images/blink-02.png", "duration" : 0.15 }
+    { "file" : "../resources/images/blink-01.png", "duration" : 1.0  },
+    { "file" : "../resources/images/blink-02.png", "duration" : 0.15 },
+    { "file" : "../resources/images/blink-03.png", "duration" : 0.15 },
+    { "file" : "../resources/images/blink-02.png", "duration" : 0.15 }
   ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "blink"     } ],
@@ -22,7 +22,7 @@
 },
 "eat" : {
   "frames" : [
-    { "file" : "../resources/src/images/eat-01.png", "duration" : 2.0 }
+    { "file" : "../resources/images/eat-01.png", "duration" : 2.0 }
   ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "blink" } ]
@@ -30,13 +30,13 @@
 },
 "sleep" : {
   "frames" : [
-    { "file" : "../resources/src/images/sleep-01.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/sleep-02.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/sleep-03.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/sleep-04.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/sleep-05.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/sleep-06.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/sleep-07.png", "duration" : 0.25 }
+    { "file" : "../resources/images/sleep-01.png", "duration" : 0.25 },
+    { "file" : "../resources/images/sleep-02.png", "duration" : 0.25 },
+    { "file" : "../resources/images/sleep-03.png", "duration" : 0.25 },
+    { "file" : "../resources/images/sleep-04.png", "duration" : 0.25 },
+    { "file" : "../resources/images/sleep-05.png", "duration" : 0.25 },
+    { "file" : "../resources/images/sleep-06.png", "duration" : 0.25 },
+    { "file" : "../resources/images/sleep-07.png", "duration" : 0.25 }
   ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "sleep" } ],
@@ -45,26 +45,26 @@
 },
 "wake" : {
   "frames" : [
-    { "file" : "../resources/src/images/wake-01.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-02.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-03.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-04.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-05.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-06.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-07.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-08.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-09.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-10.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-11.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-12.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-13.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/yawn-01.png", "duration" : 0.5  },
-    { "file" : "../resources/src/images/wake-13.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-14.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-15.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-16.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-17.png", "duration" : 0.25 },
-    { "file" : "../resources/src/images/wake-18.png", "duration" : 0.25 }
+    { "file" : "../resources/images/wake-01.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-02.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-03.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-04.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-05.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-06.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-07.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-08.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-09.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-10.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-11.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-12.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-13.png", "duration" : 0.25 },
+    { "file" : "../resources/images/yawn-01.png", "duration" : 0.5  },
+    { "file" : "../resources/images/wake-13.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-14.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-15.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-16.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-17.png", "duration" : 0.25 },
+    { "file" : "../resources/images/wake-18.png", "duration" : 0.25 }
   ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "blink" } ]
@@ -72,15 +72,15 @@
 },
 "mad" : {
   "frames" : [
-    { "file" : "../resources/src/images/mad-01.png", "duration" : 0.25  },
-    { "file" : "../resources/src/images/mad-02.png", "duration" : 0.25  },
-    { "file" : "../resources/src/images/mad-03.png", "duration" : 0.25  },
-    { "file" : "../resources/src/images/mad-04.png", "duration" : 0.25  },
-    { "file" : "../resources/src/images/mad-05.png", "duration" : 0.25  },
-    { "file" : "../resources/src/images/mad-04.png", "duration" : 0.25  },
-    { "file" : "../resources/src/images/mad-03.png", "duration" : 0.25  },
-    { "file" : "../resources/src/images/mad-02.png", "duration" : 0.25  },
-    { "file" : "../resources/src/images/mad-01.png", "duration" : 0.25  }
+    { "file" : "../resources/images/mad-01.png", "duration" : 0.25  },
+    { "file" : "../resources/images/mad-02.png", "duration" : 0.25  },
+    { "file" : "../resources/images/mad-03.png", "duration" : 0.25  },
+    { "file" : "../resources/images/mad-04.png", "duration" : 0.25  },
+    { "file" : "../resources/images/mad-05.png", "duration" : 0.25  },
+    { "file" : "../resources/images/mad-04.png", "duration" : 0.25  },
+    { "file" : "../resources/images/mad-03.png", "duration" : 0.25  },
+    { "file" : "../resources/images/mad-02.png", "duration" : 0.25  },
+    { "file" : "../resources/images/mad-01.png", "duration" : 0.25  }
   ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "blink" } ]
@@ -89,8 +89,8 @@
 "pet-start" : {
     "name" : "pet-start",
     "frames" : [
-        { "file" : "../resources/src/images/pet-01.png", "duration" : 0.15 },
-        { "file" : "../resources/src/images/pet-02.png", "duration" : 0.15 }
+        { "file" : "../resources/images/pet-01.png", "duration" : 0.15 },
+        { "file" : "../resources/images/pet-02.png", "duration" : 0.15 }
     ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "pet-end" } ],
@@ -99,11 +99,11 @@
 },
 "pet" : {
     "frames" : [
-        { "file" : "../resources/src/images/pet-03.png", "duration" : 0.15 },
-        { "file" : "../resources/src/images/pet-04.png", "duration" : 0.15 },
-        { "file" : "../resources/src/images/pet-05.png", "duration" : 0.15 },
-        { "file" : "../resources/src/images/pet-04.png", "duration" : 0.15 },
-        { "file" : "../resources/src/images/pet-03.png", "duration" : 0.15 }
+        { "file" : "../resources/images/pet-03.png", "duration" : 0.15 },
+        { "file" : "../resources/images/pet-04.png", "duration" : 0.15 },
+        { "file" : "../resources/images/pet-05.png", "duration" : 0.15 },
+        { "file" : "../resources/images/pet-04.png", "duration" : 0.15 },
+        { "file" : "../resources/images/pet-03.png", "duration" : 0.15 }
     ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "pet-end" } ],
@@ -113,8 +113,8 @@
 "pet-end" : {
     "name" : "pet-end",
     "frames" : [
-        { "file" : "../resources/src/images/pet-02.png", "duration" : 0.15 },
-        { "file" : "../resources/src/images/pet-01.png", "duration" : 0.15 }
+        { "file" : "../resources/images/pet-02.png", "duration" : 0.15 },
+        { "file" : "../resources/images/pet-01.png", "duration" : 0.15 }
     ],
   "actions" : {
     "default" : [ { "type" : "transition", "set" : "blink"     } ],
