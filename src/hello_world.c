@@ -1,93 +1,82 @@
-#include "pebble_os.h"
-#include "pebble_app.h"
-#include "pebble_fonts.h"
+#include <pebble.h>
 #include "animation.h"
 
-#define MY_UUID { 0x5C, 0x91, 0x99, 0xF8, 0xC3, 0x77, 0x46, 0x86, 0xBD, 0x63, 0x83, 0x2D, 0xC8, 0x07, 0x14, 0xC9 }
-PBL_APP_INFO(MY_UUID,
-             "Nezumi", "InSeven Limited",
-             1, 0, /* App version */
-             DEFAULT_MENU_ICON,
-             APP_INFO_STANDARD_APP);
+// Screen furniture.
+Window *window;
+Layer *layer;
 
-Window window;
-Layer layer;
-BmpContainer image;
+// Animation timer.
+AppTimer *timer;
 
-AppTimerHandle timer;
-
+// Current animation frame.
 int frame;
 
 
 // Identifier for the timer.
 #define ANIMATION_TIMER 1
 
+// Draw a bitmap by resource id.
+// TODO It would be good to include this as a separate header file
+// and source file to avoid code bloat.
 void draw_bitmap(int resource_id, GContext* context) {
-  // This appears to be the way we load an image resource, using the BmpContainer to
-  // manage the memory for us.
-  // TODO Consider whether we should be using a HeapBitmap here. It looks like this
-  // might be the 'better' solution.
-  bmp_init_container(resource_id, &image);
+
+  // Load the bitmap from the resources.
+  GBitmap *bitmap = gbitmap_create_with_resource(resource_id);
 
   // Draw the bitmap in the layer.
-  // We make sure the dimensions of the GRect to draw into
-  // are equal to the size of the bitmap--otherwise the image
-  // will automatically tile. Which might be what *you* want.
-  GRect destination = layer_get_frame(&image.layer.layer);
-  destination.origin.y = 5;
-  destination.origin.x = 5;
-  graphics_draw_bitmap_in_rect(context, &image.bmp, destination);
+  graphics_draw_bitmap_in_rect(context, bitmap, GRect(0, 0, 100, 100));
 
-  bmp_deinit_container(&image);
+  // Destroy the bitmap.
+  gbitmap_destroy(bitmap);
 
 }
 
-void layer_update_callback(Layer *me, GContext* ctx) {
-  draw_bitmap(resource_state_blink.frames[frame], ctx);
+// Render the animation frame.
+void layer_update_callback(Layer *me, GContext* context) {
+
+  draw_bitmap(resource_state_blink.frames[frame], context);
   frame = (frame + 1) % resource_state_blink.length;
-}
-
-void handle_timer(AppContextRef ctx, AppTimerHandle handle, uint32_t cookie) {
-  if (cookie == ANIMATION_TIMER) {
-    layer_mark_dirty(&layer);
-    timer = app_timer_send_event(ctx, resource_state_blink.durations[frame], ANIMATION_TIMER);
-  }
 
 }
 
-void handle_init(AppContextRef ctx) {
-  window_init(&window, "Window Name");
-  window_stack_push(&window, true /* Animated */);
+void timer_callback(void *callback_data) {
 
-  // Init the layer for the minute display
-  layer_init(&layer, window.layer.frame);
-  layer.update_proc = &layer_update_callback;
-  layer_add_child(&window.layer, &layer);
+  layer_mark_dirty(layer);
+  timer = app_timer_register(resource_state_blink.durations[frame], &timer_callback, NULL);
 
-  // Load the resources
-  resource_init_current_app(&VERSION);
+}
+
+
+void handle_init() {
+
+  window = window_create();
+
+  // Present the window (animated)
+  window_stack_push(window, true);
+
+  // Init the layer for the main animation.
+  // It looks like we may be able to do this with a BitmapLayer but the documentation
+  // claims that it does the same thing under the hood anyhow.
+  layer = layer_create(layer_get_frame(window_get_root_layer(window)));
+  layer_set_update_proc(layer, &layer_update_callback);
+  layer_add_child(window_get_root_layer(window), layer);
 
   // Initialize the timer.
-  timer = app_timer_send_event(ctx, 500, ANIMATION_TIMER);
+  timer = app_timer_register(500, &timer_callback, NULL);
 }
 
 
-void handle_deinit(AppContextRef ctx) {
+void handle_deinit() {
   // TODO Consider whether we need to deinit anything in here.
   // bmp_deinit_container(&container);
+  layer_destroy(layer);
+  window_destroy(window);
 }
 
-
-void pbl_main(void *params) {
-  PebbleAppHandlers handlers = {
-    .init_handler = &handle_init,
-    .deinit_handler = &handle_deinit,
-    .timer_handler = &handle_timer
-  };
-
-  frame = 0;
-
-  app_event_loop(params, &handlers);
+int main() {
+  handle_init();
+  app_event_loop();
+  handle_deinit();
 }
 
 
