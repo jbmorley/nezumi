@@ -1,0 +1,216 @@
+{
+  "uuid": "5c9199f8-c377-4686-bd63-832dc80714c9",
+  "shortName": "Nezumi",
+  "longName": "Nezumi",
+  "companyName": "InSeven Limited",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {},
+  "resources": {
+    "media": [
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_16",
+        "file": "images/wake-16.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_PET_02",
+        "file": "images/pet-02.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_PET_03",
+        "file": "images/pet-03.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_SLEEP_04",
+        "file": "images/sleep-04.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_SLEEP_05",
+        "file": "images/sleep-05.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_13",
+        "file": "images/wake-13.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_14",
+        "file": "images/wake-14.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_17",
+        "file": "images/wake-17.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_BLINK_02",
+        "file": "images/blink-02.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_11",
+        "file": "images/wake-11.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_PET_05",
+        "file": "images/pet-05.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_06",
+        "file": "images/wake-06.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_10",
+        "file": "images/wake-10.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_12",
+        "file": "images/wake-12.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_02",
+        "file": "images/wake-02.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_PET_01",
+        "file": "images/pet-01.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_SLEEP_02",
+        "file": "images/sleep-02.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_MAD_02",
+        "file": "images/mad-02.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_SLEEP_07",
+        "file": "images/sleep-07.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_04",
+        "file": "images/wake-04.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_BLINK_01",
+        "file": "images/blink-01.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_03",
+        "file": "images/wake-03.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_BLINK_03",
+        "file": "images/blink-03.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_01",
+        "file": "images/wake-01.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_MAD_03",
+        "file": "images/mad-03.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_MAD_01",
+        "file": "images/mad-01.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_08",
+        "file": "images/wake-08.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_09",
+        "file": "images/wake-09.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_SLEEP_01",
+        "file": "images/sleep-01.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_YAWN_01",
+        "file": "images/yawn-01.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_SLEEP_06",
+        "file": "images/sleep-06.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_PET_04",
+        "file": "images/pet-04.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_07",
+        "file": "images/wake-07.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_EAT_01",
+        "file": "images/eat-01.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_05",
+        "file": "images/wake-05.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_15",
+        "file": "images/wake-15.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_SLEEP_03",
+        "file": "images/sleep-03.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_WAKE_18",
+        "file": "images/wake-18.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_MAD_05",
+        "file": "images/mad-05.png"
+      },
+      {
+        "type": "png",
+        "name": "FRAME_MAD_04",
+        "file": "images/mad-04.png"
+      }
+    ]
+  }
+}
