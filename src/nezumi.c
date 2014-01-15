@@ -23,8 +23,13 @@ void draw_bitmap(int resource_id, GContext* context) {
   // Load the bitmap from the resources.
   GBitmap *bitmap = gbitmap_create_with_resource(resource_id);
 
+  // Center the bitmap.
+  GRect target = layer_get_frame(layer);
+  GRect rect = GRect(0, 0, 90, 90);
+  grect_align(&rect, &target, GAlignCenter, false);
+
   // Draw the bitmap in the layer.
-  graphics_draw_bitmap_in_rect(context, bitmap, GRect(0, 0, 100, 100));
+  graphics_draw_bitmap_in_rect(context, bitmap, rect);
 
   // Destroy the bitmap.
   gbitmap_destroy(bitmap);
