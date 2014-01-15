@@ -1,0 +1,13 @@
+{
+  "uuid": "5c9199f8-c377-4686-bd63-832dc80714c9",
+  "shortName": "Nezumi",
+  "longName": "Nezumi",
+  "companyName": "InSeven Limited",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {},
+  "resources": {}
+}

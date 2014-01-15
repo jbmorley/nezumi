@@ -4,7 +4,7 @@ import argparse
 import json
 import os.path
 
-RESOURCE_MAP = 'resources/src/resource_map.json'
+RESOURCE_MAP = 'appinfo.json'
 SOURCE_ROOT = 'src'
 
 def generate_state(key):
@@ -20,17 +20,21 @@ def generate_resource(key):
 def main():
   parser = argparse.ArgumentParser(description = "Generate resource and state machine structs for a JSON animation description.")
   parser.add_argument('description', help = 'Animation description file to process')
+  parser.add_argument('template', help = 'Template appinfo.json')
   parser.add_argument('project', help = 'Path to the project')
   options = parser.parse_args()
 
   project = os.path.abspath(options.project)
   resource_map = os.path.join(project, RESOURCE_MAP)
-  resource_root = os.path.dirname(resource_map)
+  resource_root = os.path.join(project, 'resources')
   description_root = os.path.dirname(options.description)
   source_root = os.path.join(project, SOURCE_ROOT)
 
   # Read the description file.
   description = json.load(open(options.description))
+
+  # Read the template.
+  template = json.load(open(options.template));
 
   # Generate the state keys.
   states = []
@@ -49,7 +53,7 @@ def main():
   for file in set(files_list):
 
     # Check the file exists.
-    abs_resource_path = os.path.abspath(os.path.join(description_root, file))
+    abs_resource_path = os.path.abspath(os.path.join(resource_root, file))
     rel_resource_path = os.path.relpath(abs_resource_path, resource_root)
 
     if not os.path.exists(abs_resource_path):
@@ -58,17 +62,17 @@ def main():
 
     media.append({
       "type": "png",
-      "defName": generate_frame(file),
+      "name": generate_frame(file),
       "file": rel_resource_path})
 
-  resources = {
-    'friendlyVersion': 'VERSION',
-    'versionDefName': 'VERSION',
-    'media': media}
+  resources = {'media': media}
+
+  # Write the contents into the template.
+  template['resources'] = resources
 
   # Write the resource_map.
   with open(resource_map, 'w') as f:
-    json.dump(resources, f, indent = 4) 
+    json.dump(template, f, indent = 2)
 
   # Write out the animation header.
   with open(os.path.join(source_root, 'animation.h'), 'w') as f:
@@ -116,31 +120,6 @@ struct states {
     
     f.write("struct animation *%s[%d] = { %s };\n" % ("resource_states", len(resource_structs), ", ".join(resource_structs)))
     f.write("struct states resources = { %d, %s };\n" % (len(resource_structs), "resource_states"))
-
-
-  #print json.dumps(resources)
-
-# {"friendlyVersion": "VERSION",
-#  "versionDefName": "VERSION",
-#  "media": [
-#      {
-#       "type":"png",
-#       "defName":"FRAME_BLINK_01",
-#       "file":"images/blink-01.png"
-#      },
-#      {
-#       "type":"png",
-#       "defName":"FRAME_BLINK_02",
-#       "file":"images/blink-02.png"
-#      },
-#      {
-#       "type":"png",
-#       "defName":"FRAME_BLINK_03",
-#       "file":"images/blink-03.png"
-#      }
-#     ]
-# }
-
 
 
 if __name__ == '__main__':
