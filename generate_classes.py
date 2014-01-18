@@ -110,7 +110,7 @@ class Array():
 
     items_name = '%s_items' % self.name
 
-    instance = str(Instance(self.types, self.name, { 'type': self.type(), 'items': items_name, 'length': len(self.items) }))
+    instance = str(Instance(self.types, self.name, { '__type__': self.type(), 'items': items_name, 'length': len(self.items) }))
     items = "\n".join(map(lambda x: str(x), self.items))
     names = ", ".join(map(lambda x: x.name, self.items))
     array = "%s %s[%d] = { %s }" % (self.item_type(), items_name, len(self.items), names)
@@ -138,9 +138,9 @@ class Instance():
     self.types = types
     self.name = name
     self.structure = structure
-    self.t = self.structure['type']
+    self.t = self.structure['__type__']
 
-    self.structure.pop('type', None)
+    self.structure.pop('__type__', None)
 
     # Instantiate our sub-structures.
     self.fields = {}
@@ -153,8 +153,6 @@ class Instance():
     return self.t
 
   def __repr__(self):
-
-    # TODO Instantiate our sub-structures?
     fields = "\n".join(map(lambda x: str(self.fields[x.name]), self.types.type(self.type()).fields))
     field_names = ", ".join(map(lambda x: str(self.fields[x.name].name), self.types.type(self.type()).fields))
     struct = "struct %s %s = { %s }" % ( self.type(), self.name, field_names )
