@@ -1,12 +1,14 @@
 {
-  "set": {
-    "__type__": "AnimationSet",
-    "frames": [
-      { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_01", "duration": 1.00 },
-      { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_02", "duration": 0.15 },
-      { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_03", "duration": 0.15 },
-      { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_02", "duration": 0.15 }
-    ],
-    "actions": [ { "__type__": "Action", "button": "1" } ]
-  }
+  "sets": [
+    {
+      "__type__": "AnimationSet",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_01", "duration": 1.00 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_02", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_03", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_02", "duration": 0.15 }
+      ],
+      "actions": [ { "__type__": "Action", "button": "1" } ]
+    }
+  ]
 }

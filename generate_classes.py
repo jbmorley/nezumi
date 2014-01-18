@@ -39,8 +39,7 @@ class Type:
       # This magically works because the type will be added before we have
       # been created, ensuring that it is defined in advance of ourselves.
       if (type.find("__array__") == 0):
-        if not self.types.defined(type):
-          self.types.add(Type(self.types, { "__name__": type, "length": "int", "items": "struct %s **" % type[9:] }))
+        create_array(self.types, type)
 
       t = TypeField(self.types, name, type)
       self.fields.append(t)
@@ -94,6 +93,8 @@ class Array():
       self.items.append(create_instance(self.types, "%s_item_%d" % (self.name, index), item))
 
     self.type = "__array__%s" % self.item_type()
+
+    create_array(self.types, self.type)
 
 
   def item_type(self):
@@ -179,6 +180,11 @@ def create_instance(types, name, structure, type = None):
     return Array(types, name, structure)
   else:
     return Property(types, name, structure, type)
+
+def create_array(types, type):
+  if not types.defined(type):
+    types.add(Type(types, { "__name__": type, "length": "int", "items": "struct %s **" % type[9:] }))
+
 
 class Data:
 
