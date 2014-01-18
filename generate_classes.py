@@ -3,7 +3,7 @@
 import json
 import argparse
 
-class Type():
+class TypeField:
 
   def __init__(self, types, name, type):
     self.types = types
@@ -14,22 +14,27 @@ class Type():
 
     # Check to see if we are a special kind of type (aka a struct defined
     # within our types.
-    if self.type in self.types:
+    if self.types.defined(self.type):
       return "struct %s %s" % (self.type, self.name)
     else:
       return "%s %s" % (self.type, self.name)
 
 
-class Class():
+class Type:
 
-  def __init__(self, types, name, dictionary):
+  def __init__(self, types, structure):
     self.types = types
-    self.name = name
+    self.structure = structure
+    self.name = self.structure["__name__"]
     self.fields = []
     self.lookup = {}
 
-    for name, type in dictionary.iteritems():
-      t = Type(self.types, name, type)
+    # Remove the name from the dictionary.
+    self.structure.pop('__name__', None)
+
+    # Iterate over the types generating the fields.
+    for name, type in self.structure.iteritems():
+      t = TypeField(self.types, name, type)
       self.fields.append(t)
       self.lookup[name] = t
 
@@ -38,6 +43,34 @@ class Class():
 
   def __repr__(self):
     return "struct %s {\n  %s;\n};\n" % (self.name, ";\n  ".join(map(lambda x: str(x), self.fields)));
+
+
+class Types:
+
+  def __init__(self, structure):
+    self.structure = structure
+    self.items = []
+    self.lookup = {}
+
+    for item in self.structure:
+      self.add(Type(self, item))
+
+  def add(self, type):
+    if not type.name in self.lookup:
+      self.items.append(type)
+      self.lookup[type.name] = type
+
+  def names(self):
+    return ['bob']
+
+  def type(self, name):
+    return self.lookup[name]
+
+  def defined(self, name):
+    return name in self.lookup
+
+  def __repr__(self):
+    return "\n".join(map(lambda x: str(x), self.items))
 
 
 class Array():
@@ -147,6 +180,11 @@ def main():
   classes = json.load(open(options.classes))
   structure = json.load(open(options.structure))
   
+  # Create the types.
+  types = Types(json.load(open(options.classes)))
+  print types
+  exit()
+
   # Create the types.
   types = {}
   for name, c in classes.iteritems():
