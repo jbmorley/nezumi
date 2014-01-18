@@ -39,16 +39,15 @@ void draw_bitmap(int resource_id, GContext* context) {
 // Render the animation frame.
 void layer_update_callback(Layer *me, GContext* context) {
 
-  draw_bitmap(*(set.frames->items[frame]->resource), context);
-  frame = (frame + 1) % *(set.frames->length);
+  draw_bitmap(set.frames->items[frame]->resource, context);
+  frame = (frame + 1) % set.frames->length;
 
 }
 
 void timer_callback(void *callback_data) {
 
   layer_mark_dirty(layer);
-  // timer = app_timer_register(resource_state_blink.durations[frame], &timer_callback, NULL);
-  timer = app_timer_register(*(set.frames->items[frame]->duration) * 1000, &timer_callback, NULL);
+  timer = app_timer_register(set.frames->items[frame]->duration * 1000, &timer_callback, NULL);
 
 }
 
