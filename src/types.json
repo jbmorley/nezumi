@@ -1,0 +1,13 @@
+{
+  "Frame": {
+    "resource": "int",
+    "duration": "float"
+  },
+  "Action": {
+    "button": "int"
+  },
+  "AnimationSet": {
+    "frame": "Frame",
+    "action": "Action"
+  }
+}
