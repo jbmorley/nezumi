@@ -15,9 +15,9 @@ class TypeField:
     # Check to see if we are a special kind of type (aka a struct defined
     # within our types.
     if self.types.defined(self.type):
-      return "struct %s %s" % (self.type, self.name)
+      return "struct %s * %s" % (self.type, self.name)
     else:
-      return "%s %s" % (self.type, self.name)
+      return "%s * %s" % (self.type, self.name)
 
 
 class Type:
@@ -34,6 +34,14 @@ class Type:
 
     # Iterate over the types generating the fields.
     for name, type in self.structure.iteritems():
+
+      # We automatically create the array types.
+      # This magically works because the type will be added before we have
+      # been created, ensuring that it is defined in advance of ourselves.
+      if (type.find("__array__") == 0):
+        if not self.types.defined(type):
+          self.types.add(Type(self.types, { "__name__": type, "length": "int", "items": "struct %s *" % type[9:] }))
+
       t = TypeField(self.types, name, type)
       self.fields.append(t)
       self.lookup[name] = t
@@ -85,11 +93,6 @@ class Array():
     for index, item in enumerate(self.structure):
       self.items.append(create_instance(self.types, "%s_item_%d" % (self.name, index), item))
 
-    # Create a type for ourselves.
-    item_type = self.item_type()
-    type = self.type()
-    self.types[type] = Class(self.types, type, { "length": "int", "items": "%s *" % item_type })
-
 
   def item_type(self):
 
@@ -103,18 +106,23 @@ class Array():
     return array_type
 
   def type(self):
-    return "%sArray" % self.item_type()
-
+    return "__array__%s" % self.item_type()
 
   def __repr__(self):
 
     items_name = '%s_items' % self.name
 
+    # We currently only support arrays of structs, so it is
+    # acceptable to assume struct contents.
+
     instance = str(Instance(self.types, self.name, { '__type__': self.type(), 'items': items_name, 'length': len(self.items) }))
     items = "\n".join(map(lambda x: str(x), self.items))
-    names = ", ".join(map(lambda x: x.name, self.items))
-    array = "%s %s[%d] = { %s }" % (self.item_type(), items_name, len(self.items), names)
-    return "%s\n%s\n%s\n\n" % (items, array, instance)
+    names = ", ".join(map(lambda x: "&%s" % x.name, self.items))
+    array = "struct %s * %s[%d] = { %s }" % (self.item_type(), items_name, len(self.items), names)
+    # return "%s\n%s;\n%s" % (items, array, instance)
+    count = "int %s_length = %d;" % (self.name, len(self.items))
+    item = "struct %s %s = { &%s_length, %s_items };" % (self.type(), self.name, self.name, self.name )
+    return "%s\n%s;\n%s\n%s" % (items, array, count, item)
 
 
 class Property:
@@ -128,8 +136,7 @@ class Property:
     self.type = type
 
   def __repr__(self):
-    #return "%s %s = %s" % (self.type, self.name, str(self.value))
-    return "#define %s %s" % (self.name, str(self.value))
+    return "%s %s = %s;" % (self.type, self.name, str(self.value))
 
 
 class Instance():
@@ -154,7 +161,12 @@ class Instance():
 
   def __repr__(self):
     fields = "\n".join(map(lambda x: str(self.fields[x.name]), self.types.type(self.type()).fields))
-    field_names = ", ".join(map(lambda x: str(self.fields[x.name].name), self.types.type(self.type()).fields))
+
+    field_names = []
+    for field in self.types.type(self.type()).fields:
+      instance_name = self.fields[field.name].name
+
+    field_names = ", ".join(map(lambda x: "&%s" % str(self.fields[x.name].name), self.types.type(self.type()).fields))
     struct = "struct %s %s = { %s }" % ( self.type(), self.name, field_names )
     return "%s\n%s;" % (fields, struct)
 
