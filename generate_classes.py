@@ -5,23 +5,31 @@ import argparse
 
 class Type():
 
-  def __init__(self, name, type):
+  def __init__(self, types, name, type):
+    self.types = types
     self.name = name
     self.type = type
 
   def __repr__(self):
-    return "%s %s" % (self.type, self.name)
+
+    # Check to see if we are a special kind of type (aka a struct defined
+    # within our types.
+    if self.type in self.types:
+      return "struct %s %s" % (self.type, self.name)
+    else:
+      return "%s %s" % (self.type, self.name)
 
 
 class Class():
 
-  def __init__(self, name, dictionary):
+  def __init__(self, types, name, dictionary):
+    self.types = types
     self.name = name
     self.fields = []
     self.lookup = {}
 
     for name, type in dictionary.iteritems():
-      t = Type(name, type)
+      t = Type(self.types, name, type)
       self.fields.append(t)
       self.lookup[name] = t
 
@@ -47,7 +55,7 @@ class Array():
     # Create a type for ourselves.
     item_type = self.item_type()
     type = self.type()
-    self.types[type] = Class(type, { "length": "int", "items": "%s *" % item_type })
+    self.types[type] = Class(self.types, type, { "length": "int", "items": "%s *" % item_type })
 
 
   def item_type(self):
@@ -87,7 +95,8 @@ class Property:
     self.type = type
 
   def __repr__(self):
-    return "%s %s = %s" % (self.type, self.name, str(self.value))
+    #return "%s %s = %s" % (self.type, self.name, str(self.value))
+    return "#define %s %s" % (self.name, str(self.value))
 
 
 class Instance():
@@ -113,10 +122,10 @@ class Instance():
   def __repr__(self):
 
     # TODO Instantiate our sub-structures?
-    fields = ";\n".join(map(lambda x: str(self.fields[x.name]), self.types[self.type()].fields))
+    fields = "\n".join(map(lambda x: str(self.fields[x.name]), self.types[self.type()].fields))
     field_names = ", ".join(map(lambda x: str(self.fields[x.name].name), self.types[self.type()].fields))
     struct = "struct %s %s = { %s }" % ( self.type(), self.name, field_names )
-    return "%s;\n%s;" % (fields, struct)
+    return "%s\n%s;" % (fields, struct)
 
 
 def create_instance(types, name, structure, type = None):
@@ -141,7 +150,7 @@ def main():
   # Create the types.
   types = {}
   for name, c in classes.iteritems():
-    types[name] = Class(name, c)
+    types[name] = Class(types, name, c)
 
   # Internalise the items.
   items = []
