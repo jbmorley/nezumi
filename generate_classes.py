@@ -145,7 +145,7 @@ class Instance():
     # Instantiate our sub-structures.
     self.fields = {}
     for name, details in self.structure.iteritems():
-      field = self.types[self.type()].field(name)
+      field = self.types.type(self.type()).field(name)
       self.fields[name] = create_instance(self.types, "%s_%s" % (self.name, name), details, field.type)
 
 
@@ -155,8 +155,8 @@ class Instance():
   def __repr__(self):
 
     # TODO Instantiate our sub-structures?
-    fields = "\n".join(map(lambda x: str(self.fields[x.name]), self.types[self.type()].fields))
-    field_names = ", ".join(map(lambda x: str(self.fields[x.name].name), self.types[self.type()].fields))
+    fields = "\n".join(map(lambda x: str(self.fields[x.name]), self.types.type(self.type()).fields))
+    field_names = ", ".join(map(lambda x: str(self.fields[x.name].name), self.types.type(self.type()).fields))
     struct = "struct %s %s = { %s }" % ( self.type(), self.name, field_names )
     return "%s\n%s;" % (fields, struct)
 
@@ -170,25 +170,39 @@ def create_instance(types, name, structure, type = None):
   else:
     return Property(types, name, structure, type)
 
+class Data:
+
+  def __init__(self, types, structure):
+    self.types = types
+    self.structure = structure
+    self.items = []
+  
+    for name, definition in structure.iteritems():
+      self.items.append(create_instance(self.types, name, definition))
+
+  def __repr__(self):
+    return "\n".join(map(lambda x: str(x), self.items))
+
+
 
 def main():
   parser = argparse.ArgumentParser(description = "Generate resource and state machine structs for a JSON animation description.")
   parser.add_argument('classes', help = 'Class definitions')
-  parser.add_argument('structure', help = 'Structure')
+  parser.add_argument('data', help = 'Data')
   options = parser.parse_args()
 
-  classes = json.load(open(options.classes))
-  structure = json.load(open(options.structure))
+  structure = json.load(open(options.data))
   
   # Create the types.
   types = Types(json.load(open(options.classes)))
-  print types
-  exit()
 
-  # Create the types.
-  types = {}
-  for name, c in classes.iteritems():
-    types[name] = Class(types, name, c)
+  # Create the data.
+  data = Data(types, json.load(open(options.data)))
+
+  print types
+  print data
+
+  exit()
 
   # Internalise the items.
   items = []
