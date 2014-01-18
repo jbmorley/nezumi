@@ -1,13 +1,16 @@
-{
-  "Frame": {
+[
+  {
+    "__name__": "Frame",
     "resource": "int",
     "duration": "float"
   },
-  "Action": {
+  {
+    "__name__": "Action",
     "button": "int"
   },
-  "AnimationSet": {
-    "frame": "Frame",
-    "action": "Action"
+  {
+    "__name__": "AnimationSet",
+    "frames": "__array__Frame",
+    "actions": "__array__Action"
   }
-}
+]
