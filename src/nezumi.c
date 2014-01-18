@@ -9,7 +9,9 @@ Layer *layer;
 AppTimer *timer;
 
 // Current animation frame.
-int frame;
+int frame = 0;
+int set = 0;
+int nextSet = 0;
 
 
 // Identifier for the timer.
@@ -39,24 +41,61 @@ void draw_bitmap(int resource_id, GContext* context) {
 // Render the animation frame.
 void layer_update_callback(Layer *me, GContext* context) {
 
-  draw_bitmap(sets.items[0]->frames->items[frame]->resource, context);
-  frame = (frame + 1) % sets.items[0]->frames->length;
+  draw_bitmap(sets.items[set]->frames->items[frame]->resource, context);
+  frame = (frame + 1) % sets.items[set]->frames->length;
 
   // If we have reached the end of the set consider an alternative.
+  if (frame == 0) {
+    set = nextSet;
+  }
 
 }
 
 void timer_callback(void *callback_data) {
 
   layer_mark_dirty(layer);
-  timer = app_timer_register(sets.items[0]->frames->items[frame]->duration * 1000, &timer_callback, NULL);
+  timer = app_timer_register(sets.items[set]->frames->items[frame]->duration * 1000, &timer_callback, NULL);
 
 }
+
+
+void down_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+  nextSet = 1;
+}
+
+void select_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+  nextSet = 0;
+}
+
+void select_multi_click_handler(ClickRecognizerRef recognizer, void *context) {
+
+}
+void select_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+
+}
+
+void select_long_click_release_handler(ClickRecognizerRef recognizer, void *context) {
+
+}
+
+
+void config_provider(Window *window) {
+ // single click / repeat-on-hold config:
+  window_single_click_subscribe(BUTTON_ID_DOWN, down_single_click_handler);
+  window_single_repeating_click_subscribe(BUTTON_ID_SELECT, 1000, select_single_click_handler);
+  // multi click config:
+  window_multi_click_subscribe(BUTTON_ID_SELECT, 2, 10, 0, true, select_multi_click_handler);
+  // long click config:
+  window_long_click_subscribe(BUTTON_ID_SELECT, 700, select_long_click_handler, select_long_click_release_handler);
+}
+
 
 
 void handle_init() {
 
   window = window_create();
+
+  window_set_click_config_provider(window, (ClickConfigProvider) config_provider);
 
   // Present the window (animated)
   window_stack_push(window, true);

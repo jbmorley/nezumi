@@ -6,7 +6,8 @@
   },
   {
     "__name__": "Action",
-    "button": "int"
+    "identifier": "int",
+    "target": "int"
   },
   {
     "__name__": "AnimationSet",
