@@ -11,6 +11,7 @@
   },
   {
     "__name__": "AnimationSet",
+    "identifier": "int",
     "frames": "__array__Frame",
     "actions": "__array__Action"
   }

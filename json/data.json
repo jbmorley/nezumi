@@ -2,6 +2,7 @@
   "sets": [
     {
       "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_BLINK",
       "frames": [
         { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_01", "duration": 1.00 },
         { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_02", "duration": 0.15 },
@@ -9,12 +10,14 @@
         { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_02", "duration": 0.15 }
       ],
       "actions": [
-        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 0 },        
-        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": 3 }
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_BLINK" },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": "ANIMATION_SET_PET_START" },
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_DOWN", "target": "ANIMATION_SET_SLEEP" }        
       ]
     },
     {
       "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_SLEEP",
       "frames": [
         { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_01", "duration": 0.40 },
         { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_02", "duration": 0.40 },
@@ -25,11 +28,13 @@
         { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_07", "duration": 0.40 }
       ],
       "actions": [
-        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 0 }
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_SLEEP" },
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_UP", "target": "ANIMATION_SET_BLINK" }        
       ]
     },
     {
       "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_PET",
       "frames": [
         { "__type__": "Frame", "resource": "RESOURCE_ID_PET_03", "duration": 0.15 },
         { "__type__": "Frame", "resource": "RESOURCE_ID_PET_04", "duration": 0.15 },
@@ -38,30 +43,32 @@
         { "__type__": "Frame", "resource": "RESOURCE_ID_PET_03", "duration": 0.15 }
       ],
       "actions": [
-        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 4 },        
-        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": 2 }
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_PET_END" },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": "ANIMATION_SET_PET" }
       ]
     },
     { 
       "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_PET_START",
       "frames": [
         { "__type__": "Frame", "resource": "RESOURCE_ID_PET_01", "duration": 0.15 },
         { "__type__": "Frame", "resource": "RESOURCE_ID_PET_02", "duration": 0.15 }
       ],
       "actions": [
-        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 0 },        
-        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": 2 }
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_BLINK" },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": "ANIMATION_SET_PET" }
       ]
     },
     { 
       "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_PET_END",
       "frames": [
         { "__type__": "Frame", "resource": "RESOURCE_ID_PET_02", "duration": 0.15 },
         { "__type__": "Frame", "resource": "RESOURCE_ID_PET_01", "duration": 0.15 }
       ],
       "actions": [
-        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 0 },        
-        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": 3 }
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_BLINK" },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": "ANIMATION_SET_PET_START" }
       ]
     }
   ]

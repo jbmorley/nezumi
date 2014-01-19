@@ -66,8 +66,12 @@ struct Action next_action(int identifier) {
 void pick_next_set() {
 
   int identifier = ACTION_DEFAULT;
-  if (buttons > 0) {
+  if ((buttons & ButtonSelect) > 0) {
     identifier = ACTION_BUTTON_SELECT;
+  } else if ((buttons & ButtonUp) > 0) {
+    identifier = ACTION_BUTTON_UP;
+  } else if ((buttons & ButtonDown) > 0) {
+    identifier = ACTION_BUTTON_DOWN;
   }
 
   struct Action action = next_action(identifier);
