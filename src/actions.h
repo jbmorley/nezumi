@@ -1,0 +1,9 @@
+#ifndef ACTIONS_H
+#define ACTIONS_H
+
+#define ACTION_DEFAULT 0
+#define ACTION_BUTTON_SELECT 1
+#define ACTION_BUTTON_UP 2
+#define ACTION_BUTTON_DOWN 3
+
+#endif // ACTIONS_H

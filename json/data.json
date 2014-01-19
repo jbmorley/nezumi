@@ -9,8 +9,8 @@
         { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_02", "duration": 0.15 }
       ],
       "actions": [
-        { "__type__": "Action", "identifier": "0", "target": 0 },        
-        { "__type__": "Action", "identifier": "1", "target": 1 }
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 0 },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": 3 }
       ]
     },
     {
@@ -25,8 +25,43 @@
         { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_07", "duration": 0.40 }
       ],
       "actions": [
-        { "__type__": "Action", "identifier": "0", "target": 0 },        
-        { "__type__": "Action", "identifier": "1", "target": 1 }
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 0 }
+      ]
+    },
+    {
+      "__type__": "AnimationSet",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_03", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_04", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_05", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_04", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_03", "duration": 0.15 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 4 },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": 2 }
+      ]
+    },
+    { 
+      "__type__": "AnimationSet",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_01", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_02", "duration": 0.15 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 0 },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": 2 }
+      ]
+    },
+    { 
+      "__type__": "AnimationSet",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_02", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_01", "duration": 0.15 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": 0 },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": 3 }
       ]
     }
   ]

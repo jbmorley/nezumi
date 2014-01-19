@@ -1,4 +1,5 @@
 #include <pebble.h>
+#include "actions.h"
 #include "animation.h"
 
 // Screen furniture.
@@ -11,7 +12,13 @@ AppTimer *timer;
 // Current animation frame.
 int frame = 0;
 int set = 0;
-int nextSet = 0;
+int buttons = 0;
+
+enum {
+  ButtonSelect = 1,
+  ButtonUp = 2,
+  ButtonDown = 4
+};
 
 
 // Identifier for the timer.
@@ -38,6 +45,36 @@ void draw_bitmap(int resource_id, GContext* context) {
 
 }
 
+struct Action next_action(int identifier) {
+
+  for (int i = 0; i < sets.items[set]->actions->length; i++) {
+    struct Action *action = sets.items[set]->actions->items[i];
+    if (action->identifier == identifier) {
+      return *action;
+    }
+  }
+
+  // If we have not managed to find an action we simply
+  // maintain our current state.
+  // TODO In the future we may wish this to reset our state.
+  struct Action action = { identifier, set };
+  return action;
+
+}
+
+
+void pick_next_set() {
+
+  int identifier = ACTION_DEFAULT;
+  if (buttons > 0) {
+    identifier = ACTION_BUTTON_SELECT;
+  }
+
+  struct Action action = next_action(identifier);
+  set = action.target;
+
+}
+
 // Render the animation frame.
 void layer_update_callback(Layer *me, GContext* context) {
 
@@ -46,7 +83,7 @@ void layer_update_callback(Layer *me, GContext* context) {
 
   // If we have reached the end of the set consider an alternative.
   if (frame == 0) {
-    set = nextSet;
+    pick_next_set();
   }
 
 }
@@ -58,35 +95,37 @@ void timer_callback(void *callback_data) {
 
 }
 
-
-void down_single_click_handler(ClickRecognizerRef recognizer, void *context) {
-  nextSet = 1;
-}
-
-void select_single_click_handler(ClickRecognizerRef recognizer, void *context) {
-  nextSet = 0;
-}
-
-void select_multi_click_handler(ClickRecognizerRef recognizer, void *context) {
-
-}
 void select_long_click_handler(ClickRecognizerRef recognizer, void *context) {
-
+  buttons |= ButtonSelect;
 }
 
 void select_long_click_release_handler(ClickRecognizerRef recognizer, void *context) {
-
+  buttons &= ~ButtonSelect;
 }
 
+void up_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  buttons |= ButtonUp;
+}
+
+void up_long_click_release_handler(ClickRecognizerRef recognizer, void *context) {
+  buttons &= ~ButtonUp;
+}
+
+void down_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+  buttons |= ButtonDown;
+}
+
+void down_long_click_release_handler(ClickRecognizerRef recognizer, void *context) {
+  buttons &= ~ButtonDown;
+}
 
 void config_provider(Window *window) {
- // single click / repeat-on-hold config:
-  window_single_click_subscribe(BUTTON_ID_DOWN, down_single_click_handler);
-  window_single_repeating_click_subscribe(BUTTON_ID_SELECT, 1000, select_single_click_handler);
-  // multi click config:
-  window_multi_click_subscribe(BUTTON_ID_SELECT, 2, 10, 0, true, select_multi_click_handler);
-  // long click config:
+
+  // Configure the buttons.
   window_long_click_subscribe(BUTTON_ID_SELECT, 700, select_long_click_handler, select_long_click_release_handler);
+  window_long_click_subscribe(BUTTON_ID_UP, 700, up_long_click_handler, up_long_click_release_handler);  
+  window_long_click_subscribe(BUTTON_ID_DOWN, 700, down_long_click_handler, down_long_click_release_handler); 
+
 }
 
 
