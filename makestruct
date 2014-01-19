@@ -195,24 +195,25 @@ class Data:
     return "\n".join(map(lambda x: str(x), self.items))
 
 
-
 def main():
   parser = argparse.ArgumentParser(description = "Generate resource and state machine structs for a JSON animation description.")
-  parser.add_argument('classes', help = 'Class definitions')
-  parser.add_argument('data', help = 'Data')
+  parser.add_argument('types', help = 'JSON file containing the type definitions')
+  parser.add_argument('data', help = 'JSON file describing the data to encode')
+  parser.add_argument('output', help = 'Output header file')
   options = parser.parse_args()
 
-  structure = json.load(open(options.data))
-  
   # Create the types.
-  types = Types(json.load(open(options.classes)))
+  types = Types(json.load(open(options.types)))
 
   # Create the data.
   data = Data(types, json.load(open(options.data)))
 
-  # Print the generated code.
-  print types
-  print data
+  # Output the generated code.
+  with open(options.output, 'w') as f:
+    f.write(str(types))
+    f.write("\n")
+    f.write(str(data))
+    f.write("\n")
 
 if __name__ == '__main__':
   main();
