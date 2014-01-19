@@ -3,10 +3,10 @@
     {
       "__type__": "AnimationSet",
       "frames": [
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_01", "duration": 1.00 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_02", "duration": 0.15 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_03", "duration": 0.15 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_BLINK_02", "duration": 0.15 }
+        { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_01", "duration": 1.00 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_02", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_03", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_02", "duration": 0.15 }
       ],
       "actions": [
         { "__type__": "Action", "identifier": "0", "target": 0 },        
@@ -16,13 +16,13 @@
     {
       "__type__": "AnimationSet",
       "frames": [
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_SLEEP_01", "duration": 0.40 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_SLEEP_02", "duration": 0.40 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_SLEEP_03", "duration": 0.40 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_SLEEP_04", "duration": 0.40 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_SLEEP_05", "duration": 0.40 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_SLEEP_06", "duration": 0.40 },
-        { "__type__": "Frame", "resource": "RESOURCE_ID_FRAME_SLEEP_07", "duration": 0.40 }
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_01", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_02", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_03", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_04", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_05", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_06", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_07", "duration": 0.40 }
       ],
       "actions": [
         { "__type__": "Action", "identifier": "0", "target": 0 },        
