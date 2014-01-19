@@ -196,7 +196,7 @@ class Data:
 
 
 def main():
-  parser = argparse.ArgumentParser(description = "Generate resource and state machine structs for a JSON animation description.")
+  parser = argparse.ArgumentParser(description = "Generate C structs and instances from JSON type and data definitions.")
   parser.add_argument('types', help = 'JSON file containing the type definitions')
   parser.add_argument('data', help = 'JSON file describing the data to encode')
   parser.add_argument('output', help = 'Output header file')
