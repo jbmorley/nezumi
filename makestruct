@@ -114,20 +114,15 @@ class Array():
 
     # We currently only support arrays of structs, so it is
     # acceptable to assume struct contents.
-
     items = "\n".join(map(lambda x: str(x), self.items))
     names = ", ".join(map(lambda x: "&%s" % x.name, self.items))
     array = "struct %s * %s[%d] = { %s }" % (self.item_type(), items_name, len(self.items), names)
-    # return "%s\n%s;\n%s" % (items, array, instance)
-    # count = "int %s_length = %d;" % (self.name, len(self.items))
     item = "struct %s %s = { %d, %s_items };" % (self.type, self.name, len(self.items), self.name )
     return "%s\n%s;\n%s" % (items, array, item)
 
 
 class Property:
 
-  # TODO We need to know what type we are!
-  # This must be inferred from our superclass?
   def __init__(self, types, name, value, type):
     self.types = types
     self.name = name
@@ -215,23 +210,9 @@ def main():
   # Create the data.
   data = Data(types, json.load(open(options.data)))
 
+  # Print the generated code.
   print types
   print data
-
-  exit()
-
-  # Internalise the items.
-  items = []
-  for name, definition in structure.iteritems():
-    items.append(create_instance(types, name, definition))
-
-  # Print the types.
-  for name, type in types.iteritems():
-    print types[name]
-
-  # Print the items.
-  for item in items:
-    print str(item)
 
 if __name__ == '__main__':
   main();
