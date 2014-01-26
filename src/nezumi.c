@@ -20,6 +20,8 @@ enum {
   ButtonDown = 4
 };
 
+bool tapped = false;
+
 
 // Identifier for the timer.
 #define ANIMATION_TIMER 1
@@ -72,6 +74,9 @@ void pick_next_set() {
     identifier = ACTION_BUTTON_UP;
   } else if ((buttons & ButtonDown) > 0) {
     identifier = ACTION_BUTTON_DOWN;
+  } else if (tapped) {
+    identifier = ACTION_ACCELEROMETER_TAP;
+    tapped = false;
   }
 
   struct Action action = next_action(identifier);
@@ -123,13 +128,15 @@ void down_long_click_release_handler(ClickRecognizerRef recognizer, void *contex
   buttons &= ~ButtonDown;
 }
 
+// Configure the buttons.
 void config_provider(Window *window) {
-
-  // Configure the buttons.
   window_long_click_subscribe(BUTTON_ID_SELECT, 700, select_long_click_handler, select_long_click_release_handler);
   window_long_click_subscribe(BUTTON_ID_UP, 700, up_long_click_handler, up_long_click_release_handler);  
   window_long_click_subscribe(BUTTON_ID_DOWN, 700, down_long_click_handler, down_long_click_release_handler); 
+}
 
+void accel_tap_handler(AccelAxisType axis, int32_t direction) {
+  tapped = true;
 }
 
 
@@ -138,7 +145,9 @@ void handle_init() {
 
   window = window_create();
 
+  // Register for events.
   window_set_click_config_provider(window, (ClickConfigProvider) config_provider);
+  accel_tap_service_subscribe(&accel_tap_handler);
 
   // Present the window (animated)
   window_stack_push(window, true);
