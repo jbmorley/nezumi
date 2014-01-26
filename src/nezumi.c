@@ -21,6 +21,7 @@ enum {
 };
 
 bool tapped = false;
+bool isNight = false;
 
 
 // Identifier for the timer.
@@ -67,7 +68,20 @@ struct Action next_action(int identifier) {
 
 void pick_next_set() {
 
+  // Default.
   int identifier = ACTION_DEFAULT;
+
+  // Allow night to override the default action.
+  time_t rawtime;
+  struct tm *info;
+
+  time(&rawtime);
+  info = localtime(&rawtime);
+  isNight = (info->tm_hour < 10 || info->tm_hour > 21);
+  if (isNight) {
+    identifier = ACTION_TIME_NIGHT;
+  }
+
   if ((buttons & ButtonSelect) > 0) {
     identifier = ACTION_BUTTON_SELECT;
   } else if ((buttons & ButtonUp) > 0) {

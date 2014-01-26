@@ -6,6 +6,9 @@
 #define ACTION_BUTTON_UP 2
 #define ACTION_BUTTON_DOWN 3
 #define ACTION_ACCELEROMETER_TAP 4
+#define ACTION_TIME_NIGHT 5
+
+// TODO We need to introduce application states?
 
 #define ANIMATION_SET_BLINK 0
 #define ANIMATION_SET_SLEEP 1
