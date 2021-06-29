@@ -1,0 +1,21 @@
+#ifndef ACTIONS_H
+#define ACTIONS_H
+
+#define ACTION_DEFAULT 0
+#define ACTION_BUTTON_SELECT 1
+#define ACTION_BUTTON_UP 2
+#define ACTION_BUTTON_DOWN 3
+#define ACTION_ACCELEROMETER_TAP 4
+#define ACTION_TIME_NIGHT 5
+
+// TODO We need to introduce application states?
+
+#define ANIMATION_SET_BLINK 0
+#define ANIMATION_SET_SLEEP 1
+#define ANIMATION_SET_PET 2
+#define ANIMATION_SET_PET_START 3
+#define ANIMATION_SET_PET_END 4
+#define ANIMATION_SET_MAD 5
+#define ANIMATION_SET_WAKE 6
+
+#endif // ACTIONS_H

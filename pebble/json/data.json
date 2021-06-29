@@ -1,0 +1,123 @@
+{
+  "sets": [
+    {
+      "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_BLINK",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_01", "duration": 1.00 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_02", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_03", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_BLINK_02", "duration": 0.15 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_BLINK" },
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": "ANIMATION_SET_PET_START" },
+        { "__type__": "Action", "identifier": "ACTION_ACCELEROMETER_TAP", "target": "ANIMATION_SET_MAD" },
+        { "__type__": "Action", "identifier": "ACTION_TIME_NIGHT", "target": "ANIMATION_SET_SLEEP" }
+      ]
+    },
+    {
+      "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_SLEEP",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_01", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_02", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_03", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_04", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_05", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_06", "duration": 0.40 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_SLEEP_07", "duration": 0.40 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_WAKE" },
+        { "__type__": "Action", "identifier": "ACTION_TIME_NIGHT", "target": "ANIMATION_SET_SLEEP" }        
+      ]
+    },
+    {
+      "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_PET",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_03", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_04", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_05", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_04", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_03", "duration": 0.15 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_PET_END" },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": "ANIMATION_SET_PET" }
+      ]
+    },
+    { 
+      "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_PET_START",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_01", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_02", "duration": 0.15 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_BLINK" },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": "ANIMATION_SET_PET" }
+      ]
+    },
+    { 
+      "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_PET_END",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_02", "duration": 0.15 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_PET_01", "duration": 0.15 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_BLINK" },        
+        { "__type__": "Action", "identifier": "ACTION_BUTTON_SELECT", "target": "ANIMATION_SET_PET_START" }
+      ]
+    },
+    {
+      "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_MAD",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_01", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_02", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_03", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_04", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_05", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_04", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_03", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_02", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_MAD_01", "duration": 0.25 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_BLINK" }
+      ]
+    },
+    {
+      "__type__": "AnimationSet",
+      "identifier": "ANIMATION_SET_WAKE",
+      "frames": [
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_01", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_02", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_03", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_04", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_05", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_06", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_07", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_08", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_09", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_10", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_11", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_12", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_13", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_YAWN_01", "duration": 0.50 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_13", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_14", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_15", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_16", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_17", "duration": 0.25 },
+        { "__type__": "Frame", "resource": "RESOURCE_ID_WAKE_18", "duration": 0.25 }
+      ],
+      "actions": [
+        { "__type__": "Action", "identifier": "ACTION_DEFAULT", "target": "ANIMATION_SET_BLINK" }
+      ]
+    }
+  ]
+}
