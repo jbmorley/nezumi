@@ -1,4 +1,4 @@
-# nezumi
+# Nezumi
 
 The many half-completed implementations of a small virtual mouse called Nezumi
 
