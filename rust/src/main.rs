@@ -109,10 +109,17 @@ fn main() {
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::WHITE);
 
+        // Center the image.
+
         let texture = &frames[frame_name];
+        let frame_width = texture.width as f32 * SCALE;
+        let frame_height = texture.height as f32 * SCALE;
         d.draw_texture_ex(
             texture,
-            Vector2 {x: 0.0, y: 0.0},
+            Vector2 {
+                x: ((WINDOW_WIDTH as f32 - frame_width) / 2.0).floor(), 
+                y: ((WINDOW_HEIGHT as f32 - frame_height) / 2.0).floor()
+            },
             0.0,
             SCALE,
             Color::WHITE);
