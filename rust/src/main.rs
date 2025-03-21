@@ -3,6 +3,10 @@ use std::collections::HashMap;
 use std::fs;
 use raylib::prelude::*;
 
+const SCALE: f32 = 3.0;
+const WINDOW_WIDTH: i32 = 360;
+const WINDOW_HEIGHT: i32 = 360;
+
 #[derive(Debug, Deserialize)]
 struct Frame {
     // TODO: Rename to file_name?
@@ -26,6 +30,8 @@ type FrameMap = HashMap<String, raylib::core::texture::Texture2D>;
 fn main() {
     println!("Hello, world!");
 
+    // Standard frame size seems to be 90 x 90.
+
     let contents = fs::read_to_string("states.json")
         .expect("Unable to read animation data");
     println!("{}", contents);
@@ -34,7 +40,7 @@ fn main() {
         .expect("Invalid animation data");
 
     let (mut rl, thread) = raylib::init()
-        .size(640, 480)
+        .size(WINDOW_WIDTH, WINDOW_HEIGHT)
         .title("Nezumi")
         .build();
 
@@ -56,22 +62,18 @@ fn main() {
     }
 
     let frame_duration = 0.3;
-    let scale = 6.0;
     
     let mut frame = 0;
     let mut accumulator = 0.0;
     let mut current_state_name = "blink";
     let mut action = "default";  // TODO: Unnecessary?
 
-    // Gestures.
-    let mut current_gesture = raylib::consts::Gesture::GESTURE_NONE;
-
     while !rl.window_should_close() {
         let mut current_state = &state[current_state_name];
         let frame_count = current_state.frames.len();
 
         // Handle gestures.
-        current_gesture = rl.get_gesture_detected();
+        let current_gesture = rl.get_gesture_detected();
         if current_gesture == raylib::consts::Gesture::GESTURE_DRAG {
             action = "drag";
         } else if current_gesture == raylib::consts::Gesture::GESTURE_TAP {
@@ -104,8 +106,6 @@ fn main() {
 
         let frame_name = &current_state.frames[frame].file;
 
-        // println!("{}, {}", frame, frame_name);
-
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::WHITE);
 
@@ -114,7 +114,7 @@ fn main() {
             texture,
             Vector2 {x: 0.0, y: 0.0},
             0.0,
-            scale,
+            SCALE,
             Color::WHITE);
         
     }
