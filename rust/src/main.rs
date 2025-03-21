@@ -62,7 +62,7 @@ fn main() {
     }
 
     let frame_duration = 0.3;
-    
+
     let mut frame = 0;
     let mut accumulator = 0.0;
     let mut current_state_name = "blink";
@@ -117,12 +117,12 @@ fn main() {
         d.draw_texture_ex(
             texture,
             Vector2 {
-                x: ((WINDOW_WIDTH as f32 - frame_width) / 2.0).floor(), 
+                x: ((WINDOW_WIDTH as f32 - frame_width) / 2.0).floor(),
                 y: ((WINDOW_HEIGHT as f32 - frame_height) / 2.0).floor()
             },
             0.0,
             SCALE,
             Color::WHITE);
-        
+
     }
 }
