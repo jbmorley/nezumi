@@ -1,0 +1,119 @@
+{
+"blink" : {
+  "frames" : [
+    { "file" : "nez-blink1.gif", "duration" : 1.0  },
+    { "file" : "nez-blink2.gif", "duration" : 0.15 },
+    { "file" : "nez-blink3.gif", "duration" : 0.15 },
+    { "file" : "nez-blink2.gif", "duration" : 0.15 }
+  ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink" },
+    "drag"  : { "type" : "transition", "set" : "pet-start" },
+    "tap"    : { "type" : "transition", "set" : "mad" },
+    "night"   : { "type" : "transition", "set" : "sleep" },
+    "eat"     : { "type" : "transition", "set" : "eat" }
+  }
+},
+"eat" : {
+  "frames" : [
+    { "file" : "nez-eat1.png", "duration" : 2.0 }
+  ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink" }
+  }
+},
+"sleep" : {
+  "frames" : [
+    { "file" : "nez-sleep1.png", "duration" : 0.25 },
+    { "file" : "nez-sleep2.png", "duration" : 0.25 },
+    { "file" : "nez-sleep3.png", "duration" : 0.25 },
+    { "file" : "nez-sleep4.png", "duration" : 0.25 },
+    { "file" : "nez-sleep5.png", "duration" : 0.25 },
+    { "file" : "nez-sleep6.png", "duration" : 0.25 },
+    { "file" : "nez-sleep7.png", "duration" : 0.25 }
+  ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink" },
+    "day"     : { "type" : "transition", "set" : "wake" }
+  }
+},
+"wake" : {
+  "frames" : [
+    { "file" : "nez-wake1.png",  "duration" : 0.25 },
+    { "file" : "nez-wake2.png",  "duration" : 0.25 },
+    { "file" : "nez-wake3.png",  "duration" : 0.25 },
+    { "file" : "nez-wake4.png",  "duration" : 0.25 },
+    { "file" : "nez-wake5.png",  "duration" : 0.25 },
+    { "file" : "nez-wake6.png",  "duration" : 0.25 },
+    { "file" : "nez-wake7.png",  "duration" : 0.25 },
+    { "file" : "nez-wake8.png",  "duration" : 0.25 },
+    { "file" : "nez-wake9.png",  "duration" : 0.25 },
+    { "file" : "nez-wake10.png", "duration" : 0.25 },
+    { "file" : "nez-wake11.png", "duration" : 0.25 },
+    { "file" : "nez-wake12.png", "duration" : 0.25 },
+    { "file" : "nez-wake13.png", "duration" : 0.25 },
+    { "file" : "nez-wake.png",   "duration" : 0.5  },
+    { "file" : "nez-wake13.png", "duration" : 0.25 },
+    { "file" : "nez-wake14.png", "duration" : 0.25 },
+    { "file" : "nez-wake15.png", "duration" : 0.25 },
+    { "file" : "nez-wake16.png", "duration" : 0.25 },
+    { "file" : "nez-wake17.png", "duration" : 0.25 },
+    { "file" : "nez-wake18.png", "duration" : 0.25 }
+  ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink" }
+  }
+},
+"mad" : {
+  "frames" : [
+    { "file" : "nez-mad1.gif", "duration" : 0.25  },
+    { "file" : "nez-mad2.gif", "duration" : 0.25  },
+    { "file" : "nez-mad3.gif", "duration" : 0.25  },
+    { "file" : "nez-mad4.gif", "duration" : 0.25  },
+    { "file" : "nez-mad5.gif", "duration" : 0.25  },
+    { "file" : "nez-mad4.gif", "duration" : 0.25  },
+    { "file" : "nez-mad3.gif", "duration" : 0.25  },
+    { "file" : "nez-mad2.gif", "duration" : 0.25  },
+    { "file" : "nez-mad1.gif", "duration" : 0.25  }
+  ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink" },
+    "tap": { "type": "transition", "set": "mad" }
+  }
+},
+"pet-start" : {
+    "name" : "pet-start",
+    "frames" : [
+        { "file" : "nez-pet1.gif", "duration" : 0.15 },
+        { "file" : "nez-pet2.gif", "duration" : 0.15 }
+    ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "pet-end" },
+    "drag"  : { "type" : "transition", "set" : "pet" }
+  }
+},
+"pet" : {
+    "frames" : [
+        { "file" : "nez-pet3.gif", "duration" : 0.15 },
+        { "file" : "nez-pet4.gif", "duration" : 0.15 },
+        { "file" : "nez-pet5.gif", "duration" : 0.15 },
+        { "file" : "nez-pet4.gif", "duration" : 0.15 },
+        { "file" : "nez-pet3.gif", "duration" : 0.15 }
+    ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "pet-end" },
+    "drag"  : { "type" : "transition", "set" : "pet" }
+  }
+},
+"pet-end" : {
+    "name" : "pet-end",
+    "frames" : [
+        { "file" : "nez-pet2.gif", "duration" : 0.15 },
+        { "file" : "nez-pet1.gif", "duration" : 0.15 }
+    ],
+  "actions" : {
+    "default" : { "type" : "transition", "set" : "blink"     },
+    "stroke"  : { "type" : "transition", "set" : "pet-start" }
+  }
+}
+}
