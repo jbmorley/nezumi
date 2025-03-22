@@ -3,6 +3,11 @@ use std::collections::HashMap;
 use std::fs;
 use raylib::prelude::*;
 
+use std::sync::{
+    atomic::{AtomicBool, Ordering},
+    Arc,
+};
+
 const WINDOW_WIDTH: i32 = 360;
 const WINDOW_HEIGHT: i32 = 360;
 
@@ -27,9 +32,14 @@ struct State {
 type FrameMap = HashMap<String, raylib::core::texture::Texture2D>;
 
 fn main() {
-    println!("Hello, world!");
 
-    // Standard frame size seems to be 90 x 90.
+    // Set up an atomic boolean to respond to Ctrl + C signals.
+    let running = Arc::new(AtomicBool::new(true));
+    let r = running.clone();
+    ctrlc::set_handler(move || {
+        r.store(false, Ordering::SeqCst);
+    })
+    .expect("Failed to set cancellation handler.");
 
     let contents = fs::read_to_string("states.json")
         .expect("Unable to read animation data");
@@ -68,7 +78,7 @@ fn main() {
     let mut current_state_name = "blink";
     let mut action = "default";  // TODO: Unnecessary?
 
-    while !rl.window_should_close() {
+    while !rl.window_should_close() && running.load(Ordering::SeqCst) {
         let mut current_state = &state[current_state_name];
         let frame_count = current_state.frames.len();
 
@@ -134,4 +144,5 @@ fn main() {
         );
 
     }
+
 }
