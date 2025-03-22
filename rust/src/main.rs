@@ -42,6 +42,7 @@ fn main() {
     let (mut rl, thread) = raylib::init()
         .size(WINDOW_WIDTH, WINDOW_HEIGHT)
         .title("Nezumi")
+        .resizable()
         .build();
 
     rl.set_target_fps(60);
@@ -108,6 +109,9 @@ fn main() {
         let frame_name = &frame.file;
         frame_duration = frame.duration;
 
+        let window_width = rl.get_screen_width();
+        let window_height = rl.get_screen_height();
+
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::WHITE);
 
@@ -118,8 +122,8 @@ fn main() {
         d.draw_texture_ex(
             texture,
             Vector2 {
-                x: ((WINDOW_WIDTH as f32 - frame_width) / 2.0).floor(),
-                y: ((WINDOW_HEIGHT as f32 - frame_height) / 2.0).floor()
+                x: ((window_width as f32 - frame_width) / 2.0).floor(),
+                y: ((window_height as f32 - frame_height) / 2.0).floor()
             },
             0.0,
             SCALE,
