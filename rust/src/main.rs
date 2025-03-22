@@ -11,7 +11,7 @@ const WINDOW_HEIGHT: i32 = 360;
 struct Frame {
     // TODO: Rename to file_name?
     file: String,
-    duration: f64,
+    duration: f32,
 }
 
 #[derive(Debug, Deserialize)]
@@ -61,7 +61,7 @@ fn main() {
         frames.insert(a.file_name().unwrap().to_str().unwrap().to_owned(), texture);
     }
 
-    let frame_duration = 0.3;
+    let mut frame_duration = 0.3;
 
     let mut frame = 0;
     let mut accumulator = 0.0;
@@ -104,13 +104,14 @@ fn main() {
             }
         }
 
-        let frame_name = &current_state.frames[frame].file;
+        let frame = &current_state.frames[frame];
+        let frame_name = &frame.file;
+        frame_duration = frame.duration;
 
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::WHITE);
 
         // Center the image.
-
         let texture = &frames[frame_name];
         let frame_width = texture.width as f32 * SCALE;
         let frame_height = texture.height as f32 * SCALE;
