@@ -3,7 +3,6 @@ use std::collections::HashMap;
 use std::fs;
 use raylib::prelude::*;
 
-const SCALE: f32 = 3.0;
 const WINDOW_WIDTH: i32 = 360;
 const WINDOW_HEIGHT: i32 = 360;
 
@@ -105,20 +104,24 @@ fn main() {
             }
         }
 
-        let frame = &current_state.frames[frame];
-        let frame_name = &frame.file;
-        frame_duration = frame.duration;
 
+        // Get the screen / window size.
         let window_width = rl.get_screen_width();
         let window_height = rl.get_screen_height();
 
+        // Get the frame and details.
+        let frame = &current_state.frames[frame];
+        let texture = &frames[&frame.file];
+        frame_duration = frame.duration;
+
+        // Scale and center the image.
+        let target_size = 0.8 * std::cmp::min(window_width, window_height) as f32;
+        let target_scale = std::cmp::max((target_size / texture.width as f32).floor() as i32, 1) as f32;  // Assume textures are square.
+        let frame_width = texture.width as f32 * target_scale;
+        let frame_height = texture.height as f32 * target_scale;
+
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::WHITE);
-
-        // Center the image.
-        let texture = &frames[frame_name];
-        let frame_width = texture.width as f32 * SCALE;
-        let frame_height = texture.height as f32 * SCALE;
         d.draw_texture_ex(
             texture,
             Vector2 {
@@ -126,8 +129,9 @@ fn main() {
                 y: ((window_height as f32 - frame_height) / 2.0).floor()
             },
             0.0,
-            SCALE,
-            Color::WHITE);
+            target_scale,
+            Color::WHITE
+        );
 
     }
 }
