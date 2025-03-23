@@ -49,23 +49,22 @@ fn main() {
     let state: HashMap<String, State> = serde_json::from_str(&contents)
         .expect("Invalid animation data");
 
-    #[cfg(feature = "drm")] {
+    let (mut rl, thread) = if cfg!(feature = "drm") {
         let width = unsafe { raylib::ffi::GetMonitorWidth(0) };
         let height = unsafe { raylib::ffi::GetMonitorHeight(0) };
-        let (mut rl, thread) = raylib::init()
+        raylib::init()
             .size(width, height)
             .title(&APP_NAME)
             .resizable()
             .fullscreen()
-            .build();
-    }
-
-    #[cfg(not(feature = "drm"))]
-    let (mut rl, thread) = raylib::init()
-        .size(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)
-        .title(&APP_NAME)
-        .resizable()
-        .build();
+            .build()
+    } else {
+        raylib::init()
+            .size(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)
+            .title(&APP_NAME)
+            .resizable()
+            .build()
+    };
 
     rl.set_target_fps(60);
 
