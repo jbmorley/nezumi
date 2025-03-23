@@ -8,6 +8,8 @@ use std::sync::{
     Arc,
 };
 
+use chrono::Local;
+
 const APP_NAME: &str = "Nezumi";
 const DEFAULT_WINDOW_WIDTH: i32 = 360;
 const DEFAULT_WINDOW_HEIGHT: i32 = 360;
@@ -142,6 +144,7 @@ fn main() {
         let frame_width = texture.width as f32 * target_scale;
         let frame_height = texture.height as f32 * target_scale;
 
+        // Draw the current frame.
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::WHITE);
         d.draw_texture_ex(
@@ -154,6 +157,15 @@ fn main() {
             target_scale,
             Color::WHITE
         );
+
+        // Draw the time.
+        let font_size = 40;
+        let now = Local::now();
+        let time_str = now.format("%H:%M:%S").to_string();
+        let text_width = d.measure_text(&time_str, 40);
+        let x = (window_width - text_width) / 2;
+        let y = window_height - font_size - 20;
+        d.draw_text(&time_str, x, y, font_size, Color::BLACK);
 
     }
 
