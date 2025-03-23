@@ -8,8 +8,9 @@ use std::sync::{
     Arc,
 };
 
-const WINDOW_WIDTH: i32 = 360;
-const WINDOW_HEIGHT: i32 = 360;
+const APP_NAME: &str = "Nezumi";
+const DEFAULT_WINDOW_WIDTH: i32 = 360;
+const DEFAULT_WINDOW_HEIGHT: i32 = 360;
 
 #[derive(Debug, Deserialize)]
 struct Frame {
@@ -48,9 +49,21 @@ fn main() {
     let state: HashMap<String, State> = serde_json::from_str(&contents)
         .expect("Invalid animation data");
 
+    #[cfg(feature = "drm")] {
+        let width = unsafe { raylib::ffi::GetMonitorWidth(0) };
+        let height = unsafe { raylib::ffi::GetMonitorHeight(0) };
+        let (mut rl, thread) = raylib::init()
+            .size(width, height)
+            .title(&APP_NAME)
+            .resizable()
+            .fullscreen()
+            .build();
+    }
+
+    #[cfg(not(feature = "drm"))]
     let (mut rl, thread) = raylib::init()
-        .size(WINDOW_WIDTH, WINDOW_HEIGHT)
-        .title("Nezumi")
+        .size(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)
+        .title(&APP_NAME)
         .resizable()
         .build();
 
