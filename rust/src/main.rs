@@ -1,18 +1,18 @@
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fs;
 use raylib::prelude::*;
+use raylib::consts::Gesture;
 
 use std::sync::{
     atomic::{AtomicBool, Ordering},
     Arc,
 };
 
-use chrono::Local;
-
 const APP_NAME: &str = "Nezumi";
 const DEFAULT_WINDOW_WIDTH: i32 = 360;
 const DEFAULT_WINDOW_HEIGHT: i32 = 360;
+const DEFAULT_FRAME_DURATION: f32 = 3.0;
 
 #[derive(Debug, Deserialize)]
 struct Frame {
@@ -22,17 +22,40 @@ struct Frame {
 }
 
 #[derive(Debug, Deserialize)]
-struct Operation {
-    set: String,
+struct State {
+    frames: Vec<Frame>,
+    next_state: String,
+    actions: Vec<Transition>,
+    side_effects: HashSet<SideEffect>
 }
 
 #[derive(Debug, Deserialize)]
-struct State {
-    frames: Vec<Frame>,
-    actions: HashMap<String, Operation>,
+struct Transition {
+    event: Event,
+    state: String,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, Hash)]
+#[serde(rename_all = "snake_case")]
+enum SideEffect {
+    IncrementEnergy,
+    DecrementEnergy,
 }
 
 type FrameMap = HashMap<String, raylib::core::texture::Texture2D>;
+
+#[derive(Debug, Deserialize, PartialEq, Eq, Hash, Clone)]
+#[serde(rename_all = "snake_case")]
+enum Event {
+    Default,
+    Drag,
+    Tap,
+
+    HighEnergy,
+    LowEnergy,
+}
+
+// TODO: Consider requiring transitions for all events to avoid trapped states.
 
 fn main() {
 
@@ -85,30 +108,33 @@ fn main() {
         frames.insert(a.file_name().unwrap().to_str().unwrap().to_owned(), texture);
     }
 
-    let mut frame_duration = 0.3;
+    let mut frame_duration = DEFAULT_FRAME_DURATION;
 
     let mut frame = 0;
     let mut accumulator = 0.0;
     let mut current_state_name = "blink";
-    let mut action = "default";  // TODO: Unnecessary?
+
+    let mut events = HashSet::<Event>::new();
+    const FULL_ENERGY: i32 = 100;
+    let mut energy = FULL_ENERGY;
 
     while !rl.window_should_close() && running.load(Ordering::SeqCst) {
         let mut current_state = &state[current_state_name];
         let frame_count = current_state.frames.len();
 
-        // Handle gestures.
-        let current_gesture = rl.get_gesture_detected();
-        if current_gesture == raylib::consts::Gesture::GESTURE_DRAG {
-            action = "drag";
-        } else if current_gesture == raylib::consts::Gesture::GESTURE_TAP {
-            action = "tap";
-        } else if current_gesture == raylib::consts::Gesture::GESTURE_HOLD {
-            // Ideally a hold gesture would clear the effect of the tap, but
-            // Raylib always seems to give us a 'hold' after a tap, so we can't
-            // easily differentiate between these two states.
-            action = "tap";
-        } else {
-            // action = "default";
+        // Convert gestues into events.
+        match rl.get_gesture_detected() {
+            Gesture::GESTURE_TAP => {},
+            Gesture::GESTURE_DRAG => {
+                events.insert(Event::Drag);
+            },
+            Gesture::GESTURE_HOLD => {
+                events.insert(Event::Tap);
+            },
+            Gesture::GESTURE_NONE => {
+                events.remove(&Event::Drag);
+            }
+            _ => {}
         }
 
         accumulator += rl.get_frame_time();
@@ -116,18 +142,52 @@ fn main() {
             accumulator -= frame_duration;
             frame += 1;
 
-            // Handle state transitions if we've reached the end of the
-            // current animation loop.
-            if frame >= frame_count {
-                frame = 0;
-                current_state_name = &current_state.actions[action].set;
-                current_state = &state[current_state_name];
-
-                // Reset the action.
-                action = "default";
+            if frame < frame_count {
+                continue;
             }
-        }
 
+            // Perform side effects.
+            for side_effect in &current_state.side_effects {
+                println!("{:?}", side_effect);
+                match side_effect {
+                    SideEffect::IncrementEnergy => {
+                        energy = energy + 1;
+                        events.remove(&Event::LowEnergy);
+                        if energy >= FULL_ENERGY {
+                            events.insert(Event::HighEnergy);
+                        }
+                    },
+                    SideEffect::DecrementEnergy => {
+                        energy = energy - 1;
+                        events.remove(&Event::HighEnergy);
+                        if energy <= 0 {
+                            events.insert(Event::LowEnergy);
+                        }
+                    }
+                }
+            }
+
+            // Print the current state.
+            println!("energy = {}, events = {:?}", energy, events);
+
+            // Determine the next state.
+            // Select the next state and then override with event-based transitions.
+            let mut next_state_name = &current_state.next_state;
+            for transition in &current_state.actions {
+                if !events.contains(&transition.event) {
+                    continue;
+                }
+                events.remove(&transition.event);
+                next_state_name = &transition.state;
+                println!("{:?} -> {}", transition.event, next_state_name);
+            }
+
+            // Reset the frame and update the state.
+            frame = 0;
+            current_state_name = next_state_name;
+            current_state = &state[current_state_name];
+
+        }
 
         // Get the screen / window size.
         let window_width = rl.get_screen_width();
@@ -146,7 +206,7 @@ fn main() {
 
         // Draw the current frame.
         let mut d = rl.begin_drawing(&thread);
-        d.clear_background(Color::WHITE);
+        d.clear_background(Color::new(214, 234, 248, 255));
         d.draw_texture_ex(
             texture,
             Vector2 {
@@ -157,15 +217,6 @@ fn main() {
             target_scale,
             Color::WHITE
         );
-
-        // Draw the time.
-        let font_size = 40;
-        let now = Local::now();
-        let time_str = now.format("%H:%M:%S").to_string();
-        let text_width = d.measure_text(&time_str, 40);
-        let x = (window_width - text_width) / 2;
-        let y = window_height - font_size - 20;
-        d.draw_text(&time_str, x, y, font_size, Color::BLACK);
 
     }
 
