@@ -83,7 +83,9 @@
     ],
     "next_state": "blink",
     "actions": [],
-    "side_effects": []
+    "side_effects": [
+      "decrement_energy_high"
+    ]
   },
   "pet_start" : {
     "frames": [

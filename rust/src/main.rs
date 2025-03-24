@@ -46,6 +46,7 @@ struct Transition {
 enum SideEffect {
     IncrementEnergy,
     DecrementEnergy,
+    DecrementEnergyHigh,
 }
 
 type FrameMap = HashMap<String, raylib::core::texture::Texture2D>;
@@ -190,6 +191,13 @@ fn main() {
                     },
                     SideEffect::DecrementEnergy => {
                         energy = energy - 1;
+                        events.remove(&Event::HighEnergy);
+                        if energy <= 0 {
+                            events.insert(Event::LowEnergy);
+                        }
+                    },
+                    SideEffect::DecrementEnergyHigh => {
+                        energy = energy - 2;
                         events.remove(&Event::HighEnergy);
                         if energy <= 0 {
                             events.insert(Event::LowEnergy);
