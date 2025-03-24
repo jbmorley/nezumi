@@ -10,9 +10,14 @@ use std::sync::{
 };
 
 const APP_NAME: &str = "Nezumi";
+
 const DEFAULT_WINDOW_WIDTH: i32 = 360;
 const DEFAULT_WINDOW_HEIGHT: i32 = 360;
+
+const TAP_GESTURE_MINIMUM_DISTANCE: f32 = 0.1;  // Given as a fraction of the window size.
+
 const DEFAULT_FRAME_DURATION: f32 = 3.0;
+
 const FULL_ENERGY: i32 = 100;
 
 #[derive(Debug, Deserialize)]
@@ -138,7 +143,7 @@ fn main() {
             gesture = Gesture::TAP;
             last_position = rl.get_mouse_position();
         }
-        if rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT) && last_position.distance_to(rl.get_mouse_position()) > 20.0 {
+        if rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT) && last_position.distance_to(rl.get_mouse_position()) > (window_width as f32 * TAP_GESTURE_MINIMUM_DISTANCE) {
             gesture = Gesture::DRAG;
         }
         if rl.is_mouse_button_released(MouseButton::MOUSE_BUTTON_LEFT) {
@@ -212,6 +217,8 @@ fn main() {
             frame = 0;
             current_state_name = next_state_name;
             current_state = &state[current_state_name];
+
+            // TODO: Consider clearing the event set?
 
         }
 
