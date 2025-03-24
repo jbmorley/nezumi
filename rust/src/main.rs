@@ -1,8 +1,8 @@
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::fs;
+use std::io::Take;
 use raylib::prelude::*;
-use raylib::consts::Gesture;
 
 use std::sync::{
     atomic::{AtomicBool, Ordering},
@@ -13,6 +13,7 @@ const APP_NAME: &str = "Nezumi";
 const DEFAULT_WINDOW_WIDTH: i32 = 360;
 const DEFAULT_WINDOW_HEIGHT: i32 = 360;
 const DEFAULT_FRAME_DURATION: f32 = 3.0;
+const FULL_ENERGY: i32 = 100;
 
 #[derive(Debug, Deserialize)]
 struct Frame {
@@ -56,6 +57,13 @@ enum Event {
 }
 
 // TODO: Consider requiring transitions for all events to avoid trapped states.
+
+#[derive(Debug)]
+enum Gesture {
+    TAP,
+    DRAG,
+    NONE,
+}
 
 fn main() {
 
@@ -108,32 +116,50 @@ fn main() {
         frames.insert(a.file_name().unwrap().to_str().unwrap().to_owned(), texture);
     }
 
-    let mut frame_duration = DEFAULT_FRAME_DURATION;
+    let mut gesture = Gesture::NONE;
+    let mut last_position = Vector2::new(0.0, 0.0);
 
+    let mut frame_duration = DEFAULT_FRAME_DURATION;
     let mut frame = 0;
     let mut accumulator = 0.0;
     let mut current_state_name = "blink";
 
     let mut events = HashSet::<Event>::new();
-    const FULL_ENERGY: i32 = 100;
     let mut energy = FULL_ENERGY;
 
     while !rl.window_should_close() && running.load(Ordering::SeqCst) {
+
+        // Get the screen / window size.
+        let window_width = rl.get_screen_width();
+        let window_height = rl.get_screen_height();
+
+        // Determine the current gesture.
+        if rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT) {
+            gesture = Gesture::TAP;
+            last_position = rl.get_mouse_position();
+        }
+        if rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT) && last_position.distance_to(rl.get_mouse_position()) > 20.0 {
+            gesture = Gesture::DRAG;
+        }
+        if rl.is_mouse_button_released(MouseButton::MOUSE_BUTTON_LEFT) {
+            gesture = Gesture::NONE;
+        }
+
         let mut current_state = &state[current_state_name];
         let frame_count = current_state.frames.len();
 
         // Convert gestues into events.
-        match rl.get_gesture_detected() {
-            Gesture::GESTURE_TAP => {},
-            Gesture::GESTURE_DRAG => {
-                events.insert(Event::Drag);
-            },
-            Gesture::GESTURE_HOLD => {
+        match gesture {
+            Gesture::TAP => {
                 events.insert(Event::Tap);
             },
-            Gesture::GESTURE_NONE => {
+            Gesture::DRAG => {
+                events.remove(&Event::Tap);
+                events.insert(Event::Drag);
+            },
+            Gesture::NONE => {
                 events.remove(&Event::Drag);
-            }
+            },
             _ => {}
         }
 
@@ -188,10 +214,6 @@ fn main() {
             current_state = &state[current_state_name];
 
         }
-
-        // Get the screen / window size.
-        let window_width = rl.get_screen_width();
-        let window_height = rl.get_screen_height();
 
         // Get the frame and details.
         let frame = &current_state.frames[frame];
