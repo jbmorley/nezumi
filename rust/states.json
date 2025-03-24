@@ -9,7 +9,7 @@
     "next_state": "blink",
     "actions": [
       {"event": "low_energy", "state": "sleep"},
-      {"event": "tap", "state": "mad"},
+      {"event": "tap", "state": "mad_start"},
       {"event": "drag", "state": "pet_start"}
     ],
     "side_effects": [
@@ -69,23 +69,42 @@
     "next_state": "blink",
     "side_effects": []
   },
-  "mad" : {
+  "mad_start": {
     "frames": [
       {"file": "nez-mad1.gif", "duration": 0.25},
       {"file": "nez-mad2.gif", "duration": 0.25},
-      {"file": "nez-mad3.gif", "duration": 0.25},
+      {"file": "nez-mad3.gif", "duration": 0.25}
+    ],
+    "next_state": "mad",
+    "actions": [],
+    "side_effects": []
+  },
+  "mad" : {
+    "frames": [
       {"file": "nez-mad4.gif", "duration": 0.25},
-      {"file": "nez-mad5.gif", "duration": 0.25},
+      {"file": "nez-mad5.gif", "duration": 0.25}
+
+    ],
+    "next_state": "mad_end",
+    "actions": [
+      {"event": "tap", "state": "mad"}
+    ],
+    "side_effects": [
+      "decrement_energy_high"
+    ]
+  },
+  "mad_end" : {
+    "frames": [
       {"file": "nez-mad4.gif", "duration": 0.25},
       {"file": "nez-mad3.gif", "duration": 0.25},
       {"file": "nez-mad2.gif", "duration": 0.25},
       {"file": "nez-mad1.gif", "duration": 0.25}
     ],
     "next_state": "blink",
-    "actions": [],
-    "side_effects": [
-      "decrement_energy_high"
-    ]
+    "actions": [
+      {"event": "tap", "state": "mad_start"}
+    ],
+    "side_effects": []
   },
   "pet_start" : {
     "frames": [
