@@ -133,11 +133,12 @@
     ],
     "next_state": "awake",
     "actions": [
-      {"event": "tap", "state": "mad_start"},
-      {"event": "drag", "state": "pet_start"},
-      {"event": "low_energy", "state": "yawn"},
-      {"event": "random_medium", "state": "blink"},
-      {"event": "random_low", "state": "tail_swoosh"}
+      {"conditions": ["tap"], "state": "mad_start"},
+      {"conditions": ["drag"], "state": "pet_start"},
+      {"conditions": ["no_energy"], "state": "yawn"},
+      {"conditions": ["low_energy", "random_low"], "state": "yawn"},
+      {"conditions": ["random_medium"], "state": "blink"},
+      {"conditions": ["random_low"], "state": "tail_swoosh"}
     ],
     "side_effects": []
   },
@@ -149,9 +150,9 @@
     ],
     "next_state": "awake",
     "actions": [
-      {"event": "tap", "state": "mad_start"},
-      {"event": "drag", "state": "pet_start"},
-      {"event": "low_energy", "state": "yawn"}
+      {"conditions": ["tap"], "state": "mad_start"},
+      {"conditions": ["drag"], "state": "pet_start"},
+      {"conditions": ["no_energy"], "state": "yawn"}
     ],
     "side_effects": [
       "decrement_energy"
@@ -164,9 +165,9 @@
     ],
     "next_state": "awake",
     "actions": [
-      {"event": "tap", "state": "mad_start"},
-      {"event": "drag", "state": "pet_start"},
-      {"event": "low_energy", "state": "yawn"}
+      {"conditions": ["tap"], "state": "mad_start"},
+      {"conditions": ["drag"], "state": "pet_start"},
+      {"conditions": ["no_energy"], "state": "yawn"}
     ],
     "side_effects": [
       "decrement_energy"
@@ -176,8 +177,10 @@
     "frames": [
       {"file": "nez-wake.png", "duration": 1.4}
     ],
-    "next_state": "sleep",
-    "actions": [],
+    "next_state": "awake",
+    "actions": [
+      {"conditions": ["no_energy"], "state": "sleep"}
+    ],
     "side_effects": []
   },
   "eat" : {
@@ -197,9 +200,9 @@
     ],
     "next_state": "sleep",
     "actions": [
-      {"event": "tap", "state": "wake_surprise"},
-      {"event": "high_energy", "state": "wake"},
-      {"event": "random_high", "state": "snore"}
+      {"conditions": ["tap"], "state": "wake_surprise"},
+      {"conditions": ["full_energy"], "state": "wake"},
+      {"conditions": ["random_high"], "state": "snore"}
     ],
     "side_effects": [
       "increment_energy"
@@ -218,8 +221,8 @@
     ],
     "next_state": "sleep",
     "actions": [
-      {"event": "tap", "state": "wake_surprise"},
-      {"event": "high_energy", "state": "wake"}
+      {"conditions": ["tap"], "state": "wake_surprise"},
+      {"conditions": ["full_energy"], "state": "wake"}
     ],
     "side_effects": [
       "increment_energy"
@@ -279,7 +282,7 @@
     ],
     "next_state": "mad_end",
     "actions": [
-      {"event": "tap", "state": "mad"}
+      {"conditions": ["tap"], "state": "mad"}
     ],
     "side_effects": [
       "decrement_energy_high"
@@ -294,7 +297,7 @@
     ],
     "next_state": "blink",
     "actions": [
-      {"event": "tap", "state": "mad_start"}
+      {"conditions": ["tap"], "state": "mad_start"}
     ],
     "side_effects": []
   },
@@ -305,7 +308,7 @@
     ],
     "next_state": "pet_end",
     "actions": [
-      {"event": "drag", "state": "pet"}
+      {"conditions": ["drag"], "state": "pet"}
     ],
     "side_effects": []
   },
@@ -319,7 +322,7 @@
     ],
     "next_state": "pet_end",
     "actions": [
-      {"event": "drag", "state": "pet"}
+      {"conditions": ["drag"], "state": "pet"}
     ],
     "side_effects": []
   },
@@ -330,7 +333,7 @@
     ],
     "next_state": "blink",
     "actions": [
-      {"event": "drag", "state": "pet_start"}
+      {"conditions": ["drag"], "state": "pet_start"}
     ],
     "side_effects": []
   }

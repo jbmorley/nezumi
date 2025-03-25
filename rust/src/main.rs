@@ -46,7 +46,7 @@ struct State {
 
 #[derive(Debug, Deserialize)]
 struct Transition {
-    event: Event,
+    conditions: Vec<Event>,
     state: String,
 }
 
@@ -68,8 +68,9 @@ enum Event {
     Drag,
     Tap,
 
-    HighEnergy,
+    FullEnergy,
     LowEnergy,
+    NoEnergy,
 
     StateAgeExceedsShortRandom,
     StateAgeExceedsMediumRandom,
@@ -103,11 +104,15 @@ struct CharacterState {
 
 impl CharacterState {
 
-    fn is_high_energy(&self) -> bool {
+    fn is_full_energy(&self) -> bool {
         self.energy >= FULL_ENERGY
     }
 
     fn is_low_energy(&self) -> bool {
+        self.energy < 10
+    }
+
+    fn is_no_energy(&self) -> bool {
         self.energy <= 0
     }
 
@@ -127,19 +132,22 @@ struct StateState<'a> {
     age: f32
 }
 
-fn evaluate_event(event: &Event, character_state: &CharacterState, state_state: &StateState, events: &HashSet<Event>) -> bool {
-    match event {
+fn evaluate_condition(condition: &Event, character_state: &CharacterState, state_state: &StateState, events: &HashSet<Event>) -> bool {
+    match condition {
         Event::Tap => {
             events.contains(&Event::Tap)  // TODO: Clean up event model.
         },
         Event::Drag => {
             events.contains(&Event::Drag)  // TODO: Clean up event model.
         },
-        Event::HighEnergy => {
-            character_state.is_high_energy()
+        Event::FullEnergy => {
+            character_state.is_full_energy()
         },
         Event::LowEnergy => {
             character_state.is_low_energy()
+        }
+        Event::NoEnergy => {
+            character_state.is_no_energy()
         },
         Event::StateAgeExceedsShortRandom => {
             let mut rng = rand::rng();
@@ -313,12 +321,21 @@ fn main() {
             // Select the next state and then override with event-based transitions.
             let mut next_state_name = &current_state.next_state;
             for transition in &current_state.actions {
-                if !evaluate_event(&transition.event, &character_state, &state_state, &events) {
+                let mut matches = true;
+                for condition in &transition.conditions {
+                    if !evaluate_condition(&condition, &character_state, &state_state, &events) {
+                        matches = false;
+                        break;
+                    }
+                }
+                if !matches {
                     continue;
                 }
-                events.remove(&transition.event);
+                for condition in &transition.conditions {
+                    events.remove(&condition);
+                }
                 next_state_name = &transition.state;
-                println!("{:?} -> {}", transition.event, next_state_name);
+                println!("{:?} -> {}", transition.conditions, next_state_name);
                 break;
             }
 
