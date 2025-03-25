@@ -205,7 +205,7 @@
       {"event": "state_age_exceeds_medium_random", "state": "snore"}
     ],
     "side_effects": [
-      "increment_energy"
+      "increment_energy_high"
     ]
   },
   "snore" : {

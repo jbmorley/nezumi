@@ -45,6 +45,7 @@ struct Transition {
 #[serde(rename_all = "snake_case")]
 enum SideEffect {
     IncrementEnergy,
+    IncrementEnergyHigh,
     DecrementEnergy,
     DecrementEnergyHigh,
 }
@@ -100,8 +101,8 @@ impl CharacterState {
         self.energy <= 0
     }
 
-    fn increment_energy(&mut self) {
-        self.energy = self.energy + 1;
+    fn increment_energy(&mut self, value: i32) {
+        self.energy = self.energy + value;
     }
 
     fn decrement_energy(&mut self, value: i32) {
@@ -273,8 +274,11 @@ fn main() {
                 println!("{:?}", side_effect);
                 match side_effect {
                     SideEffect::IncrementEnergy => {
-                        character_state.increment_energy();
+                        character_state.increment_energy(1);
                     },
+                    SideEffect::IncrementEnergyHigh => {
+                        character_state.increment_energy(2);
+                    }
                     SideEffect::DecrementEnergy => {
                         character_state.decrement_energy(1);
                     },
