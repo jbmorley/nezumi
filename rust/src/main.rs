@@ -1,6 +1,7 @@
+use serde::de::value;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
-use std::fs;
+use std::{char, fs};
 use std::io::Take;
 use raylib::prelude::*;
 
@@ -63,7 +64,14 @@ enum Event {
     LowEnergy,
 }
 
+// Random after timeout?
+// StateAgeExceedsShortRandom---the time spent in the current state exceeds a random time between 5-10s.
+// StateAgeExceedsLongRandom
+
 // TODO: Consider requiring transitions for all events to avoid trapped states.
+// TODO: Perhaps evaluation of the events results in a code evaluation which would allow for them not to
+//       be pure events? Maybe conditions?
+// We can capture state about the current scenario and inject it?
 
 #[derive(Debug)]
 enum Gesture {
@@ -72,9 +80,56 @@ enum Gesture {
     NONE,
 }
 
+#[derive(Debug)]
+struct CharacterState {
+    energy: i32,
+}
+
+impl CharacterState {
+
+    fn is_high_energy(&self) -> bool {
+        self.energy >= FULL_ENERGY
+    }
+
+    fn is_low_energy(&self) -> bool {
+        self.energy <= 0
+    }
+
+    fn increment_energy(&mut self) {
+        self.energy = self.energy + 1;
+    }
+
+    fn decrement_energy(&mut self, value: i32) {
+        self.energy = self.energy - value;
+    }
+
+}
+
+// TODO: Flesh this out.
+fn evaluate_event(event: Event) -> bool {
+    match event {
+        Event::HighEnergy => {
+            return true;
+        },
+        Event::Default => {  // TODO: Delete this?
+            return false;
+        },
+        Event::Drag => {
+            return false;
+        },
+        Event::Tap => {
+            return false;
+        },
+        Event::LowEnergy => {
+            return false;
+        }
+    }
+}
+
 fn main() {
 
     // Set up an atomic boolean to respond to Ctrl + C signals.
+    // TODO: Check if this is actually working?
     let running = Arc::new(AtomicBool::new(true));
     let r = running.clone();
     ctrlc::set_handler(move || {
@@ -132,7 +187,8 @@ fn main() {
     let mut current_state_name = START_STATE;
 
     let mut events = HashSet::<Event>::new();
-    let mut energy = FULL_ENERGY;
+
+    let mut character_state = CharacterState { energy: FULL_ENERGY };
 
     while !rl.window_should_close() && running.load(Ordering::SeqCst) {
 
@@ -184,23 +240,22 @@ fn main() {
                 println!("{:?}", side_effect);
                 match side_effect {
                     SideEffect::IncrementEnergy => {
-                        energy = energy + 1;
-                        events.remove(&Event::LowEnergy);
-                        if energy >= FULL_ENERGY {
+                        character_state.increment_energy();
+                        if character_state.is_high_energy() {
                             events.insert(Event::HighEnergy);
                         }
                     },
                     SideEffect::DecrementEnergy => {
-                        energy = energy - 1;
+                        character_state.decrement_energy(1);
                         events.remove(&Event::HighEnergy);
-                        if energy <= 0 {
+                        if character_state.is_low_energy() {
                             events.insert(Event::LowEnergy);
                         }
                     },
                     SideEffect::DecrementEnergyHigh => {
-                        energy = energy - 2;
+                        character_state.decrement_energy(2);
                         events.remove(&Event::HighEnergy);
-                        if energy <= 0 {
+                        if character_state.is_low_energy() {
                             events.insert(Event::LowEnergy);
                         }
                     }
@@ -208,7 +263,7 @@ fn main() {
             }
 
             // Print the current state.
-            println!("energy = {}, events = {:?}", energy, events);
+            println!("character_state = {:?}, events = {:?}", character_state, events);
 
             // Determine the next state.
             // Select the next state and then override with event-based transitions.
@@ -226,9 +281,6 @@ fn main() {
             frame = 0;
             current_state_name = next_state_name;
             current_state = &state[current_state_name];
-
-            // TODO: Consider clearing the event set?
-
         }
 
         // Get the frame and details.
