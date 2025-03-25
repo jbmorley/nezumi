@@ -13,11 +13,11 @@
     ],
     "next_state": "awake",
     "actions": [
-      {"event": "state_age_exceeds_short_random", "state": "blink"},
-      {"event": "state_age_exceeds_short_random", "state": "tail_swoosh"},
       {"event": "low_energy", "state": "yawn"},
       {"event": "tap", "state": "mad_start"},
-      {"event": "drag", "state": "pet_start"}
+      {"event": "drag", "state": "pet_start"},
+      {"event": "random_medium", "state": "blink"},
+      {"event": "random_low", "state": "tail_swoosh"}
     ],
     "side_effects": []
   },

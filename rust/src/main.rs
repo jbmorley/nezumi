@@ -63,6 +63,10 @@ enum Event {
     StateAgeExceedsShortRandom,
     StateAgeExceedsMediumRandom,
     StateAgeExceedsLongRandom,
+
+    RandomLow,
+    RandomMedium,
+    RandomHigh,
 }
 
 // Random after timeout?
@@ -137,6 +141,18 @@ fn evaluate_event(event: &Event, character_state: &CharacterState, state_state: 
         Event::StateAgeExceedsLongRandom => {
             let mut rng = rand::rng();
             state_state.age >= rng.random_range(20.0..30.0)
+        }
+        Event::RandomLow => {
+            let mut rng = rand::rng();
+            rng.random_range(0.0..1.0) < 0.25
+        }
+        Event::RandomMedium => {
+            let mut rng = rand::rng();
+            rng.random_range(0.0..1.0) < 0.5
+        }
+        Event::RandomHigh => {
+            let mut rng = rand::rng();
+            rng.random_range(0.0..1.0) < 0.75
         }
     }
 }
