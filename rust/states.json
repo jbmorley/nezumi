@@ -1,5 +1,13 @@
 {
-  "blink" : {
+  "splash": {
+    "frames": [
+      {"file": "cheese.png", "duration": 5.0}
+    ],
+    "next_state": "blink",
+    "actions": [],
+    "side_effects": []
+  },
+  "blink": {
     "frames": [
       {"file": "nez-blink1.gif", "duration": 1.0},
       {"file": "nez-blink2.gif", "duration": 0.15},

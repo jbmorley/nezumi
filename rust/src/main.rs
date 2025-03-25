@@ -19,6 +19,7 @@ const TAP_GESTURE_MINIMUM_DISTANCE: f32 = 0.1;  // Given as a fraction of the wi
 const DEFAULT_FRAME_DURATION: f32 = 3.0;
 
 const FULL_ENERGY: i32 = 100;
+const START_STATE: &str = "splash";
 
 #[derive(Debug, Deserialize)]
 struct Frame {
@@ -128,7 +129,7 @@ fn main() {
     let mut frame_duration = DEFAULT_FRAME_DURATION;
     let mut frame = 0;
     let mut accumulator = 0.0;
-    let mut current_state_name = "blink";
+    let mut current_state_name = START_STATE;
 
     let mut events = HashSet::<Event>::new();
     let mut energy = FULL_ENERGY;
