@@ -201,6 +201,7 @@
     "next_state": "sleep",
     "actions": [
       {"conditions": ["tap"], "state": "wake_surprise"},
+      {"conditions": ["drag"], "state": "wake_surprise"},
       {"conditions": ["full_energy"], "state": "wake"},
       {"conditions": ["random_high"], "state": "snore"}
     ],
@@ -222,6 +223,7 @@
     "next_state": "sleep",
     "actions": [
       {"conditions": ["tap"], "state": "wake_surprise"},
+      {"conditions": ["drag"], "state": "wake_surprise"},
       {"conditions": ["full_energy"], "state": "wake"}
     ],
     "side_effects": [
