@@ -223,7 +223,9 @@
       {"event": "high_energy", "state": "wake"},
       {"event": "tap", "state": "wake_surprise"}
     ],
-    "side_effects": []
+    "side_effects": [
+      "increment_energy"
+    ]
   },
   "wake" : {
     "frames": [
