@@ -257,7 +257,9 @@
     ],
     "actions": [],
     "next_state": "mad",
-    "side_effects": []
+    "side_effects": [
+      "increment_energy_bump"
+    ]
   },
   "mad_start": {
     "frames": [

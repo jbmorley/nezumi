@@ -50,6 +50,7 @@ struct Transition {
 enum SideEffect {
     IncrementEnergy,
     IncrementEnergyHigh,
+    IncrementEnergyBump,
     DecrementEnergy,
     DecrementEnergyHigh,
 }
@@ -282,6 +283,9 @@ fn main() {
                     },
                     SideEffect::IncrementEnergyHigh => {
                         character_state.increment_energy(2);
+                    },
+                    SideEffect::IncrementEnergyBump => {
+                        character_state.increment_energy(6);
                     }
                     SideEffect::DecrementEnergy => {
                         character_state.decrement_energy(1);
