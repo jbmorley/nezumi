@@ -310,6 +310,7 @@ fn main() {
                 events.remove(&transition.event);
                 next_state_name = &transition.state;
                 println!("{:?} -> {}", transition.event, next_state_name);
+                break;
             }
 
             // Reset the frame.

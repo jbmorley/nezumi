@@ -133,9 +133,9 @@
     ],
     "next_state": "awake",
     "actions": [
-      {"event": "low_energy", "state": "yawn"},
       {"event": "tap", "state": "mad_start"},
       {"event": "drag", "state": "pet_start"},
+      {"event": "low_energy", "state": "yawn"},
       {"event": "random_medium", "state": "blink"},
       {"event": "random_low", "state": "tail_swoosh"}
     ],
@@ -149,9 +149,9 @@
     ],
     "next_state": "awake",
     "actions": [
-      {"event": "low_energy", "state": "yawn"},
       {"event": "tap", "state": "mad_start"},
-      {"event": "drag", "state": "pet_start"}
+      {"event": "drag", "state": "pet_start"},
+      {"event": "low_energy", "state": "yawn"}
     ],
     "side_effects": [
       "decrement_energy"
@@ -164,9 +164,9 @@
     ],
     "next_state": "awake",
     "actions": [
-      {"event": "low_energy", "state": "yawn"},
       {"event": "tap", "state": "mad_start"},
-      {"event": "drag", "state": "pet_start"}
+      {"event": "drag", "state": "pet_start"},
+      {"event": "low_energy", "state": "yawn"}
     ],
     "side_effects": [
       "decrement_energy"
@@ -197,8 +197,8 @@
     ],
     "next_state": "sleep",
     "actions": [
-      {"event": "high_energy", "state": "wake"},
       {"event": "tap", "state": "wake_surprise"},
+      {"event": "high_energy", "state": "wake"},
       {"event": "random_high", "state": "snore"}
     ],
     "side_effects": [
@@ -218,8 +218,8 @@
     ],
     "next_state": "sleep",
     "actions": [
-      {"event": "high_energy", "state": "wake"},
-      {"event": "tap", "state": "wake_surprise"}
+      {"event": "tap", "state": "wake_surprise"},
+      {"event": "high_energy", "state": "wake"}
     ],
     "side_effects": [
       "increment_energy"
