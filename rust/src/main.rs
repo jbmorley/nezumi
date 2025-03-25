@@ -14,6 +14,10 @@ const APP_NAME: &str = "Nezumi";
 const DEFAULT_WINDOW_WIDTH: i32 = 360;
 const DEFAULT_WINDOW_HEIGHT: i32 = 360;
 
+// const BACKGROUND_COLOR: Color = Color::WHITE;
+// const BACKGROUND_COLOR: Color = Color::new(127, 179, 215, 255);
+const BACKGROUND_COLOR: Color = Color::new(214, 234, 248, 255);
+
 const TAP_GESTURE_MINIMUM_DISTANCE: f32 = 0.1;  // Given as a fraction of the window size.
 
 const DEFAULT_FRAME_DURATION: f32 = 3.0;
@@ -332,7 +336,7 @@ fn main() {
 
         // Draw the current frame.
         let mut d = rl.begin_drawing(&thread);
-        d.clear_background(Color::new(214, 234, 248, 255));
+        d.clear_background(BACKGROUND_COLOR);
         d.draw_texture_ex(
             texture,
             Vector2 {
