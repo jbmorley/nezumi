@@ -11,8 +11,8 @@ use std::sync::{
 
 const APP_NAME: &str = "Nezumi";
 
-const DEFAULT_WINDOW_WIDTH: i32 = 360;
-const DEFAULT_WINDOW_HEIGHT: i32 = 360;
+const DEFAULT_WINDOW_WIDTH: i32 = 460;
+const DEFAULT_WINDOW_HEIGHT: i32 = 460;
 
 // const BACKGROUND_COLOR: Color = Color::WHITE;
 // const BACKGROUND_COLOR: Color = Color::new(127, 179, 215, 255);
