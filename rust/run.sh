@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd "$(dirname "$0")"
-target/debug/nezumi-rust
+target/release/nezumi-rust
