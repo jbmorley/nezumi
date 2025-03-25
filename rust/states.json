@@ -174,7 +174,7 @@
   },
   "yawn": {
     "frames": [
-      {"file": "nez-wake.png", "duration": 0.5}
+      {"file": "nez-wake.png", "duration": 1.4}
     ],
     "next_state": "sleep",
     "actions": [],
