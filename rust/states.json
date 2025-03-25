@@ -129,7 +129,7 @@
   },
   "awake": {
     "frames": [
-      {"file": "nez-blink1.gif", "duration": 0.40}
+      {"file": "awake-1.gif", "duration": 0.40}
     ],
     "next_state": "awake",
     "actions": [
@@ -144,9 +144,9 @@
   },
   "blink": {
     "frames": [
-      {"file": "nez-blink2.gif", "duration": 0.15},
-      {"file": "nez-blink3.gif", "duration": 0.15},
-      {"file": "nez-blink2.gif", "duration": 0.15}
+      {"file": "blink-1.gif", "duration": 0.15},
+      {"file": "blink-2.gif", "duration": 0.15},
+      {"file": "blink-1.gif", "duration": 0.15}
     ],
     "next_state": "awake",
     "actions": [
