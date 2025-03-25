@@ -1,9 +1,8 @@
-use serde::de::value;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
-use std::{char, fs};
-use std::io::Take;
+use std::fs;
 use raylib::prelude::*;
+use rand::Rng;
 
 use std::sync::{
     atomic::{AtomicBool, Ordering},
@@ -19,12 +18,11 @@ const TAP_GESTURE_MINIMUM_DISTANCE: f32 = 0.1;  // Given as a fraction of the wi
 
 const DEFAULT_FRAME_DURATION: f32 = 3.0;
 
-const FULL_ENERGY: i32 = 100;
+const FULL_ENERGY: i32 = 10;
 const START_STATE: &str = "splash";
 
 #[derive(Debug, Deserialize)]
 struct Frame {
-    // TODO: Rename to file_name?
     file: String,
     duration: f32,
 }
@@ -56,12 +54,14 @@ type FrameMap = HashMap<String, raylib::core::texture::Texture2D>;
 #[derive(Debug, Deserialize, PartialEq, Eq, Hash, Clone)]
 #[serde(rename_all = "snake_case")]
 enum Event {
-    Default,
     Drag,
     Tap,
 
     HighEnergy,
     LowEnergy,
+
+    StateAgeExceedsShortRandom,
+    StateAgeExceedsLongRandom,
 }
 
 // Random after timeout?
@@ -105,23 +105,33 @@ impl CharacterState {
 
 }
 
-// TODO: Flesh this out.
-fn evaluate_event(event: Event) -> bool {
+#[derive(Debug)]
+struct StateState<'a> {
+    name: &'a str,
+    age: f32
+}
+
+fn evaluate_event(event: &Event, character_state: &CharacterState, state_state: &StateState, events: &HashSet<Event>) -> bool {
     match event {
-        Event::HighEnergy => {
-            return true;
-        },
-        Event::Default => {  // TODO: Delete this?
-            return false;
+        Event::Tap => {
+            events.contains(&Event::Tap)  // TODO: Clean up event model.
         },
         Event::Drag => {
-            return false;
+            events.contains(&Event::Drag)  // TODO: Clean up event model.
         },
-        Event::Tap => {
-            return false;
+        Event::HighEnergy => {
+            character_state.is_high_energy()
         },
         Event::LowEnergy => {
-            return false;
+            character_state.is_low_energy()
+        },
+        Event::StateAgeExceedsShortRandom => {
+            let mut rng = rand::rng();
+            state_state.age >= rng.random_range(0.5..4.0)
+        },
+        Event::StateAgeExceedsLongRandom => {
+            let mut rng = rand::rng();
+            state_state.age >= rng.random_range(20.0..30.0)
         }
     }
 }
@@ -129,7 +139,6 @@ fn evaluate_event(event: Event) -> bool {
 fn main() {
 
     // Set up an atomic boolean to respond to Ctrl + C signals.
-    // TODO: Check if this is actually working?
     let running = Arc::new(AtomicBool::new(true));
     let r = running.clone();
     ctrlc::set_handler(move || {
@@ -184,7 +193,8 @@ fn main() {
     let mut frame_duration = DEFAULT_FRAME_DURATION;
     let mut frame = 0;
     let mut accumulator = 0.0;
-    let mut current_state_name = START_STATE;
+
+    let mut state_state = StateState { name: START_STATE, age: 0.0 };
 
     let mut events = HashSet::<Event>::new();
 
@@ -208,7 +218,7 @@ fn main() {
             gesture = Gesture::NONE;
         }
 
-        let mut current_state = &state[current_state_name];
+        let mut current_state = &state[state_state.name];
         let frame_count = current_state.frames.len();
 
         // Convert gestues into events.
@@ -226,7 +236,9 @@ fn main() {
             _ => {}
         }
 
-        accumulator += rl.get_frame_time();
+        let frame_time = rl.get_frame_time();
+        accumulator += frame_time;
+        state_state.age += frame_time;
         while accumulator > frame_duration {
             accumulator -= frame_duration;
             frame += 1;
@@ -241,35 +253,29 @@ fn main() {
                 match side_effect {
                     SideEffect::IncrementEnergy => {
                         character_state.increment_energy();
-                        if character_state.is_high_energy() {
-                            events.insert(Event::HighEnergy);
-                        }
                     },
                     SideEffect::DecrementEnergy => {
                         character_state.decrement_energy(1);
-                        events.remove(&Event::HighEnergy);
-                        if character_state.is_low_energy() {
-                            events.insert(Event::LowEnergy);
-                        }
                     },
                     SideEffect::DecrementEnergyHigh => {
                         character_state.decrement_energy(2);
-                        events.remove(&Event::HighEnergy);
-                        if character_state.is_low_energy() {
-                            events.insert(Event::LowEnergy);
-                        }
                     }
                 }
             }
 
             // Print the current state.
-            println!("character_state = {:?}, events = {:?}", character_state, events);
+            println!(
+                "character_state = {:?}, state_state = {:?}, events = {:?}",
+                character_state,
+                state_state,
+                events
+            );
 
             // Determine the next state.
             // Select the next state and then override with event-based transitions.
             let mut next_state_name = &current_state.next_state;
             for transition in &current_state.actions {
-                if !events.contains(&transition.event) {
+                if !evaluate_event(&transition.event, &character_state, &state_state, &events) {
                     continue;
                 }
                 events.remove(&transition.event);
@@ -277,10 +283,15 @@ fn main() {
                 println!("{:?} -> {}", transition.event, next_state_name);
             }
 
-            // Reset the frame and update the state.
+            // Reset the frame.
             frame = 0;
-            current_state_name = next_state_name;
-            current_state = &state[current_state_name];
+
+            // Update the state and reset the state state if it we've changed state.
+            if state_state.name != next_state_name {
+                state_state = StateState { name: &next_state_name, age: 0.0 };
+                current_state = &state[state_state.name];
+            }
+
         }
 
         // Get the frame and details.

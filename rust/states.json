@@ -3,18 +3,30 @@
     "frames": [
       {"file": "cheese.png", "duration": 5.0}
     ],
-    "next_state": "blink",
+    "next_state": "awake",
     "actions": [],
+    "side_effects": []
+  },
+  "awake": {
+    "frames": [
+      {"file": "nez-blink1.gif", "duration": 0.25}
+    ],
+    "next_state": "awake",
+    "actions": [
+      {"event": "state_age_exceeds_short_random", "state": "blink"},
+      {"event": "low_energy", "state": "yawn"},
+      {"event": "tap", "state": "mad_start"},
+      {"event": "drag", "state": "pet_start"}
+    ],
     "side_effects": []
   },
   "blink": {
     "frames": [
-      {"file": "nez-blink1.gif", "duration": 1.0},
       {"file": "nez-blink2.gif", "duration": 0.15},
       {"file": "nez-blink3.gif", "duration": 0.15},
       {"file": "nez-blink2.gif", "duration": 0.15}
     ],
-    "next_state": "blink",
+    "next_state": "awake",
     "actions": [
       {"event": "low_energy", "state": "yawn"},
       {"event": "tap", "state": "mad_start"},
