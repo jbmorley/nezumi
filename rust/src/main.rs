@@ -61,6 +61,7 @@ enum Event {
     LowEnergy,
 
     StateAgeExceedsShortRandom,
+    StateAgeExceedsMediumRandom,
     StateAgeExceedsLongRandom,
 }
 
@@ -128,6 +129,10 @@ fn evaluate_event(event: &Event, character_state: &CharacterState, state_state: 
         Event::StateAgeExceedsShortRandom => {
             let mut rng = rand::rng();
             state_state.age >= rng.random_range(0.5..4.0)
+        },
+        Event::StateAgeExceedsMediumRandom => {
+            let mut rng = rand::rng();
+            state_state.age >= rng.random_range(4.0..10.0)
         },
         Event::StateAgeExceedsLongRandom => {
             let mut rng = rand::rng();

@@ -14,6 +14,7 @@
     "next_state": "awake",
     "actions": [
       {"event": "state_age_exceeds_short_random", "state": "blink"},
+      {"event": "state_age_exceeds_short_random", "state": "tail_swoosh"},
       {"event": "low_energy", "state": "yawn"},
       {"event": "tap", "state": "mad_start"},
       {"event": "drag", "state": "pet_start"}
@@ -25,6 +26,21 @@
       {"file": "nez-blink2.gif", "duration": 0.15},
       {"file": "nez-blink3.gif", "duration": 0.15},
       {"file": "nez-blink2.gif", "duration": 0.15}
+    ],
+    "next_state": "awake",
+    "actions": [
+      {"event": "low_energy", "state": "yawn"},
+      {"event": "tap", "state": "mad_start"},
+      {"event": "drag", "state": "pet_start"}
+    ],
+    "side_effects": [
+      "decrement_energy"
+    ]
+  },
+  "tail_swoosh": {
+    "frames": [
+      {"file": "tail-swoosh-1.gif", "duration": 0.15},
+      {"file": "tail-swoosh-2.gif", "duration": 0.15}
     ],
     "next_state": "awake",
     "actions": [
@@ -65,11 +81,29 @@
     "next_state": "sleep",
     "actions": [
       {"event": "high_energy", "state": "wake"},
-      {"event": "tap", "state": "wake_surprise"}
+      {"event": "tap", "state": "wake_surprise"},
+      {"event": "state_age_exceeds_medium_random", "state": "snore"}
     ],
     "side_effects": [
       "increment_energy"
     ]
+  },
+  "snore" : {
+    "frames": [
+      {"file": "snore-1.png", "duration": 0.4},
+      {"file": "snore-2.png", "duration": 0.4},
+      {"file": "snore-3.png", "duration": 0.4},
+      {"file": "snore-4.png", "duration": 0.4},
+      {"file": "snore-5.png", "duration": 0.4},
+      {"file": "snore-6.png", "duration": 0.4},
+      {"file": "snore-7.png", "duration": 0.4}
+    ],
+    "next_state": "sleep",
+    "actions": [
+      {"event": "high_energy", "state": "wake"},
+      {"event": "tap", "state": "wake_surprise"}
+    ],
+    "side_effects": []
   },
   "wake" : {
     "frames": [
