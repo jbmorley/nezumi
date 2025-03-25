@@ -22,7 +22,12 @@ const TAP_GESTURE_MINIMUM_DISTANCE: f32 = 0.1;  // Given as a fraction of the wi
 
 const DEFAULT_FRAME_DURATION: f32 = 3.0;
 
-const FULL_ENERGY: i32 = 32;
+const FULL_ENERGY: i32 = if cfg!(debug_assertions) {
+    32
+} else {
+    100
+};
+
 const START_STATE: &str = "credits";
 
 #[derive(Debug, Deserialize)]
