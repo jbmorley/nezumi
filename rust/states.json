@@ -181,7 +181,9 @@
     "actions": [
       {"conditions": ["no_energy"], "state": "sleep"}
     ],
-    "side_effects": []
+    "side_effects": [
+      "decrement_energy"
+    ]
   },
   "eat" : {
     "frames": [
