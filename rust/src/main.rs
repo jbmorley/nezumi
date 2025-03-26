@@ -118,11 +118,11 @@ impl CharacterState {
     }
 
     fn increment_energy(&mut self, value: i32) {
-        self.energy = self.energy + value;
+        self.energy = std::cmp::min(FULL_ENERGY, self.energy + value);
     }
 
     fn decrement_energy(&mut self, value: i32) {
-        self.energy = self.energy - value;
+        self.energy = std::cmp::max(0, self.energy - value);
     }
 
 }

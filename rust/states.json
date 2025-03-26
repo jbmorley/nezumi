@@ -156,9 +156,7 @@
       {"conditions": ["drag"], "state": "pet_start"},
       {"conditions": ["no_energy"], "state": "yawn"}
     ],
-    "side_effects": [
-      "decrement_energy"
-    ]
+    "side_effects": []
   },
   "tail_swoosh": {
     "frames": [
@@ -208,7 +206,7 @@
       {"conditions": ["random_high"], "state": "snore"}
     ],
     "side_effects": [
-      "increment_energy"
+      "increment_energy_high"
     ]
   },
   "snore" : {
@@ -229,7 +227,7 @@
       {"conditions": ["full_energy"], "state": "wake"}
     ],
     "side_effects": [
-      "increment_energy"
+      "increment_energy_high"
     ]
   },
   "wake" : {
