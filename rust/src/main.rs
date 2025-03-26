@@ -58,6 +58,7 @@ enum SideEffect {
     IncrementEnergyBump,
     DecrementEnergy,
     DecrementEnergyHigh,
+    ClearGestures,
 }
 
 type FrameMap = HashMap<String, raylib::core::texture::Texture2D>;
@@ -90,11 +91,11 @@ enum Event {
 //       be pure events? Maybe conditions?
 // We can capture state about the current scenario and inject it?
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 enum Gesture {
-    TAP,
-    DRAG,
-    NONE,
+    DidTap,
+    IsDragging,
+    None,
 }
 
 #[derive(Debug)]
@@ -132,13 +133,13 @@ struct StateState<'a> {
     age: f32
 }
 
-fn evaluate_condition(condition: &Event, character_state: &CharacterState, state_state: &StateState, events: &HashSet<Event>) -> bool {
+fn evaluate_condition(condition: &Event, character_state: &CharacterState, state_state: &StateState, gesture: &Gesture) -> bool {
     match condition {
         Event::Tap => {
-            events.contains(&Event::Tap)  // TODO: Clean up event model.
+            gesture == &Gesture::DidTap
         },
         Event::Drag => {
-            events.contains(&Event::Drag)  // TODO: Clean up event model.
+            gesture == &Gesture::IsDragging
         },
         Event::FullEnergy => {
             character_state.is_full_energy()
@@ -173,6 +174,24 @@ fn evaluate_condition(condition: &Event, character_state: &CharacterState, state
             let mut rng = rand::rng();
             rng.random_range(0.0..1.0) < 0.75
         }
+    }
+}
+
+fn consume_condition_state(condition: &Event, gesture: &mut Gesture) {
+    match condition {
+        Event::Tap => {
+            *gesture = Gesture::None;
+        },
+        Event::Drag => {},
+        Event::FullEnergy => {},
+        Event::LowEnergy => {}
+        Event::NoEnergy => {},
+        Event::StateAgeExceedsShortRandom => {},
+        Event::StateAgeExceedsMediumRandom => {},
+        Event::StateAgeExceedsLongRandom => {}
+        Event::RandomLow => {}
+        Event::RandomMedium => {}
+        Event::RandomHigh => {}
     }
 }
 
@@ -227,16 +246,17 @@ fn main() {
         frames.insert(a.file_name().unwrap().to_str().unwrap().to_owned(), texture);
     }
 
-    let mut gesture = Gesture::NONE;
+    let mut gesture = Gesture::None;
+    let mut gesture_start_time: f64 = 0.0;
     let mut last_position = Vector2::new(0.0, 0.0);
+
+    let mut last_detected_gesture = Gesture::None;
 
     let mut frame_duration = DEFAULT_FRAME_DURATION;
     let mut frame = 0;
     let mut accumulator = 0.0;
 
     let mut state_state = StateState { name: START_STATE, age: 0.0 };
-
-    let mut events = HashSet::<Event>::new();
 
     let mut character_state = CharacterState { energy: FULL_ENERGY };
 
@@ -248,33 +268,24 @@ fn main() {
 
         // Determine the current gesture.
         if rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT) {
-            gesture = Gesture::TAP;
+            gesture = Gesture::None;
+            gesture_start_time = rl.get_time();
             last_position = rl.get_mouse_position();
         }
         if rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT) && last_position.distance_to(rl.get_mouse_position()) > (window_width as f32 * TAP_GESTURE_MINIMUM_DISTANCE) {
-            gesture = Gesture::DRAG;
+            gesture = Gesture::IsDragging;
+            last_detected_gesture = Gesture::IsDragging;
         }
         if rl.is_mouse_button_released(MouseButton::MOUSE_BUTTON_LEFT) {
-            gesture = Gesture::NONE;
+            if gesture == Gesture::IsDragging {
+                last_detected_gesture = Gesture::None;
+            } else if rl.get_time() - gesture_start_time <= 1.0 {
+                last_detected_gesture = Gesture::DidTap;
+            }
         }
 
         let mut current_state = &state[state_state.name];
         let frame_count = current_state.frames.len();
-
-        // Convert gestues into events.
-        match gesture {
-            Gesture::TAP => {
-                events.insert(Event::Tap);
-            },
-            Gesture::DRAG => {
-                events.remove(&Event::Tap);
-                events.insert(Event::Drag);
-            },
-            Gesture::NONE => {
-                events.remove(&Event::Drag);
-            },
-            _ => {}
-        }
 
         let frame_time = rl.get_frame_time();
         accumulator += frame_time;
@@ -305,16 +316,19 @@ fn main() {
                     },
                     SideEffect::DecrementEnergyHigh => {
                         character_state.decrement_energy(2);
+                    },
+                    SideEffect::ClearGestures => {
+                        last_detected_gesture = Gesture::None;
                     }
                 }
             }
 
             // Print the current state.
             println!(
-                "character_state = {:?}, state_state = {:?}, events = {:?}",
+                "character_state = {:?}, state_state = {:?}, last_detected_gesture = {:?}",
                 character_state,
                 state_state,
-                events
+                last_detected_gesture
             );
 
             // Determine the next state.
@@ -323,7 +337,7 @@ fn main() {
             for transition in &current_state.actions {
                 let mut matches = true;
                 for condition in &transition.conditions {
-                    if !evaluate_condition(&condition, &character_state, &state_state, &events) {
+                    if !evaluate_condition(&condition, &character_state, &state_state, &last_detected_gesture) {
                         matches = false;
                         break;
                     }
@@ -332,7 +346,7 @@ fn main() {
                     continue;
                 }
                 for condition in &transition.conditions {
-                    events.remove(&condition);
+                    consume_condition_state(condition, &mut last_detected_gesture);
                 }
                 next_state_name = &transition.state;
                 println!("{:?} -> {}", transition.conditions, next_state_name);

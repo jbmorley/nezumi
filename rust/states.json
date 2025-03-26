@@ -125,7 +125,9 @@
     ],
     "next_state": "awake",
     "actions": [],
-    "side_effects": []
+    "side_effects": [
+      "clear_gestures"
+    ]
   },
   "awake": {
     "frames": [
