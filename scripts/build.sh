@@ -29,3 +29,5 @@ ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd 
 SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
 
 echo "Hello, World!"
+
+"$SCRIPTS_DIRECTORY/generate-credits" "$ROOT_DIRECTORY/graphics/credits.png"
