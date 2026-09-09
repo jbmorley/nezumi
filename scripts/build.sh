@@ -30,4 +30,8 @@ SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
 
 echo "Hello, World!"
 
-"$SCRIPTS_DIRECTORY/generate-credits" "$ROOT_DIRECTORY/graphics/credits.png"
+"$SCRIPTS_DIRECTORY/generate-credits" \
+    "$ROOT_DIRECTORY/graphics/credits.png" \
+    --step 3 \
+    --duration 0.1 \
+    --anchor-duration 3

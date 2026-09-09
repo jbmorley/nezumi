@@ -27,13 +27,13 @@ def split_image(input_path, step, default_duration, anchor_duration):
         filename = f"credits-{frame}.png"
         out_path = os.path.join(output_dir, filename)
         crop_cmd = [
-            "convert", input_path,
+            "magick", input_path,
             "-crop", f"90x90+0+{y}",
             out_path
         ]
         subprocess.run(crop_cmd, check=True)
 
-        if i == 0 or i == len(positions) - 1:
+        if i == len(positions) - 1:
             duration = default_duration
         else:
             duration = anchor_duration if y % 90 == 0 else default_duration
@@ -42,10 +42,12 @@ def split_image(input_path, step, default_duration, anchor_duration):
         frame += 1
 
     state = {
-        "frames": frames,
-        "next_state": "awake",
-        "actions": [],
-        "side_effects": []
+        "credits": {
+            "frames": frames,
+            "next_state": "awake",
+            "actions": [],
+            "side_effects": []
+        }
     }
 
     with open(os.path.join(output_dir, "credits.json"), "w") as f:
