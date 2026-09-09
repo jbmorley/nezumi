@@ -1,8 +1,8 @@
 [tools]
 
-"python" = "3.12.13"
+python = "3.12.13"
 rust = "latest"
-"uv" = "latest"
+uv = "latest"
 imagemagick = "latest"
 
 "pipx:changes-semver" = "6"
@@ -10,7 +10,8 @@ imagemagick = "latest"
 
 [env]
 
-RUSTUP_HOME = "{{config_root}}/.local/rustup"
+MISE_CARGO_HOME = "{{config_root}}/.local/share/cargo"
+MISE_RUSTUP_HOME = "{{config_root}}/.local/share/rustup"
 UV_PYTHON_PREFERENCE = "only-system"
 
 [settings]
