@@ -1,7 +1,7 @@
 [tools]
 
 "python" = "3.12.13"
-"rust" = "1.84"
+rust = "latest"
 "uv" = "latest"
 imagemagick = "latest"
 
@@ -10,6 +10,7 @@ imagemagick = "latest"
 
 [env]
 
+RUSTUP_HOME = "{{config_root}}/.local/rustup"
 UV_PYTHON_PREFERENCE = "only-system"
 
 [settings]
