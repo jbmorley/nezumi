@@ -27,6 +27,7 @@ set -u
 
 ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
 SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
+SOURCE_DIRECTORY="$ROOT_DIRECTORY/rust"
 
 echo "Hello, World!"
 
@@ -35,3 +36,6 @@ echo "Hello, World!"
     --step 3 \
     --duration 0.1 \
     --anchor-duration 3
+
+cd "$SOURCE_DIRECTORY"
+cargo build
