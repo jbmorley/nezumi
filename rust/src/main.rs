@@ -2,7 +2,7 @@ use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::fs;
 use raylib::prelude::*;
-use rand::Rng;
+use rand::RngExt;
 
 use std::sync::{
     atomic::{AtomicBool, Ordering},
