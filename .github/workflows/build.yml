@@ -61,7 +61,6 @@ jobs:
         submodules: recursive
         fetch-depth: 0
 
-    # Install the latest version of mise and all of the tools defined in mise.toml.
     - name: Install mise
       uses: jdx/mise-action@v4.2.3
       with:
