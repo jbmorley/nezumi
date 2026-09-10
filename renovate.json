@@ -43,6 +43,11 @@
       },
       "matchManagers": ["mise"],
       "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchCurrentVersion": "<1.0.0",
+      "matchUpdateTypes": ["minor"],
+      "groupName": null
     }
   ]
 }
