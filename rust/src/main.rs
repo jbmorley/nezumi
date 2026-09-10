@@ -207,7 +207,6 @@ fn main() {
 
     let contents = fs::read_to_string("states.json")
         .expect("Unable to read animation data");
-    println!("{}", contents);
 
     let state: HashMap<String, State> = serde_json::from_str(&contents)
         .expect("Invalid animation data");
