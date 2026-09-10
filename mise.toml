@@ -7,6 +7,7 @@ imagemagick = "latest"
 
 "pipx:changes-semver" = "6"
 "pipx:inseven-build-tools" = "1"
+cmake = "latest"
 
 [env]
 
