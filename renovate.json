@@ -6,31 +6,41 @@
     ":semanticCommitScopeDisabled"
   ],
   "semanticCommits": "enabled",
+  "commitMessageLowerCase": "never",
   "packageRules": [
     {
       "matchManagers": ["cargo"],
-      "semanticCommitType": "fix"
+      "commitMessagePrefix": "fix: 🦀"
     },
     {
       "groupName": "Rust dependencies",
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} ({{#each upgrades}}{{{depName}}}{{#unless @last}}, {{/unless}}{{/each}})"
+      },
       "matchManagers": ["cargo"],
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "matchManagers": ["github-actions"],
-      "semanticCommitType": "ci"
+      "commitMessagePrefix": "ci: ⚙️"
     },
     {
       "groupName": "GitHub Actions build steps",
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} ({{#each upgrades}}{{{depName}}}{{#unless @last}}, {{/unless}}{{/each}})"
+      },
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "matchManagers": ["mise"],
-      "semanticCommitType": "build"
+      "commitMessagePrefix": "build: 🧰"
     },
     {
       "groupName": "build tools",
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} ({{#each upgrades}}{{{depName}}}{{#unless @last}}, {{/unless}}{{/each}})"
+      },
       "matchManagers": ["mise"],
       "matchUpdateTypes": ["minor", "patch"]
     }
