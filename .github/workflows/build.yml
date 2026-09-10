@@ -72,8 +72,7 @@ jobs:
         submodules: recursive
         fetch-depth: 0
 
-    # We cache mise ourselves, instead of relying on `jdx/mise-action` to ensure we do a dumb cache and restoration
-    # of the in-workspace mise installation.
+    # Coarse-grained cache of the in-tree .mise directory.
     - name: Cache mise
       id: cache-mise
       uses: actions/cache@v6
