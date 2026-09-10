@@ -63,6 +63,8 @@ jobs:
 
     - name: Install mise
       uses: jbmorley/latest-mise@jbmorley/reshim
+      with:
+        cache: ${{ runner.os != "inseven-macos-26" }}
 
     - name: Install dependencies
       run: scripts/install-dependencies.sh
