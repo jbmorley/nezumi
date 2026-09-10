@@ -1,3 +1,0 @@
-[submodule "rust/raylib-rs"]
-	path = rust/raylib-rs
-	url = git@github.com:jbmorley/raylib-rs.git
