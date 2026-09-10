@@ -30,7 +30,9 @@ jobs:
         fetch-depth: 0
 
     - name: Install mise
-      uses: jbmorley/latest-mise@v1
+      uses: jdx/mise-action@v4.2.3
+      with:
+        version: 2026.9.4
 
     - name: Generate version and build numbers
       id: version
@@ -43,7 +45,10 @@ jobs:
   rust-build:
     strategy:
       matrix:
-        os: [ubuntu-26.04, ubuntu-26.04-arm, inseven-macos-26]
+        os:
+        - ubuntu-26.04
+        - ubuntu-26.04-arm
+        - inseven-macos-26
     runs-on: ${{ matrix.os }}
 
     needs:
@@ -53,6 +58,12 @@ jobs:
       VERSION_NUMBER: ${{ needs.generate-version-number.outputs.version_number }}
       BUILD_NUMBER: ${{ needs.generate-version-number.outputs.build_number }}
 
+      # Ensure mise installs are contained within the project workspace.
+      MISE_CACHE_DIR: ${{ github.workspace }}/.mise/cache
+      MISE_CONFIG_DIR: ${{ github.workspace }}/.mise/config
+      MISE_DATA_DIR: ${{ github.workspace }}/.mise/data
+      MISE_STATE_DIR: ${{ github.workspace }}/.mise/state
+
     steps:
 
     - name: Checkout repository
@@ -61,8 +72,19 @@ jobs:
         submodules: recursive
         fetch-depth: 0
 
+    # Coarse-grained cache of the in-tree .mise directory.
+    - name: Cache mise
+      id: cache-mise
+      uses: actions/cache@v6
+      with:
+        path: .mise
+        key: ${{ runner.os }}-${{ runner.arch }}-mise--${{ hashFiles('mise.toml') }}
+
     - name: Install mise
-      uses: jbmorley/latest-mise@v1
+      uses: jdx/mise-action@v4.2.3
+      with:
+        version: 2026.9.4
+        cache: false
 
     - name: Install dependencies
       run: scripts/install-dependencies.sh
