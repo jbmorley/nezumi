@@ -28,8 +28,8 @@ set -u
 case `uname` in
     Linux)
         echo "Installing Ubuntu dependencies..."
-        sudo apt install -y \
-            libasound2-devi \
+        sudo apt-get install -y \
+            libasound2-dev \
             libgl1-mesa-dev \
             libwayland-dev \
             libx11-dev \
