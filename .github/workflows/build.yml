@@ -41,7 +41,10 @@ jobs:
         echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
 
   rust-build:
-    runs-on: [ubuntu-latest, inseven-macos-26]
+    strategy:
+      matrix:
+        os: [ubuntu-latest, inseven-macos-26]
+    runs-on: ${{ matrix.os }}
 
     needs:
     - generate-version-number
