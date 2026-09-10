@@ -43,7 +43,7 @@ jobs:
   rust-build:
     strategy:
       matrix:
-        os: [ubuntu-latest, inseven-macos-26]
+        os: [ubuntu-26.04, ubuntu-26.04-arm, inseven-macos-26]
     runs-on: ${{ matrix.os }}
 
     needs:
