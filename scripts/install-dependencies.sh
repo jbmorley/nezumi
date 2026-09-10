@@ -30,7 +30,6 @@ case `uname` in
         echo "Installing Ubuntu dependencies..."
         sudo apt-get install -y \
             build-essential \
-            cmake \
             libasound2-dev \
             libgl1-mesa-dev \
             libwayland-dev \
