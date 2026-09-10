@@ -13,10 +13,10 @@ uv = "latest"
 
 [env]
 
-MISE_CARGO_HOME = "{{config_root}}/.local/share/cargo"
-MISE_RUSTUP_HOME = "{{config_root}}/.local/share/rustup"
+MISE_CARGO_HOME = "{{config_root}}/.mise/share/cargo"
+MISE_RUSTUP_HOME = "{{config_root}}/.mise/share/rustup"
 
-UV_CACHE_DIR = "{{config_root}}/.mise/cache/uv"
+UV_CACHE_DIR = "{{config_root}}/.mise/share/uv"
 
 UV_PYTHON_PREFERENCE = "only-system"
 
