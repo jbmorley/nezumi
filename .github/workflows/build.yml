@@ -31,6 +31,8 @@ jobs:
 
     - name: Install mise
       uses: jdx/mise-action@v4.2.3
+      with:
+        version: 2026.9.4
 
     - name: Generate version and build numbers
       id: version
@@ -63,6 +65,8 @@ jobs:
 
     - name: Install mise
       uses: jdx/mise-action@v4.2.3
+      with:
+        version: 2026.9.4
 
     - name: Install dependencies
       run: scripts/install-dependencies.sh
