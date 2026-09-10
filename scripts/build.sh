@@ -30,7 +30,10 @@ SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
 SOURCE_DIRECTORY="$ROOT_DIRECTORY/rust"
 
 # Manually activate mise.
-# eval "$(~/.local/bin/mise activate bash)"
+# This should be a no-op on correctly configured platforms, but serves to work-around seemingly intermittent failures
+# on some hosted build runners (possible issue with jdx/mise-action cache restoration).
+eval "$(~/.local/bin/mise activate bash)"
+mise reshim
 
 # Ensure required commands are available.
 which cmake || (echo "CMake (cmake) not available on the path." && exit 1)
