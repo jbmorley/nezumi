@@ -1,7 +1,38 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":semanticCommitTypeAll(fix)",
+    ":semanticCommitScopeDisabled"
   ],
-  "semanticCommits": "enabled"
+  "semanticCommits": "enabled",
+  "packageRules": [
+    {
+      "matchManagers": ["cargo"],
+      "semanticCommitType": "fix"
+    },
+    {
+      "groupName": "Rust dependencies",
+      "matchManagers": ["cargo"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "semanticCommitType": "ci"
+    },
+    {
+      "groupName": "GitHub Actions build steps",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchManagers": ["mise"],
+      "semanticCommitType": "build"
+    },
+    {
+      "groupName": "build tools",
+      "matchManagers": ["mise"],
+      "matchUpdateTypes": ["minor", "patch"]
+    }
+  ]
 }
