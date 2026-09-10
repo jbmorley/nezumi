@@ -1,3 +1,22 @@
 [tools]
 
-rust = "1.84"
+cmake = "latest"
+gh = "latest"
+imagemagick = "latest"
+python = "3.12.13"
+rust = "latest"
+uv = "latest"
+
+"pipx:changes-semver" = "6"
+"pipx:check-jsonschema" = "0"
+"pipx:inseven-build-tools" = "1"
+
+[env]
+
+MISE_CARGO_HOME = "{{config_root}}/.local/share/cargo"
+MISE_RUSTUP_HOME = "{{config_root}}/.local/share/rustup"
+UV_PYTHON_PREFERENCE = "only-system"
+
+[settings]
+
+minimum_release_age_excludes = ["pipx:changes-semver", "pipx:inseven-build-tools"]
