@@ -62,9 +62,7 @@ jobs:
         fetch-depth: 0
 
     - name: Install mise
-      uses: jbmorley/latest-mise@v1
-      with:
-        cache: ${{ matrix.os != 'inseven-macos-26' }}
+      uses: jdx/mise-action@v4
 
     - name: Install dependencies
       run: scripts/install-dependencies.sh
