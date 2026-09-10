@@ -212,7 +212,7 @@ fn main() {
     let state: HashMap<String, State> = serde_json::from_str(&contents)
         .expect("Invalid animation data");
 
-    let (mut rl, thread) = if cfg!(feature = "drm") {
+    let (mut rl, thread) = /* if cfg!(feature = "drm") {
         let width = unsafe { raylib::ffi::GetMonitorWidth(0) };
         let height = unsafe { raylib::ffi::GetMonitorHeight(0) };
         raylib::init()
@@ -221,13 +221,13 @@ fn main() {
             .resizable()
             .fullscreen()
             .build()
-    } else {
+    } else { */
         raylib::init()
             .size(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)
             .title(&APP_NAME)
             .resizable()
-            .build()
-    };
+            .build();
+    // };
 
     rl.set_target_fps(60);
 
@@ -237,10 +237,14 @@ fn main() {
     let paths = fs::read_dir("frames")
         .expect("Failed to list frames");
     for path in paths {
-        let a = path.unwrap().path();
+        let a = path.expect("Failed to read path").path();
+        if a.extension().and_then(|e| e.to_str()) != Some("png") {
+            continue;
+        }
+
         let b = a.to_str().unwrap();
         let image = Image::load_image(&b)
-            .expect("Failed to load image");
+            .unwrap_or_else(|_| panic!("Failed to load image '{}'", b));
         let texture = rl.load_texture_from_image(&thread, &image)
             .expect("Failed to create texture");
         frames.insert(a.file_name().unwrap().to_str().unwrap().to_owned(), texture);
@@ -272,7 +276,7 @@ fn main() {
             gesture_start_time = rl.get_time();
             last_position = rl.get_mouse_position();
         }
-        if rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT) && last_position.distance_to(rl.get_mouse_position()) > (window_width as f32 * TAP_GESTURE_MINIMUM_DISTANCE) {
+        if rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT) && last_position.distance(rl.get_mouse_position()) > (window_width as f32 * TAP_GESTURE_MINIMUM_DISTANCE) {
             gesture = Gesture::IsDragging;
             last_detected_gesture = Gesture::IsDragging;
         }
@@ -365,6 +369,7 @@ fn main() {
         }
 
         // Get the frame and details.
+        // TODO: It seems to be failing to load here?
         let frame = &current_state.frames[frame];
         let texture = &frames[&frame.file];
         frame_duration = frame.duration;
