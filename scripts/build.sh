@@ -30,7 +30,7 @@ SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
 SOURCE_DIRECTORY="$ROOT_DIRECTORY/rust"
 
 # Manually activate mise.
-eval "$(~/.local/bin/mise activate bash)"
+# eval "$(~/.local/bin/mise activate bash)"
 
 # Ensure required commands are available.
 which cmake || (echo "CMake (cmake) not available on the path." && exit 1)
