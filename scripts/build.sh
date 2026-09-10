@@ -25,6 +25,8 @@ set -o pipefail
 set -x
 set -u
 
+echo "PATH=$PATH"
+
 ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
 SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
 SOURCE_DIRECTORY="$ROOT_DIRECTORY/rust"
