@@ -237,7 +237,8 @@ fn main() {
         .expect("Failed to list frames");
     for path in paths {
         let a = path.expect("Failed to read path").path();
-        if a.extension().and_then(|e| e.to_str()) != Some("png") {
+        let extension = a.extension().and_then(|e| e.to_str());
+        if extension != Some("png") && extension != Some("gif") {
             continue;
         }
 
