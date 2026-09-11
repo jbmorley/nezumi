@@ -1,5 +1,7 @@
 # Nezumi
 
+[![build](https://github.com/inseven/nezumi/actions/workflows/build.yml/badge.svg)](https://github.com/inseven/nezumi/actions/workflows/build.yml)
+
 The many incarnations of a small virtual mouse called Nezumi
 
 ![Animation of Nezumi being stroked](images/stroke-animation.gif)
