@@ -50,10 +50,15 @@ jobs:
   rust-build:
     strategy:
       matrix:
-        os:
-        - ubuntu-26.04
-        - ubuntu-26.04-arm
-        - inseven-macos-26
+        include:
+        - name: ubuntu-26.04-amd64
+          os: ubuntu-26.04
+        - name: ubuntu-26.04-arm64
+          os: ubuntu-26.04-arm
+        - name: macos
+          os: inseven-macos-26
+
+    name: ${{ matrix.name }}-build
     runs-on: ${{ matrix.os }}
 
     needs:
@@ -96,3 +101,11 @@ jobs:
 
     - name: Build and test
       run: scripts/build.sh
+
+    - name: Archive the Debian package
+      uses: actions/upload-artifact@v7
+      with:
+        name: nezumi-${{ matrix.name}}-debian-package
+        path: rust/target/debian/*.deb
+        if-no-files-found: error
+        retention-days: 1

@@ -4,6 +4,7 @@ use raylib::prelude::*;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::fs;
+use std::path::Path;
 
 use std::sync::{
     atomic::{AtomicBool, Ordering},
@@ -216,14 +217,20 @@ fn main() {
     })
     .expect("Failed to set cancellation handler.");
 
-    let contents = fs::read_to_string("states.json")
+    let (states_path, frames_directory): (&Path, &Path) = if Path::new("states.json").exists() {
+        (Path::new("states.json"), Path::new("frames"))
+    } else {
+        (Path::new("/usr/share/nezumi/states.json"), Path::new("/usr/share/nezumi/frames"))
+    };
+
+    let contents = fs::read_to_string(states_path)
         .expect("Unable to read animation data");
 
     let state: HashMap<String, State> = serde_json::from_str(&contents)
         .expect("Invalid animation data");
 
     // List all the frames.
-    let images: HashMap<String, String> = fs::read_dir("frames")
+    let images: HashMap<String, String> = fs::read_dir(frames_directory)
         .expect("Failed to list frames")
         .filter_map(|entry| {
             let path = entry.expect("Failed to read path").path();
