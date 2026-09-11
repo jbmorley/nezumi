@@ -96,3 +96,11 @@ jobs:
 
     - name: Build and test
       run: scripts/build.sh
+
+    - name: Archive the Debian package
+      uses: actions/upload-artifact@v7
+      with:
+        name: debian-package
+        path: rust/target/debian/*.deb
+        if-no-files-found: error
+        retention-days: 1

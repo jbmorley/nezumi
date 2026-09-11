@@ -50,3 +50,6 @@ cargo build
 
 # Smoke-test.
 cargo run -- --validate-only
+
+# Build the Debian package.
+cargo deb
