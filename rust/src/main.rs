@@ -222,46 +222,51 @@ fn main() {
     let state: HashMap<String, State> = serde_json::from_str(&contents)
         .expect("Invalid animation data");
 
+    // List all the frames.
+    let images: HashMap<String, String> = fs::read_dir("frames")
+        .expect("Failed to list frames")
+        .filter_map(|entry| {
+            let path = entry.expect("Failed to read path").path();
+            let ext = path.extension()?.to_str()?;
+            if ext != "png" && ext != "gif" {
+                return None;
+            }
+            let name = path.file_name()?.to_str()?.to_owned();
+            let path_str = path.to_str()?.to_owned();
+            Some((name, path_str))
+        })
+        .collect();
+
+    // Check that every named image exists.
+    // We do this prior to initializing raylib to allow validation to run in headless scenarios.
+    for (state_name, state_item) in state.iter() {
+        for frame in state_item.frames.iter() {
+            assert!(images.contains_key(&frame.file), "Missing file '{}' used by state '{}'.", frame.file, state_name);
+        }
+    }
+    if args.validate_only {
+        println!("State passed integry check.");
+        return;
+    }
+
+    // Initialize raylib.
     let (mut rl, thread) = raylib::init()
         .size(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)
         .title(&APP_NAME)
         .resizable()
         .build();
-
     rl.set_target_fps(60);
 
-    let mut frames: FrameMap = FrameMap::new();
-
     // Cache all the frames.
-    let paths = fs::read_dir("frames")
-        .expect("Failed to list frames");
-    for path in paths {
-        let a = path.expect("Failed to read path").path();
-        let extension = a.extension().and_then(|e| e.to_str());
-        if extension != Some("png") && extension != Some("gif") {
-            continue;
-        }
-
-        let b = a.to_str().unwrap();
-        let image = Image::load_image(&b)
-            .unwrap_or_else(|_| panic!("Failed to load image '{}'", b));
-        let texture = rl.load_texture_from_image(&thread, &image)
-            .expect("Failed to create texture");
-        frames.insert(a.file_name().unwrap().to_str().unwrap().to_owned(), texture);
-    }
-
-    // Check that every named image exists.
-    for (state_name, state_item) in state.iter() {
-        for frame in state_item.frames.iter() {
-            assert!(frames.contains_key(&frame.file), "Missing file '{}' used by state '{}'.", frame.file, state_name);
-        }
-    }
-
-    // Exit early if we're just performing validation.
-    if args.validate_only {
-        println!("Success.");
-        return;
-    }
+    let frames: FrameMap = images.iter()
+        .map(|(name, path)| {
+            let image = Image::load_image(&path)
+                .unwrap_or_else(|_| panic!("Failed to load image '{}'", path));
+            let texture = rl.load_texture_from_image(&thread, &image)
+                .expect("Failed to create texture");
+            (name.to_owned(), texture)
+        })
+        .collect();
 
     let mut gesture = Gesture::None;
     let mut gesture_start_time: f64 = 0.0;
