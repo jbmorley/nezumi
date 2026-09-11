@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nezumi.jbmorley.co.uk/schema/v1/states.schema.json",
+  "title": "States",
+  "description": "",
+  "type": "object",
+  "additionalProperties": {"$ref": "state.schema.json"}
+}

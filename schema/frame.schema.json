@@ -1,0 +1,13 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://nezumi.jbmorley.co.uk/schema/v1/frame.schema.json",
+    "title": "Frame",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "file": {"type": "string"},
+        "duration": {"type": "number"}
+    },
+    "required": ["file", "duration"],
+    "additionalProperties": false
+}

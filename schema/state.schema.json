@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://nezumi.jbmorley.co.uk/schema/v1/state.schema.json",
+    "title": "State",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "frames": {
+            "type": "array",
+            "items": {"$ref": "frame.schema.json"}
+        },
+        "next_state": {"type": "string"},
+        "side_effects": {"type": "array", "items": {"type": "string"}},
+        "actions": {"type": "array", "items": {
+            "type": "object",
+            "properties": {
+                "conditions": {"type": "array", "items": {"type": "string"}},
+                "state": {"type": "string"}
+            }
+        }}
+    },
+    "required": ["frames", "next_state", "actions"],
+    "additionalProperties": true
+}
