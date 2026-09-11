@@ -3,7 +3,8 @@
   "extends": [
     "config:recommended",
     ":semanticCommitTypeAll(fix)",
-    ":semanticCommitScopeDisabled"
+    ":semanticCommitScopeDisabled",
+    ":disableDependencyDashboard"
   ],
   "semanticCommits": "enabled",
   "commitMessageLowerCase": "never",
