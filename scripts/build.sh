@@ -29,9 +29,6 @@ ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd 
 SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
 SOURCE_DIRECTORY="$ROOT_DIRECTORY/rust"
 
-# Ensure required commands are available.
-which cmake || (echo "CMake (cmake) not available on the path." && exit 1)
-which gh || (echo "GitHub cli (gh) not available on the path." && exit 1)
 
 "$SCRIPTS_DIRECTORY/generate-credits" \
     "$ROOT_DIRECTORY/graphics/credits.png" \
