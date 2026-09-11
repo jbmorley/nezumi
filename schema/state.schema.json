@@ -19,6 +19,6 @@
             }
         }}
     },
-    "required": ["frames", "next_state", "actions"],
-    "additionalProperties": true
+    "required": ["frames", "next_state", "actions", "side_effects"],
+    "additionalProperties": false
 }
