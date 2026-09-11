@@ -26,9 +26,18 @@ set -x
 set -u
 
 ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
+
+SCHEMA_DIRECTORY="$ROOT_DIRECTORY/schema"
 SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
 SOURCE_DIRECTORY="$ROOT_DIRECTORY/rust"
+SOURCE_DIRECTORY="$ROOT_DIRECTORY/rust"
 
+STATES_PATH="$SOURCE_DIRECTORY/states.json"
+
+check-jsonschema \
+    --base-uri "$SCHEMA_DIRECTORY/" \
+    --schemafile "$SCHEMA_DIRECTORY/states.schema.json" \
+    "$STATES_PATH"
 
 "$SCRIPTS_DIRECTORY/generate-credits" \
     "$ROOT_DIRECTORY/graphics/credits.png" \
