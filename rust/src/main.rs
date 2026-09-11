@@ -238,6 +238,13 @@ fn main() {
         frames.insert(a.file_name().unwrap().to_str().unwrap().to_owned(), texture);
     }
 
+    // Check that every named image exists.
+    for (state_name, state_item) in state.iter() {
+        for frame in state_item.frames.iter() {
+            assert!(frames.contains_key(&frame.file), "Missing file '{}' used by state '{}'.", frame.file, state_name);
+        }
+    }
+
     let mut gesture = Gesture::None;
     let mut gesture_start_time: f64 = 0.0;
     let mut last_position = Vector2::new(0.0, 0.0);
