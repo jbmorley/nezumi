@@ -47,3 +47,6 @@ check-jsonschema \
 
 cd "$SOURCE_DIRECTORY"
 cargo build
+
+# Smoke-test.
+cargo run -- --validate-only

@@ -1,8 +1,9 @@
+use clap::Parser;
+use rand::RngExt;
+use raylib::prelude::*;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::fs;
-use raylib::prelude::*;
-use rand::RngExt;
 
 use std::sync::{
     atomic::{AtomicBool, Ordering},
@@ -29,6 +30,15 @@ const FULL_ENERGY: i32 = if cfg!(debug_assertions) {
 };
 
 const START_STATE: &str = "credits";
+
+#[derive(Parser)]
+#[command(version, about)]
+struct Args {
+
+    /// Perform frame and state validation and exit early.
+    #[arg(short, long)]
+    validate_only: bool,
+}
 
 #[derive(Debug, Deserialize)]
 struct Frame {
@@ -196,6 +206,7 @@ fn consume_condition_state(condition: &Event, gesture: &mut Gesture) {
 }
 
 fn main() {
+    let args = Args::parse();
 
     // Set up an atomic boolean to respond to Ctrl + C signals.
     let running = Arc::new(AtomicBool::new(true));
@@ -243,6 +254,12 @@ fn main() {
         for frame in state_item.frames.iter() {
             assert!(frames.contains_key(&frame.file), "Missing file '{}' used by state '{}'.", frame.file, state_name);
         }
+    }
+
+    // Exit early if we're just performing validation.
+    if args.validate_only {
+        println!("Success.");
+        return;
     }
 
     let mut gesture = Gesture::None;

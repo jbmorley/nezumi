@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.40"
+clap = { version = "4", features = ["derive"] }
 ctrlc = "3.4.5"
 rand = "0.10.0"
 raylib = { version = "6.0", features = ["opengl_21"] }
