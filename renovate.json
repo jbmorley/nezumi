@@ -1,54 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    ":semanticCommitTypeAll(fix)",
-    ":semanticCommitScopeDisabled",
-    ":disableDependencyDashboard"
-  ],
-  "semanticCommits": "enabled",
-  "commitMessageLowerCase": "never",
-  "packageRules": [
-    {
-      "matchManagers": ["cargo"],
-      "commitMessagePrefix": "fix: 🦀"
-    },
-    {
-      "groupName": "Rust dependencies",
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} ({{#each upgrades}}{{{depName}}}{{#unless @last}}, {{/unless}}{{/each}})"
-      },
-      "matchManagers": ["cargo"],
-      "matchUpdateTypes": ["minor", "patch"]
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "commitMessagePrefix": "ci: ⚙️"
-    },
-    {
-      "groupName": "GitHub Actions build steps",
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} ({{#each upgrades}}{{{depName}}}{{#unless @last}}, {{/unless}}{{/each}})"
-      },
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"]
-    },
-    {
-      "matchManagers": ["mise"],
-      "commitMessagePrefix": "build: 🧰"
-    },
-    {
-      "groupName": "build tools",
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} ({{#each upgrades}}{{{depName}}}{{#unless @last}}, {{/unless}}{{/each}})"
-      },
-      "matchManagers": ["mise"],
-      "matchUpdateTypes": ["minor", "patch"]
-    },
-    {
-      "matchCurrentVersion": "<1.0.0",
-      "matchUpdateTypes": ["minor"],
-      "groupName": null
-    }
+    "local>inseven/renovate-config"
   ]
 }
